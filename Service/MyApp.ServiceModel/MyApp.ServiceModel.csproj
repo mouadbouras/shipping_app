@@ -12,4 +12,8 @@
     <Folder Include="Types\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\MyApp.Model\MyApp.Model.csproj" />
+  </ItemGroup>
+
 </Project>
