@@ -2,6 +2,7 @@ import { Component,ElementRef, NgZone, OnInit, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
 /// <reference types="@types/googlemaps" />
 import { MapsAPILoader } from '@agm/core';
+import { ShippoApi } from '../Services/ShippoApi'
 
 @Component({
   selector: 'app-getquote',
@@ -12,8 +13,13 @@ export class GetquoteComponent implements OnInit {
 
   constructor(
     private mapsAPILoader: MapsAPILoader,
-    private ngZone: NgZone
-  ) {}
+    private ngZone: NgZone,
+    private shippo:ShippoApi
+  ) {
+
+    this.shippo.GetQuote();
+
+  }
 
   public latitude: number;
   public longitude: number;
