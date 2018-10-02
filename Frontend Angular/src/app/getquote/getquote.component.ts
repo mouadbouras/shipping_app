@@ -2,7 +2,16 @@ import { Component,ElementRef, NgZone, OnInit, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
 /// <reference types="@types/googlemaps" />
 import { MapsAPILoader } from '@agm/core';
-import { ShippoApi } from '../Services/ShippoApi'
+import { QuoteService } from '../Services/quote.service';
+import { Observable } from 'rxjs';
+import { Shipment } from '../Model/shipment.model';
+import { Parcel } from '../Model/parcel.model';
+import { Shipp } from '../Model/shipp.model';
+
+import { HttpClient } from '@angular/common/http'; 
+
+
+
 
 @Component({
   selector: 'app-getquote',
@@ -14,16 +23,16 @@ export class GetquoteComponent implements OnInit {
   constructor(
     private mapsAPILoader: MapsAPILoader,
     private ngZone: NgZone,
-    private shippo:ShippoApi
+    private quote: QuoteService,
+    private http: HttpClient
   ) {
 
-    this.shippo.GetQuote();
-
   }
-
+  public shipment : Shipment;
   public latitude: number;
   public longitude: number;
-  public searchControl: FormControl;
+  public searchControl1: FormControl;
+  public searchControl2: FormControl;
   public zoom: number;
 
   public shippment = {
@@ -32,6 +41,45 @@ export class GetquoteComponent implements OnInit {
     weight:0
   };   
  
+  onClickMe() {
+    this.shipment.From = new Shipp();
+    this.shipment.From.Name = this.contentForm1.name;
+    this.shipment.From.Street1 = this.contentForm1.street_number + " " + this.contentForm1.route;
+    this.shipment.From.State = this.contentForm1.administrative_area_level_1;
+    this.shipment.From.City = this.contentForm1.locality;
+    this.shipment.From.Country = this.contentForm1.country;
+    this.shipment.From.Zip = this.contentForm1.postal_code;
+
+    this.shipment.To = new Shipp();
+    this.shipment.To.Name = this.contentForm2.name;
+    this.shipment.To.Street1 = this.contentForm2.street_number + this.contentForm1.route;
+    this.shipment.To.State = this.contentForm2.administrative_area_level_1;
+    this.shipment.To.City = this.contentForm2.locality;
+    this.shipment.To.Country = this.contentForm2.country;
+    this.shipment.To.Zip = this.contentForm2.postal_code;    
+
+    var parcel = new Parcel();
+    parcel.Width  = 1;
+    parcel.Height = 1;
+    parcel.Distance_unit = 'in';
+    parcel.Weight = 10;
+    parcel.Mass_unit = 'lb' ;
+
+    this.shipment.Parcels = new Array<Parcel>();
+    this.shipment.Parcels.push(parcel);
+
+    //console.log(this.shipment);
+    var response; 
+
+    this.http.post('http://shipping-co.azurewebsites.net/shipment.json' , this.shipment).subscribe(
+      data => {
+      response = data;
+      console.log(data);
+    });
+
+    console.log('You are my hero!');
+  }
+
   public componentForm = {
     street_number: 'short_name',
     route: 'long_name',
@@ -42,7 +90,7 @@ export class GetquoteComponent implements OnInit {
   };
 
   public contentForm1 = {
-    name :'',
+    name :'person1',
     street_number: '',
     route: '',
     locality: '',
@@ -52,7 +100,7 @@ export class GetquoteComponent implements OnInit {
   };
   
   public contentForm2 = {
-    name :'',
+    name :'person2',
     street_number: '',
     route: '',
     locality: '',
@@ -69,13 +117,18 @@ export class GetquoteComponent implements OnInit {
 
 
   ngOnInit() {
+    this.quote.shipment.subscribe(
+      resShipment => this.shipment = resShipment
+    );
+
     //set google maps defaults
     this.zoom = 4;
     this.latitude = 39.8282;
     this.longitude = -98.5795;
 
     //create search FormControl
-    this.searchControl = new FormControl();
+    this.searchControl1 = new FormControl();
+    this.searchControl2 = new FormControl();
 
     //set current position
     this.setCurrentPosition();

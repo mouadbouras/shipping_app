@@ -7,13 +7,19 @@ import { AppComponent } from './app.component';
 import { GetquoteComponent } from './getquote/getquote.component';
 import { NavigationComponent } from './navigation/navigation.component';
 import { AgmCoreModule } from '@agm/core';
+import { GetratesComponent } from './getrates/getrates.component';
+import { QuoteService } from './Services/quote.service';
+import { HttpClientModule } from '@angular/common/http'; 
+import { HttpModule } from '@angular/http';
+
 
 
 @NgModule({
   declarations: [
     AppComponent,
     GetquoteComponent,
-    NavigationComponent
+    NavigationComponent,
+    GetratesComponent
   ],
   imports: [
     AgmCoreModule.forRoot({
@@ -22,9 +28,12 @@ import { AgmCoreModule } from '@agm/core';
     }),
     BrowserModule,
     AppRoutingModule,
-    FormsModule, ReactiveFormsModule
+    FormsModule, 
+    ReactiveFormsModule,
+    HttpModule,
+    HttpClientModule    
   ],
-  providers: [],
+  providers: [QuoteService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
