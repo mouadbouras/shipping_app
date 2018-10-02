@@ -23,6 +23,7 @@ namespace MyApp
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -42,6 +43,8 @@ namespace MyApp
         // Configure your AppHost with the necessary configuration and dependencies your App needs
         public override void Configure(Container container)
         {
+            Plugins.Add(new CorsFeature());
+
             SetConfig(new HostConfig
             {
                 DefaultRedirectPath = "/metadata",
