@@ -1,11 +1,13 @@
-﻿using ServiceStack;
-using MyApp.Model;
+﻿
 
 namespace MyApp.ServiceModel
 {
-    [Route("/shipment")]
-    public class ShippmentDTO : Shipment, IReturn<ShippmentDTOResponse>
-    {
+    using ServiceStack;
+    using MyApp.Model;
+
+    [Route("/shipment" , "POST")]
+    public class ShippmentDTO : Shipment , IReturn<ShippmentDTOResponse>
+    {        
     }
 
     public class ShippmentDTOResponse

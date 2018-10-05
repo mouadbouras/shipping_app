@@ -54,65 +54,71 @@ namespace MyApp.ServiceInterface
             { "async", false}});
 
 
-            return response;
+            return response.Rates;
         }
 
         public object Post(ShippmentDTO request)
         {
             APIResource resource = new APIResource("shippo_test_5f00f661c1f2f19191bfba82cc8575fddb06c202");
-
             //APIResource resource = new APIResource("shippo_live_b248c98357917b42d991df307d6573359a901ea9");
+            try { 
+                //to address
+                Hashtable toAddressTable = new Hashtable();
+                toAddressTable.Add("name", request.To.Name);
+                toAddressTable.Add("company", request.To.Company);
+                toAddressTable.Add("street1", request.To.Street1);
+                toAddressTable.Add("city", request.To.City);
+                toAddressTable.Add("state", request.To.State);
+                toAddressTable.Add("zip", request.To.Zip);
+                toAddressTable.Add("country", request.To.Country);
+                toAddressTable.Add("validate", "true");
 
-            // to address
-            Hashtable toAddressTable = new Hashtable();
-            toAddressTable.Add("name",    request.To.Name);
-            toAddressTable.Add("company", request.To.Company);
-            toAddressTable.Add("street1", request.To.Street1);
-            toAddressTable.Add("city",    request.To.City);
-            toAddressTable.Add("state",   request.To.State);
-            toAddressTable.Add("zip",     request.To.Zip);
-            toAddressTable.Add("country", request.To.Country);
-            toAddressTable.Add("validate", "true");
+                Address address = resource.CreateAddress(toAddressTable);
+                Console.Out.WriteLine("Address IsValid: " + address.ValidationResults.IsValid);
 
-            Address address = resource.CreateAddress(toAddressTable);
-            Console.Out.WriteLine("Address IsValid: " + address.ValidationResults.IsValid);
+                // from address
+                Hashtable fromAddressTable = new Hashtable();
+                fromAddressTable.Add("name", request.From.Name);
+                fromAddressTable.Add("company", request.From.Company);
+                fromAddressTable.Add("street1", request.From.Street1);
+                fromAddressTable.Add("city", request.From.City);
+                fromAddressTable.Add("state", request.From.State);
+                fromAddressTable.Add("zip", request.From.Zip);
+                fromAddressTable.Add("country", request.From.Country);
+                fromAddressTable.Add("validate", "true");
 
-            // from address
-            Hashtable fromAddressTable = new Hashtable();
-            fromAddressTable.Add("name",    request.From.Name);
-            fromAddressTable.Add("company", request.From.Company);
-            fromAddressTable.Add("street1", request.From.Street1);
-            fromAddressTable.Add("city",    request.From.City);
-            fromAddressTable.Add("state",   request.From.State);
-            fromAddressTable.Add("zip",     request.From.Zip);
-            fromAddressTable.Add("country", request.From.Country);
-            fromAddressTable.Add("validate", "true");
+                address = resource.CreateAddress(toAddressTable);
+                Console.Out.WriteLine("Address IsValid: " + address.ValidationResults.IsValid);
 
-            address = resource.CreateAddress(toAddressTable);
-            Console.Out.WriteLine("Address IsValid: " + address.ValidationResults.IsValid);
+                List<Hashtable> parcels = new List<Hashtable>();
 
-            List<Hashtable> parcels = new List<Hashtable>();
+                foreach (var parcel in request.Parcels)
+                {
+                    Hashtable parcelTable = new Hashtable();
+                    parcelTable.Add("length", parcel.Length);
+                    parcelTable.Add("width", parcel.Width);
+                    parcelTable.Add("height", parcel.Height);
+                    parcelTable.Add("distance_unit", parcel.Distance_unit);
+                    parcelTable.Add("weight", parcel.Weight);
+                    parcelTable.Add("mass_unit", parcel.Mass_unit);
+                    parcels.Add(parcelTable);
+                }
 
-            foreach(var parcel in request.Parcels)
+
+                var response = resource.CreateShipment(new Hashtable(){
+                { "address_to", toAddressTable},
+                { "address_from", fromAddressTable},
+                { "parcels", parcels},
+                { "async", false}});
+                return response;
+
+            }
+            catch (Exception e)
             {
-                Hashtable parcelTable = new Hashtable();
-                parcelTable.Add("length", parcel.Length);
-                parcelTable.Add("width", parcel.Width);
-                parcelTable.Add("height", parcel.Height);
-                parcelTable.Add("distance_unit", parcel.Distance_unit);
-                parcelTable.Add("weight", parcel.Weight);
-                parcelTable.Add("mass_unit", parcel.Mass_unit);
-                parcels.Add(parcelTable);
+                var response = "{'error': 'exception caught by server'}";
+                return response;
             }
 
-
-            var response = resource.CreateShipment(new Hashtable(){
-            { "address_to", toAddressTable},
-            { "address_from", fromAddressTable},
-            { "parcels", parcels},
-            { "async", false}});
-
-            return response;
         }
 
     }

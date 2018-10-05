@@ -10,6 +10,13 @@ import { Shipp } from '../Model/shipp.model';
 
 import { HttpClient } from '@angular/common/http'; 
 
+import { HttpHeaders } from '@angular/common/http';
+
+const httpOptions = {
+  headers: new HttpHeaders({
+    'Content-Type':  'application/json'
+  })
+};
 
 
 
@@ -42,6 +49,7 @@ export class GetquoteComponent implements OnInit {
   };   
  
   onClickMe() {
+    this.shipment = new Shipment();
     this.shipment.From = new Shipp();
     this.shipment.From.Name = this.contentForm1.name;
     this.shipment.From.Street1 = this.contentForm1.street_number + " " + this.contentForm1.route;
@@ -59,6 +67,7 @@ export class GetquoteComponent implements OnInit {
     this.shipment.To.Zip = this.contentForm2.postal_code;    
 
     var parcel = new Parcel();
+    parcel.Length =  this.shippment.weight ;
     parcel.Width  = 1;
     parcel.Height = 1;
     parcel.Distance_unit = 'in';
@@ -67,17 +76,18 @@ export class GetquoteComponent implements OnInit {
 
     this.shipment.Parcels = new Array<Parcel>();
     this.shipment.Parcels.push(parcel);
-
+    var name = "bob";
     //console.log(this.shipment);
     var response; 
 
-    this.http.post('http://shipping-co.azurewebsites.net/shipment.json' , this.shipment).subscribe(
+    console.log(JSON.stringify(this.shipment));
+
+    this.http.post('http://localhost:5000/shipment.json' , JSON.stringify(this.shipment), httpOptions).subscribe(
       data => {
       response = data;
       console.log(data);
     });
 
-    console.log('You are my hero!');
   }
 
   public componentForm = {
