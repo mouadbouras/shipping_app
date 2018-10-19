@@ -117,22 +117,28 @@
           <div class="card-body text-center">
               <table class="table">
                   <tr>
-                      <td class="label">Ship Date </td>
+                      <td class="label">Length </td>
                       <td class="slimField">
-                        <input class="field" id="date"
-                          value="{{ shippment.date  }}"/></td>
+                        <input class="field" id="Length"  [(ngModel)]="shippment.Length "
+                          value="{{ shippment.Length }}"/></td>
                   </tr>  
                   <tr>
-                      <td class="label">Quantity </td>
+                      <td class="label">Width </td>
                       <td class="slimField">
-                        <input class="field" id="quantity"
-                          value="{{ shippment.quantity  }}"/></td>
+                        <input class="field" id="width"  [(ngModel)]="shippment.width "
+                          value="{{ shippment.width }}"/></td>
+                  </tr>  
+                  <tr>
+                      <td class="label">Height </td>
+                      <td class="slimField">
+                        <input class="field" id="height"  [(ngModel)]="shippment.height "
+                          value="{{ shippment.height }}"/></td>
                   </tr>  
                   <tr>
                       <td class="label">Weight </td>
                       <td class="slimField">
-                        <input class="field" id="weight"
-                          value="{{ shippment.weight  }}"/></td>
+                        <input class="field" id="weight" [(ngModel)]="shippment.weight "
+                          value="{{ shippment.weight }}"/></td>
                   </tr>                                      
               </table>
 
@@ -141,6 +147,38 @@
         </div>
     </div>
   </div>
+  <div class="row">
+    <div class="col-lg-12 py-3 " >
+        <div class="card">
+            <li *ngFor="let hero of heroes">
+                {{ hero }}
+              </li>
+              <table class="table table-striped">
+                  <thead>
+                    <tr >
+                        <th>Amount</th>
+                        <th>Currency</th>
+                        <th>Estimate</th>
+                        <th>Provider</th>
+                        <th>Servicelevel</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let r of rates">
+                      <td>{{ r.Amount}}</td>
+                      <td>{{ r.Currency}}</td>
+                      <td>{{ r.Estimate }}</td>
+                      <td>{{ r.Provider }}</td>
+                      <td>{{ r.Servicelevel }}</td>
+                    </tr>
+                  </tbody>
+                </table>                    
+
+        </div>
+      </div>
+    </div>
+
+
 </div>
 
 

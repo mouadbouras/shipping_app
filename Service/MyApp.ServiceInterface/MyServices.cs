@@ -14,7 +14,7 @@ namespace MyApp.ServiceInterface
         {
             APIResource resource = new APIResource("shippo_test_5f00f661c1f2f19191bfba82cc8575fddb06c202");
 
-           // APIResource resource = new APIResource("shippo_live_b248c98357917b42d991df307d6573359a901ea9");
+            //APIResource resource = new APIResource("shippo_live_b248c98357917b42d991df307d6573359a901ea9");
             // to address
             Hashtable toAddressTable = new Hashtable();
             toAddressTable.Add("name", "Mr Hippo");
@@ -115,7 +115,8 @@ namespace MyApp.ServiceInterface
             }
             catch (Exception e)
             {
-                var response = "{'error': 'exception caught by server'}";
+                var response = "{\"error\": \"exception caught by server\" ," +
+                    "\"details\" : " + e.Message.ToString() + "}";
                 return response;
             }
 

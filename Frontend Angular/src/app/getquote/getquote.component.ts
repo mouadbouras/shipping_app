@@ -7,6 +7,8 @@ import { Observable } from 'rxjs';
 import { Shipment } from '../Model/shipment.model';
 import { Parcel } from '../Model/parcel.model';
 import { Shipp } from '../Model/shipp.model';
+import { Rate } from '../Model/rate.model';
+
 
 import { HttpClient } from '@angular/common/http'; 
 
@@ -17,8 +19,6 @@ const httpOptions = {
     'Content-Type':  'application/json'
   })
 };
-
-
 
 @Component({
   selector: 'app-getquote',
@@ -43,10 +43,13 @@ export class GetquoteComponent implements OnInit {
   public zoom: number;
 
   public shippment = {
-    date: '',
-    quantity:0,
-    weight:0
+    Length:1,
+    width:1,
+    height:1,
+    weight:1
   };   
+
+  public rates : Array<Rate>;
  
   onClickMe() {
     this.shipment = new Shipment();
@@ -85,7 +88,28 @@ export class GetquoteComponent implements OnInit {
     this.http.post('http://localhost:5000/shipment.json' , JSON.stringify(this.shipment), httpOptions).subscribe(
       data => {
       response = data;
-      console.log(data);
+      //console.log(data);
+      if(data["error"]!= undefined)
+      {
+        console.log("An Error Happened");
+        console.log(data["details"]);
+      }
+
+      console.log(data[0]);
+      this.rates = new Array<Rate>();
+      for (var i =0 ; i < 50 ; i++ ){
+        if(data[i] == undefined){
+          break;
+        }
+        var r = new Rate();
+        r.Amount = data[i]["amount"];
+        r.Currency= data[i]["currency"];
+        r.Estimate= data[i]["estimatedDays"];
+        r.Provider= data[i]["provider"];
+        r.Servicelevel= data[i]["servicelevel"]["name"];
+        this.rates.push(r);
+      }
+
     });
 
   }
@@ -139,6 +163,17 @@ export class GetquoteComponent implements OnInit {
     //create search FormControl
     this.searchControl1 = new FormControl();
     this.searchControl2 = new FormControl();
+
+    this.rates = new Array<Rate>(); 
+    var r = new Rate();
+
+    r.Amount = 30;
+    r.Currency = "USD";
+    r.Estimate = "2 days 3 nights";
+    r.Provider = "USPS";
+    r.Servicelevel = "priority";
+
+    this.rates.push(r);
 
     //set current position
     this.setCurrentPosition();

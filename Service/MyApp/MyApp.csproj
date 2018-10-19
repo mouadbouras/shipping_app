@@ -3,6 +3,11 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp2.1</TargetFramework>
   </PropertyGroup>
+  <PropertyGroup>
+      <RuntimeIdentifiers>win-x64</RuntimeIdentifiers>
+      <StartupObject>MyApp.Program</StartupObject>
+  </PropertyGroup>
+
 
   <ItemGroup>
     <Folder Include="wwwroot\" />
@@ -11,6 +16,7 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.App" Version="2.1.*" />
     <PackageReference Include="ServiceStack" Version="5.*" />
+    <PackageReference Include="Shippo" Version="2.1.10" />
   </ItemGroup>
 
   <ItemGroup>
