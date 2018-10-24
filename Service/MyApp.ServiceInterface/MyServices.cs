@@ -8,13 +8,15 @@ using System.Collections.Generic;
 
 namespace MyApp.ServiceInterface
 {
+    [EnableCors(allowedMethods:"GET,POST")]
     public class MyServices : Service
     {
         public object Any(Hello request)
         {
             APIResource resource = new APIResource("shippo_test_5f00f661c1f2f19191bfba82cc8575fddb06c202");
-
-            //APIResource resource = new APIResource("shippo_live_b248c98357917b42d991df307d6573359a901ea9");
+            
+            // APIResource resource = new APIResource("shippo_live_b248c98357917b42d991df307d6573359a901ea9");
+            
             // to address
             Hashtable toAddressTable = new Hashtable();
             toAddressTable.Add("name", "Mr Hippo");
