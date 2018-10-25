@@ -1,12 +1,11 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp2.1</TargetFramework>
-  </PropertyGroup>
-  <PropertyGroup>
+      <TargetFramework>netcoreapp2.1</TargetFramework>
       <RuntimeIdentifiers>win-x64</RuntimeIdentifiers>
-      <StartupObject>MyApp.Program</StartupObject>
+      <StartupObject>MyApp.Program</StartupObject>	
   </PropertyGroup>
+
 
 
   <ItemGroup>
