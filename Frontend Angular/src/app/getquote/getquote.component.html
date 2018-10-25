@@ -17,12 +17,18 @@
                     <td class="slimField">
                       <input class="field" id="name"
                         value="{{ contentForm1.name  }}"/></td>
-                  </tr>              
+                  </tr>      
+                  <tr>
+                    <td class="label">Street number</td>
+                    <td class="slimField">
+                      <input class="field" id="street_number"
+                          disabled="true" value="{{ contentForm1.street_number  }}"/></td>
+                  </tr>                          
                 <tr>
                   <td class="label">Street address</td>
                   <td class="slimField">
-                    <input class="field" id="street_number"
-                        disabled="true" value="{{ contentForm1.street_number + ' ' + contentForm1.route  }}"/></td>
+                    <input class="field" id="street_name"
+                        disabled="true" value="{{ contentForm1.route  }}"/></td>
                 </tr>
                 <tr>
                   <td class="label">City</td>
@@ -74,10 +80,16 @@
                         value="{{ contentForm2.name  }}"/></td>
                 </tr>  
                 <tr>
+                  <td class="label">Street number</td>
+                  <td class="slimField">
+                    <input class="field" id="street_number"
+                        disabled="true" value="{{ contentForm2.street_number  }}"/></td>
+                </tr>                   
+                <tr>
                   <td class="label">Street address</td>
                   <td class="slimField">
-                      <input class="field" id="street_number"
-                      disabled="true" value="{{ contentForm2.street_number + ' ' + contentForm2.route  }}"/></td>
+                      <input class="field" id="street_name"
+                      disabled="true" value="{{ contentForm2.route  }}"/></td>
                 </tr>
                 <tr>
                   <td class="label">City</td>

@@ -53,9 +53,11 @@ export class GetquoteComponent implements OnInit {
  
   onClickMe() {
     this.shipment = new Shipment();
+    
     this.shipment.From = new Shipp();
     this.shipment.From.Name = this.contentForm1.name;
-    this.shipment.From.Street1 = this.contentForm1.street_number + " " + this.contentForm1.route;
+    this.shipment.From.StreetNumber = this.contentForm1.street_number;
+    this.shipment.From.Street1 =  this.contentForm1.route;
     this.shipment.From.State = this.contentForm1.administrative_area_level_1;
     this.shipment.From.City = this.contentForm1.locality;
     this.shipment.From.Country = this.contentForm1.country;
@@ -63,7 +65,8 @@ export class GetquoteComponent implements OnInit {
 
     this.shipment.To = new Shipp();
     this.shipment.To.Name = this.contentForm2.name;
-    this.shipment.To.Street1 = this.contentForm2.street_number + this.contentForm1.route;
+    this.shipment.To.StreetNumber = this.contentForm2.street_number;
+    this.shipment.To.Street1 = this.contentForm2.route ;
     this.shipment.To.State = this.contentForm2.administrative_area_level_1;
     this.shipment.To.City = this.contentForm2.locality;
     this.shipment.To.Country = this.contentForm2.country;
@@ -85,7 +88,7 @@ export class GetquoteComponent implements OnInit {
 
     console.log(JSON.stringify(this.shipment));
 
-    this.http.post('http://localhost:5000/shipment.json' , JSON.stringify(this.shipment), httpOptions).subscribe(
+    this.http.post('http://shipping-co.azurewebsites.net/shipment.json' , JSON.stringify(this.shipment), httpOptions).subscribe(
       data => {
       response = data;
       //console.log(data);

@@ -61,13 +61,14 @@ namespace MyApp.ServiceInterface
 
         public object Post(ShippmentDTO request)
         {
-            APIResource resource = new APIResource("shippo_test_5f00f661c1f2f19191bfba82cc8575fddb06c202");
-            //APIResource resource = new APIResource("shippo_live_b248c98357917b42d991df307d6573359a901ea9");
+            //APIResource resource = new APIResource("shippo_test_5f00f661c1f2f19191bfba82cc8575fddb06c202");
+            APIResource resource = new APIResource("shippo_live_b248c98357917b42d991df307d6573359a901ea9");
             try { 
                 //to address
                 Hashtable toAddressTable = new Hashtable();
                 toAddressTable.Add("name", request.To.Name);
                 toAddressTable.Add("company", request.To.Company);
+                toAddressTable.Add("street_no", request.To.StreetNumber);
                 toAddressTable.Add("street1", request.To.Street1);
                 toAddressTable.Add("city", request.To.City);
                 toAddressTable.Add("state", request.To.State);
@@ -82,6 +83,7 @@ namespace MyApp.ServiceInterface
                 Hashtable fromAddressTable = new Hashtable();
                 fromAddressTable.Add("name", request.From.Name);
                 fromAddressTable.Add("company", request.From.Company);
+                fromAddressTable.Add("street_no", request.From.StreetNumber);
                 fromAddressTable.Add("street1", request.From.Street1);
                 fromAddressTable.Add("city", request.From.City);
                 fromAddressTable.Add("state", request.From.State);
@@ -112,7 +114,7 @@ namespace MyApp.ServiceInterface
                 { "address_from", fromAddressTable},
                 { "parcels", parcels},
                 { "async", false}});
-                return response;
+                return response.Rates;
 
             }
             catch (Exception e)
