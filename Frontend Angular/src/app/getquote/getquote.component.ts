@@ -8,6 +8,8 @@ import { Shipment } from '../Model/shipment.model';
 import { Parcel } from '../Model/parcel.model';
 import { Shipp } from '../Model/shipp.model';
 import { Rate } from '../Model/rate.model';
+import { NgxSpinnerService } from 'ngx-spinner';
+
 
 
 import { HttpClient } from '@angular/common/http'; 
@@ -31,7 +33,8 @@ export class GetquoteComponent implements OnInit {
     private mapsAPILoader: MapsAPILoader,
     private ngZone: NgZone,
     private quote: QuoteService,
-    private http: HttpClient
+    private http: HttpClient,
+    private spinner: NgxSpinnerService
   ) {
 
   }
@@ -42,6 +45,10 @@ export class GetquoteComponent implements OnInit {
   public searchControl2: FormControl;
   public zoom: number;
 
+  public showError : boolean;
+  public showQuote : boolean;
+  public quoteError : string;
+
   public shippment = {
     Length:1,
     width:1,
@@ -50,8 +57,19 @@ export class GetquoteComponent implements OnInit {
   };   
 
   public rates : Array<Rate>;
- 
+  onClickBack() {
+    this.showError = false;
+    this.showQuote = false;
+    this.quoteError= "" ;
+  }
+
   onClickMe() {
+
+    this.showError = false;
+    this.showQuote = false;
+    this.quoteError= "" ;
+    this.spinner.show();
+
     this.shipment = new Shipment();
     
     this.shipment.From = new Shipp();
@@ -90,10 +108,15 @@ export class GetquoteComponent implements OnInit {
 
     this.http.post('http://shipping-co.azurewebsites.net/shipment.json' , JSON.stringify(this.shipment), httpOptions).subscribe(
       data => {
+
+      this.spinner.hide();
+
       response = data;
       //console.log(data);
       if(data["error"]!= undefined)
       {
+        this.showError = true;
+        this.quoteError = "An error happened, please try again.";
         console.log("An Error Happened");
         console.log(data["details"]);
       }
@@ -105,12 +128,28 @@ export class GetquoteComponent implements OnInit {
           break;
         }
         var r = new Rate();
+        r.Image = data[i]["providerImage75"];
         r.Amount = data[i]["amount"];
         r.Currency= data[i]["currency"];
         r.Estimate= data[i]["estimatedDays"];
         r.Provider= data[i]["provider"];
         r.Servicelevel= data[i]["servicelevel"]["name"];
         this.rates.push(r);
+        this.rates.sort(function(a, b) {
+          if (a.Amount < b.Amount)
+            return -1;
+          if (a.Amount > b.Amount)
+            return 1;
+          return 0;
+        });
+      }
+
+      if(data[0] == undefined){
+        this.showError = true;
+        this.quoteError = "No results found, please try again.";
+      }
+      else{
+        this.showQuote = true;
       }
 
     });
@@ -158,6 +197,10 @@ export class GetquoteComponent implements OnInit {
       resShipment => this.shipment = resShipment
     );
 
+    this.showError = false;
+    this.showQuote = false;
+    this.quoteError= "" ;
+
     //set google maps defaults
     this.zoom = 4;
     this.latitude = 39.8282;
@@ -167,16 +210,16 @@ export class GetquoteComponent implements OnInit {
     this.searchControl1 = new FormControl();
     this.searchControl2 = new FormControl();
 
-    this.rates = new Array<Rate>(); 
-    var r = new Rate();
+     this.rates = new Array<Rate>(); 
+    // var r = new Rate();
 
-    r.Amount = 30;
-    r.Currency = "USD";
-    r.Estimate = "2 days 3 nights";
-    r.Provider = "USPS";
-    r.Servicelevel = "priority";
+    // r.Amount = 30;
+    // r.Currency = "USD";
+    // r.Estimate = "2 days 3 nights";
+    // r.Provider = "USPS";
+    // r.Servicelevel = "priority";
 
-    this.rates.push(r);
+    // this.rates.push(r);
 
     //set current position
     this.setCurrentPosition();

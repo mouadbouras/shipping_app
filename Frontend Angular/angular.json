@@ -3,25 +3,24 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "shipping-app": {
+    "ng-pages": {
       "root": "",
       "sourceRoot": "src",
       "projectType": "application",
       "prefix": "app",
       "schematics": {},
-      "targets": {
+      "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/shipping-app",
+            "outputPath": "dist/",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
             "tsConfig": "src/tsconfig.app.json",
             "assets": [
               "src/favicon.ico",
-              "src/assets",
-              "src/web.config"
+              "src/assets"
             ],
             "styles": [
               "src/styles.css"
@@ -51,18 +50,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "shipping-app:build"
+            "browserTarget": "ng-pages:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "shipping-app:build:production"
+              "browserTarget": "ng-pages:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "shipping-app:build"
+            "browserTarget": "ng-pages:build"
           }
         },
         "test": {
@@ -96,19 +95,19 @@
         }
       }
     },
-    "shipping-app-e2e": {
+    "ng-pages-e2e": {
       "root": "e2e/",
       "projectType": "application",
-      "targets": {
+      "architect": {
         "e2e": {
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "shipping-app:serve"
+            "devServerTarget": "ng-pages:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "shipping-app:serve:production"
+              "devServerTarget": "ng-pages:serve:production"
             }
           }
         },
@@ -124,5 +123,5 @@
       }
     }
   },
-  "defaultProject": "shipping-app"
+  "defaultProject": "ng-pages"
 }

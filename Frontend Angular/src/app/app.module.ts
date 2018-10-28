@@ -11,6 +11,8 @@ import { GetratesComponent } from './getrates/getrates.component';
 import { QuoteService } from './Services/quote.service';
 import { HttpClientModule } from '@angular/common/http'; 
 import { HttpModule } from '@angular/http';
+import { NgxSpinnerModule } from 'ngx-spinner';
+
 
 
 
@@ -19,7 +21,7 @@ import { HttpModule } from '@angular/http';
     AppComponent,
     GetquoteComponent,
     NavigationComponent,
-    GetratesComponent
+    GetratesComponent,
   ],
   imports: [
     AgmCoreModule.forRoot({
@@ -31,7 +33,8 @@ import { HttpModule } from '@angular/http';
     FormsModule, 
     ReactiveFormsModule,
     HttpModule,
-    HttpClientModule    
+    HttpClientModule,
+    NgxSpinnerModule    
   ],
   providers: [QuoteService],
   bootstrap: [AppComponent]
