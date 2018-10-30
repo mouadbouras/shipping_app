@@ -5,4 +5,8 @@ body {
 
 .black-overlay{
     position: fixed !important;
-    }
+}
+
+.container{
+ min-width: 650px;
+}

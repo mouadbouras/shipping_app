@@ -10,11 +10,10 @@ import { Shipp } from '../Model/shipp.model';
 import { Rate } from '../Model/rate.model';
 import { NgxSpinnerService } from 'ngx-spinner';
 
-
-
 import { HttpClient } from '@angular/common/http'; 
-
 import { HttpHeaders } from '@angular/common/http';
+import { Location } from '@angular/common';
+
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -50,17 +49,25 @@ export class GetquoteComponent implements OnInit {
   public quoteError : string;
 
   public shippment = {
-    Length:1,
-    width:1,
-    height:1,
-    weight:1
+    Length: "",
+    width:"",
+    height:"",
+    weight:""
   };   
 
   public rates : Array<Rate>;
+
+
   onClickBack() {
-    this.showError = false;
-    this.showQuote = false;
-    this.quoteError= "" ;
+    // this.showError = false;
+    // this.showQuote = false;
+    // this.quoteError= "" ;
+    // this.loadMapsAutocomplete();
+
+    // this.router.navigateByUrl('/RefrshComponent', {skipLocationChange: true}).then(()=>
+    // this.router.navigate(["Your actualComponent"]));
+
+    location.reload();
   }
 
   onClickMe() {
@@ -91,11 +98,11 @@ export class GetquoteComponent implements OnInit {
     this.shipment.To.Zip = this.contentForm2.postal_code;    
 
     var parcel = new Parcel();
-    parcel.Length =  this.shippment.weight ;
-    parcel.Width  = 1;
-    parcel.Height = 1;
+    parcel.Length =  Number(this.shippment.Length) ;
+    parcel.Width  =  Number(this.shippment.width);
+    parcel.Height =  Number(this.shippment.height);
     parcel.Distance_unit = 'in';
-    parcel.Weight = 10;
+    parcel.Weight =  Number(this.shippment.weight);
     parcel.Mass_unit = 'lb' ;
 
     this.shipment.Parcels = new Array<Parcel>();
@@ -166,7 +173,7 @@ export class GetquoteComponent implements OnInit {
   };
 
   public contentForm1 = {
-    name :'person1',
+    name :'',
     street_number: '',
     route: '',
     locality: '',
@@ -176,7 +183,7 @@ export class GetquoteComponent implements OnInit {
   };
   
   public contentForm2 = {
-    name :'person2',
+    name :'',
     street_number: '',
     route: '',
     locality: '',
@@ -197,19 +204,6 @@ export class GetquoteComponent implements OnInit {
       resShipment => this.shipment = resShipment
     );
 
-    this.showError = false;
-    this.showQuote = false;
-    this.quoteError= "" ;
-
-    //set google maps defaults
-    this.zoom = 4;
-    this.latitude = 39.8282;
-    this.longitude = -98.5795;
-
-    //create search FormControl
-    this.searchControl1 = new FormControl();
-    this.searchControl2 = new FormControl();
-
      this.rates = new Array<Rate>(); 
     // var r = new Rate();
 
@@ -220,6 +214,23 @@ export class GetquoteComponent implements OnInit {
     // r.Servicelevel = "priority";
 
     // this.rates.push(r);
+
+    this.showError = false;
+    this.showQuote = false;
+    this.quoteError= "" ;
+
+    this.loadMapsAutocomplete();
+  }
+
+  private loadMapsAutocomplete(){
+    //set google maps defaults
+    this.zoom = 4;
+    this.latitude = 39.8282;
+    this.longitude = -98.5795;
+
+    //create search FormControl
+    this.searchControl1 = new FormControl();
+    this.searchControl2 = new FormControl();
 
     //set current position
     this.setCurrentPosition();
@@ -285,7 +296,6 @@ export class GetquoteComponent implements OnInit {
         });
       });
     });
-
   }
 
   private setCurrentPosition() {

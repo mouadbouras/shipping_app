@@ -14,45 +14,60 @@
             <table class="table table-borderless" id="address" >
                 <tr>
                     <td class="label">Name</td>
+                </tr>      
+                <tr>
                     <td class="slimField">
-                      <input class="field" id="name"
-                        value="{{ contentForm1.name  }}"/></td>
+                      <input class="form-control" id="name" placeholder="Company Name"
+                        value="{{ contentForm1.name  }}" required /></td>
                   </tr>      
                   <tr>
                     <td class="label">Street number</td>
+                    </tr>      
+                    <tr>                    
                     <td class="slimField">
-                      <input class="field" id="street_number"
+                      <input class="form-control" id="street_number" required
                           disabled="true" value="{{ contentForm1.street_number  }}"/></td>
                   </tr>                          
                 <tr>
                   <td class="label">Street address</td>
+                </tr>      
+                <tr>                  
                   <td class="slimField">
-                    <input class="field" id="street_name"
+                    <input class="form-control" id="street_name" required
                         disabled="true" value="{{ contentForm1.route  }}"/></td>
                 </tr>
                 <tr>
                   <td class="label">City</td>
-                  <td class="wideField" colspan="3"><input class="field" id="locality"
+                </tr>      
+                <tr>                      
+                  <td class="wideField" colspan="3">
+                    <input class="form-control" id="locality" required
                         disabled="true"  value="{{ contentForm1.locality }}"/></td>
                 </tr>
                 <tr>
                   <td class="label">State/Province</td>
+                </tr>      
+                <tr>                      
                   <td class="slimField">
-                    <input class="field"
+                    <input class="form-control" required
                         id="administrative_area_level_1" disabled="true" 
                         value="{{ contentForm1.administrative_area_level_1 }}" /></td>
                 </tr>
                 <tr>
                     <td class="label">Zip code</td>
+                  </tr>      
+                  <tr>                        
                     <td class="wideField">
-                      <input class="field" id="postal_code"
-                          disabled="true"
+                      <input class="form-control" id="postal_code"
+                          disabled="true" required
                           value="{{ contentForm1.postal_code }}"/></td>
                 </tr>                
                 <tr>
                   <td class="label">Country</td>
+                </tr>      
+                <tr>                      
                   <td class="wideField" colspan="3">
-                    <input class="field"
+                    <input class="form-control" required
                         id="country" disabled="true"
                         value="{{ contentForm1.country }}"/></td>
                 </tr>
@@ -87,45 +102,60 @@
             <table class="table table-borderless" >
                 <tr>
                     <td class="label">Name </td>
+                  </tr>      
+                  <tr>                        
                     <td class="slimField">
-                      <input class="field" id="name"
-                        value="{{ contentForm2.name  }}"/></td>
+                      <input class="form-control" id="name" required
+                      placeholder="Company Name" value="{{ contentForm2.name  }}"/></td>
                 </tr>  
                 <tr>
                   <td class="label">Street number</td>
+                </tr>      
+                <tr>                      
                   <td class="slimField">
-                    <input class="field" id="street_number"
+                    <input class="form-control" id="street_number" required 
                         disabled="true" value="{{ contentForm2.street_number  }}"/></td>
                 </tr>                   
                 <tr>
                   <td class="label">Street address</td>
+                </tr>      
+                <tr>                      
                   <td class="slimField">
-                      <input class="field" id="street_name"
+                      <input class="form-control" id="street_name" required
                       disabled="true" value="{{ contentForm2.route  }}"/></td>
                 </tr>
                 <tr>
                   <td class="label">City</td>
-                  <td class="wideField" colspan="3"><input class="field" id="locality"
+                </tr>      
+                <tr>                      
+                  <td class="wideField" colspan="3">
+                    <input class="form-control" id="locality" required
                         disabled="true"  value="{{ contentForm2.locality }}"/></td>
                 </tr>
                 <tr>
                   <td class="label">State/Province</td>
+                </tr>      
+                <tr>                      
                   <td class="slimField">
-                    <input class="field"
+                    <input class="form-control" required
                         id="administrative_area_level_1" disabled="true" 
                         value="{{ contentForm2.administrative_area_level_1 }}" /></td>
                 </tr>
                 <tr>
                     <td class="label">Zip code</td>
+                  </tr>      
+                  <tr>                        
                     <td class="wideField">
-                      <input class="field" id="postal_code"
-                          disabled="true"
+                      <input class="form-control" id="postal_code"
+                          disabled="true" required
                           value="{{ contentForm2.postal_code }}"/></td>
                 </tr>
                 <tr>
                   <td class="label">Country</td>
+                </tr>      
+                <tr>                      
                   <td class="wideField" colspan="3">
-                    <input class="field"
+                    <input class="form-control" required
                         id="country" disabled="true"
                         value="{{ contentForm2.country }}"/></td>
                 </tr>
@@ -144,39 +174,71 @@
                   <tr>
                       <td class="label">Length </td>
                       <td class="slimField">
-                        <input class="field" id="Length"  [(ngModel)]="shippment.Length "
-                          value="{{ shippment.Length }}"/></td>
+                        <!-- <input class="form-control" id="Length"  [(ngModel)]="shippment.Length "
+                          value="{{ shippment.Length }}"/> &nbsp; Inches</td> -->
+                          <div class="input-group mb-3">
+                              <input type="number" class="form-control" id="Length"  
+                              [(ngModel)]="shippment.Length " placeholder="0" required
+                              value="{{ shippment.Length }}" />
+                              <div class="input-group-append">
+                                <span class="input-group-text" id="basic-addon2">Inches</span>
+                              </div>
+                            </div>
                   </tr>  
                   <tr>
                       <td class="label">Width </td>
                       <td class="slimField">
-                        <input class="field" id="width"  [(ngModel)]="shippment.width "
-                          value="{{ shippment.width }}"/></td>
+                        <!-- <input class="form-control" id="width"  [(ngModel)]="shippment.width "
+                          value="{{ shippment.width }}"/>&nbsp; Inches -->
+                          <div class="input-group mb-3">
+                          <input type="number" class="form-control" id="width"  [(ngModel)]="shippment.width "
+                          value="{{ shippment.width }}"  placeholder="0" required/>
+                          <div class="input-group-append">
+                            <span class="input-group-text" id="basic-addon2">Inches</span>
+                          </div>   
+                        </div>
+                        </td>
                   </tr>  
                   <tr>
                       <td class="label">Height </td>
                       <td class="slimField">
-                        <input class="field" id="height"  [(ngModel)]="shippment.height "
-                          value="{{ shippment.height }}"/></td>
+                        <!-- <input class="form-control" id="height"  [(ngModel)]="shippment.height "
+                          value="{{ shippment.height }}"/>&nbsp; Inches -->
+                          <div class="input-group mb-3">
+                          <input type="number" class="form-control" id="height"  [(ngModel)]="shippment.height "
+                          value="{{ shippment.height }}" placeholder="0"  required />
+                          <div class="input-group-append">
+                            <span class="input-group-text" id="basic-addon2">Inches</span>
+                          </div>  
+                        </div>
+                        </td>
                   </tr>  
                   <tr>
                       <td class="label">Weight </td>
                       <td class="slimField">
-                        <input class="field" id="weight" [(ngModel)]="shippment.weight "
-                          value="{{ shippment.weight }}"/></td>
+                        <!-- <input class="form-control" id="weight" [(ngModel)]="shippment.weight "
+                          value="{{ shippment.weight }}"/>&nbsp; Pounds -->
+                          <div class="input-group mb-3">
+                              <input type="number" class="form-control" id="weight"  [(ngModel)]="shippment.weight "
+                              value="{{ shippment.weight }}"  placeholder="0" required/>
+                              <div class="input-group-append">
+                                <span class="input-group-text" id="basic-addon2">Pounds</span>
+                              </div>      
+                            </div>
+                        </td>
                   </tr>                                      
               </table>
               <div class="alert alert-danger" role="alert" *ngIf="showError">
                   {{ quoteError}}
               </div>
-              <button type="button" class="btn btn-primary" (click)="onClickMe()">Send</button>
+              <button type="submit" class="btn btn-primary" (click)="onClickMe()" >Send</button>
           </div>
         </div>
     </div>
     <div class="col"></div>
   </div>
   <div class="row" *ngIf="showQuote">
-    <div class="col-lg-12 py-3 "  >
+    <div class="col-12 py-3 "  >
         <div class="card" >
           <div class="card-body text-center">
             <table class="table table-striped"  >
@@ -206,7 +268,6 @@
         </div>
       </div>
     </div>
-
 
 </div>
 
