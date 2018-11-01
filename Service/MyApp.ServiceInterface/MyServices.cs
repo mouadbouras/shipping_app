@@ -61,8 +61,8 @@ namespace MyApp.ServiceInterface
 
         public object Post(ShippmentDTO request)
         {
-            //APIResource resource = new APIResource("shippo_test_5f00f661c1f2f19191bfba82cc8575fddb06c202");
-            APIResource resource = new APIResource("shippo_live_b248c98357917b42d991df307d6573359a901ea9");
+            APIResource resource = new APIResource("shippo_test_5f00f661c1f2f19191bfba82cc8575fddb06c202");
+            //APIResource resource = new APIResource("shippo_live_b248c98357917b42d991df307d6573359a901ea9");
             try { 
                 //to address
                 Hashtable toAddressTable = new Hashtable();
