@@ -125,6 +125,11 @@ namespace MyApp.ServiceInterface
             }
 
         }
+        
+        public object Post(QuoteDTO request){
+            return null;
+        }
 
+    
     }
 }
