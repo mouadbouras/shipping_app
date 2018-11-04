@@ -241,24 +241,26 @@
     <div class="col-12 py-3 "  >
         <div class="card" >
           <div class="card-body text-center">
-            <table class="table table-striped"  >
-                <thead>
+            <table class="table"  >
+                <thead class="thead-dark">
                   <tr >
                       <th colspan="2">Provider</th>
                       <th>Amount</th>
                       <th>Currency</th>
                       <th>Estimate</th>
                       <th>Servicelevel</th>
+                      <th>Save</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr *ngFor="let r of rates">
-                    <th><img src="{{r.Image}}" class="img-fluid" alt="Responsive image"></th>
+                    <th><img  src="{{r.Image}}" width="50" class="img-fluid" alt="Responsive image"></th>
                     <td> {{ r.Provider }}</td>
                     <td>${{ r.Amount}}</td>
                     <td>{{ r.Currency}}</td>
                     <td>{{ r.Estimate }} Days</td>
                     <td>{{ r.Servicelevel }}</td>
+                    <td><button type="button" class="btn btn-success" (click)="onClickAdd(r)" >Add</button></td>
                   </tr>
                 </tbody>
             </table> 

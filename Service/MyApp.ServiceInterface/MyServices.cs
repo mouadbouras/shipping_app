@@ -74,10 +74,9 @@ namespace MyApp.ServiceInterface
                 toAddressTable.Add("state", request.To.State);
                 toAddressTable.Add("zip", request.To.Zip);
                 toAddressTable.Add("country", request.To.Country);
-                toAddressTable.Add("validate", "true");
+                toAddressTable.Add("validate", "false");
 
                 Address address = resource.CreateAddress(toAddressTable);
-                Console.Out.WriteLine("Address IsValid: " + address.ValidationResults.IsValid);
 
                 // from address
                 Hashtable fromAddressTable = new Hashtable();
@@ -89,10 +88,7 @@ namespace MyApp.ServiceInterface
                 fromAddressTable.Add("state", request.From.State);
                 fromAddressTable.Add("zip", request.From.Zip);
                 fromAddressTable.Add("country", request.From.Country);
-                fromAddressTable.Add("validate", "true");
-
-                address = resource.CreateAddress(toAddressTable);
-                Console.Out.WriteLine("Address IsValid: " + address.ValidationResults.IsValid);
+                fromAddressTable.Add("validate", "false");
 
                 List<Hashtable> parcels = new List<Hashtable>();
 

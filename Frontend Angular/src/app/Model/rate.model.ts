@@ -1,4 +1,3 @@
-
 export class Rate 
 {
     Image : string;

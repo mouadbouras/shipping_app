@@ -12,9 +12,7 @@ import { QuoteService } from './Services/quote.service';
 import { HttpClientModule } from '@angular/common/http'; 
 import { HttpModule } from '@angular/http';
 import { NgxSpinnerModule } from 'ngx-spinner';
-
-
-
+import { MyquotesComponent } from './myquotes/myquotes.component';
 
 @NgModule({
   declarations: [
@@ -22,6 +20,7 @@ import { NgxSpinnerModule } from 'ngx-spinner';
     GetquoteComponent,
     NavigationComponent,
     GetratesComponent,
+    MyquotesComponent,
   ],
   imports: [
     AgmCoreModule.forRoot({

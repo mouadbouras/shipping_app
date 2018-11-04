@@ -13,6 +13,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { HttpClient } from '@angular/common/http'; 
 import { HttpHeaders } from '@angular/common/http';
 import { Location } from '@angular/common';
+import { Quote } from '../Model/quote.model';
 
 
 const httpOptions = {
@@ -26,23 +27,17 @@ const httpOptions = {
   templateUrl: './getquote.component.html',
   styleUrls: ['./getquote.component.css']
 })
+
 export class GetquoteComponent implements OnInit {
 
-  constructor(
-    private mapsAPILoader: MapsAPILoader,
-    private ngZone: NgZone,
-    private quote: QuoteService,
-    private http: HttpClient,
-    private spinner: NgxSpinnerService
-  ) {
-
-  }
   public shipment : Shipment;
+  public qq: Quote;
   public latitude: number;
   public longitude: number;
   public searchControl1: FormControl;
   public searchControl2: FormControl;
   public zoom: number;
+  public rates : Array<Rate>;
 
   public showError : boolean;
   public showQuote : boolean;
@@ -55,8 +50,76 @@ export class GetquoteComponent implements OnInit {
     weight:""
   };   
 
-  public rates : Array<Rate>;
+  public componentForm = {
+    street_number: 'short_name',
+    route: 'long_name',
+    locality: 'long_name',
+    administrative_area_level_1: 'short_name',
+    country: 'long_name',
+    postal_code: 'short_name'
+  };
+  public contentForm1 = {
+    name :'',
+    street_number: '',
+    route: '',
+    locality: '',
+    administrative_area_level_1: '',
+    country: '',
+    postal_code: ''
+  };
+  public contentForm2 = {
+    name :'',
+    street_number: '',
+    route: '',
+    locality: '',
+    administrative_area_level_1: '',
+    country: '',
+    postal_code: ''
+  };  
 
+  @ViewChild("search1")
+  public searchElementRef1: ElementRef;
+  @ViewChild("search2")
+  public searchElementRef2: ElementRef;
+
+  constructor(
+    private mapsAPILoader: MapsAPILoader,
+    private ngZone: NgZone,
+    private quote: QuoteService,
+    private http: HttpClient,
+    private spinner: NgxSpinnerService
+  ) {
+
+  }
+
+  ngOnInit() {
+
+    this.quote.quote.subscribe(res => this.qq = res);
+
+    this.quote.shipment.subscribe(
+      resShipment => this.shipment = resShipment
+    );
+
+    this.rates = new Array<Rate>(); 
+    var r = new Rate();
+
+    r.Image = "https://d37j7wop4pf4r7.cloudfront.net/sites/default/files/images/news/usps_big_logo_link.png";
+    r.Amount = 30;
+    r.Currency = "USD";
+    r.Estimate = "2 days 3 nights";
+    r.Provider = "USPS";
+    r.Servicelevel = "priority";
+
+    this.rates.push(r);
+
+    this.showError = false;
+    this.showQuote = false;
+    this.quoteError= "" ;
+
+    //this.showQuote=true;
+
+    this.loadMapsAutocomplete();
+  }
 
   onClickBack() {
     // this.showError = false;
@@ -113,7 +176,9 @@ export class GetquoteComponent implements OnInit {
 
     console.log(JSON.stringify(this.shipment));
 
-    this.http.post('http://shipping-co.azurewebsites.net/shipment.json' , JSON.stringify(this.shipment), httpOptions).subscribe(
+    this.http.post(//'http://localhost:5000/shipment.json' ,
+                   'http://shipping-co.azurewebsites.net/shipment.json' ,
+                   JSON.stringify(this.shipment), httpOptions).subscribe(
       data => {
 
       this.spinner.hide();
@@ -161,65 +226,6 @@ export class GetquoteComponent implements OnInit {
 
     });
 
-  }
-
-  public componentForm = {
-    street_number: 'short_name',
-    route: 'long_name',
-    locality: 'long_name',
-    administrative_area_level_1: 'short_name',
-    country: 'long_name',
-    postal_code: 'short_name'
-  };
-
-  public contentForm1 = {
-    name :'',
-    street_number: '',
-    route: '',
-    locality: '',
-    administrative_area_level_1: '',
-    country: '',
-    postal_code: ''
-  };
-  
-  public contentForm2 = {
-    name :'',
-    street_number: '',
-    route: '',
-    locality: '',
-    administrative_area_level_1: '',
-    country: '',
-    postal_code: ''
-  };  
-
-  @ViewChild("search1")
-  public searchElementRef1: ElementRef;
-
-  @ViewChild("search2")
-  public searchElementRef2: ElementRef;
-
-
-  ngOnInit() {
-    this.quote.shipment.subscribe(
-      resShipment => this.shipment = resShipment
-    );
-
-     this.rates = new Array<Rate>(); 
-    // var r = new Rate();
-
-    // r.Amount = 30;
-    // r.Currency = "USD";
-    // r.Estimate = "2 days 3 nights";
-    // r.Provider = "USPS";
-    // r.Servicelevel = "priority";
-
-    // this.rates.push(r);
-
-    this.showError = false;
-    this.showQuote = false;
-    this.quoteError= "" ;
-
-    this.loadMapsAutocomplete();
   }
 
   private loadMapsAutocomplete(){
@@ -306,6 +312,14 @@ export class GetquoteComponent implements OnInit {
         this.zoom = 12;
       });
     }
+  }
+
+  private onClickAdd(rate){
+    console.log(rate);
+    var q = new Quote();
+    q.QuoteRate = rate;
+    this.quote.addQuote(q);
+    console.log(this.qq);
   }
 
 }
