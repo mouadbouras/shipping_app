@@ -94,9 +94,9 @@ export class GetquoteComponent implements OnInit {
 
   ngOnInit() {
 
-    this.quote.quote.subscribe(res => this.qq = res);
+    this.quote.quoteOB.subscribe(res => this.qq = res);
 
-    this.quote.shipment.subscribe(
+    this.quote.shipmentOB.subscribe(
       resShipment => this.shipment = resShipment
     );
 
@@ -115,6 +115,17 @@ export class GetquoteComponent implements OnInit {
     this.showError = false;
     this.showQuote = false;
     this.quoteError= "" ;
+
+    var q = new Quote();
+    q.From = new Shipp();
+    q.From = this.shipment.From;
+    q.To = new Shipp();
+    q.To = this.shipment.To;
+    q.QuoteParcel = null;
+    q.QuoteRate = r;
+    q.QuoteDate = new Date();
+    this.quote.addQuote(q);
+    this.quote.addShipment(q);
 
     //this.showQuote=true;
 
@@ -315,10 +326,14 @@ export class GetquoteComponent implements OnInit {
   }
 
   private onClickAdd(rate){
-    console.log(rate);
     var q = new Quote();
+    q.From = this.shipment.From;
+    q.To = this.shipment.To;
+    q.QuoteParcel = this.shipment.Parcels[0];
     q.QuoteRate = rate;
+    q.QuoteDate = new Date();
     this.quote.addQuote(q);
+    this.quote.addShipment(q);
     console.log(this.qq);
   }
 

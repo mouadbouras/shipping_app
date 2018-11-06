@@ -1,0 +1,35 @@
+<div class="row">
+    <div class="col-12 py-3 "  >
+        <div class="card" >
+          <div class="card-body text-center">    
+            <div class="text-left">            
+              <h1>Shipment</h1>
+              <br/>
+            </div>                          
+            <table class="table"  >
+                <thead class="thead-dark">
+                  <tr >
+                      <th colspan="2">Provider</th>
+                      <th>Amount</th>
+                      <th>Currency</th>
+                      <th>Estimate</th>
+                      <th>Servicelevel</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngIf="this.shipment.QuoteRate ">
+                    <td><img src="{{this.shipment.QuoteRate.Image}}" width="50" class="img-fluid" alt="Responsive image"></td>
+                    <td> {{ this.shipment.QuoteRate.Provider }}</td>
+                    <td>${{ this.shipment.QuoteRate.Amount}}</td>
+                    <td> {{ this.shipment.QuoteRate.Currency}}</td>
+                    <td> {{ this.shipment.QuoteRate.Estimate }} Days</td>
+                    <td> {{ this.shipment.QuoteRate.Servicelevel }}</td>
+                  </tr>
+                </tbody>
+            </table> 
+            
+            <!-- <button type="button" class="btn btn-primary" (click)="onClickBack()" >Back</button> -->
+          </div>
+        </div>
+      </div>
+    </div>

@@ -3,6 +3,7 @@ import { QuoteService } from '../Services/quote.service';
 import { Quote } from '../Model/quote.model';
 
 
+
 @Component({
   selector: 'app-myquotes',
   templateUrl: './myquotes.component.html',
@@ -16,7 +17,7 @@ export class MyquotesComponent implements OnInit {
   constructor(private quoteServcie: QuoteService) { }
 
   ngOnInit() {
-    this.quoteServcie.quote.subscribe(res => this.quotes = res);
+    this.quoteServcie.quoteOB.subscribe(res => this.quotes = res);
   }
 
 }

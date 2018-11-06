@@ -4,6 +4,7 @@ import { NavigationComponent } from './navigation/navigation.component';
 import { GetquoteComponent } from './getquote/getquote.component';
 import { AppComponent } from './app.component';
 import { MyquotesComponent } from './myquotes/myquotes.component';
+import { ShipmentComponent } from './shipment/shipment.component';
 
 
 const routes: Routes = [
@@ -14,7 +15,11 @@ const routes: Routes = [
   {
     path:"myquotes",
     component:MyquotesComponent
-  }  
+  },
+  {
+    path:"shipment",
+    component:ShipmentComponent
+  }    
 
 ];
 

@@ -9,17 +9,23 @@ import { BehaviorSubject } from 'rxjs';
 export class QuoteService {
 
   private quotes = new Array<Quote>();
+  private shipment = new Array<Quote>();
 
   private quotesBh = new BehaviorSubject<any>(this.quotes); 
-  private shipmentBh = new BehaviorSubject<any>([]); 
+  private shipmentBh = new BehaviorSubject<any>(this.shipment); 
 
-  shipment = this.shipmentBh.asObservable();
-  quote = this.quotesBh.asObservable();
+  shipmentOB = this.shipmentBh.asObservable();
+  quoteOB = this.quotesBh.asObservable();
 
   constructor() { }
 
   public addQuote(quote){    
     this.quotes.push(quote);
+  }
+
+  public addShipment(shipment){  
+    this.shipment.pop();  
+    this.shipment.push(shipment);
   }
 
 
