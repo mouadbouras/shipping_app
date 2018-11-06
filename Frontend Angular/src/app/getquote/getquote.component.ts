@@ -9,6 +9,8 @@ import { Parcel } from '../Model/parcel.model';
 import { Shipp } from '../Model/shipp.model';
 import { Rate } from '../Model/rate.model';
 import { NgxSpinnerService } from 'ngx-spinner';
+import {Router} from '@angular/router';
+
 
 import { HttpClient } from '@angular/common/http'; 
 import { HttpHeaders } from '@angular/common/http';
@@ -31,7 +33,6 @@ const httpOptions = {
 export class GetquoteComponent implements OnInit {
 
   public shipment : Shipment;
-  public qq: Quote;
   public latitude: number;
   public longitude: number;
   public searchControl1: FormControl;
@@ -58,6 +59,7 @@ export class GetquoteComponent implements OnInit {
     country: 'long_name',
     postal_code: 'short_name'
   };
+
   public contentForm1 = {
     name :'',
     street_number: '',
@@ -67,6 +69,7 @@ export class GetquoteComponent implements OnInit {
     country: '',
     postal_code: ''
   };
+
   public contentForm2 = {
     name :'',
     street_number: '',
@@ -83,6 +86,7 @@ export class GetquoteComponent implements OnInit {
   public searchElementRef2: ElementRef;
 
   constructor(
+    private router : Router,
     private mapsAPILoader: MapsAPILoader,
     private ngZone: NgZone,
     private quote: QuoteService,
@@ -93,8 +97,6 @@ export class GetquoteComponent implements OnInit {
   }
 
   ngOnInit() {
-
-    this.quote.quoteOB.subscribe(res => this.qq = res);
 
     this.quote.shipmentOB.subscribe(
       resShipment => this.shipment = resShipment
@@ -116,16 +118,16 @@ export class GetquoteComponent implements OnInit {
     this.showQuote = false;
     this.quoteError= "" ;
 
-    var q = new Quote();
-    q.From = new Shipp();
-    q.From = this.shipment.From;
-    q.To = new Shipp();
-    q.To = this.shipment.To;
-    q.QuoteParcel = null;
-    q.QuoteRate = r;
-    q.QuoteDate = new Date();
-    this.quote.addQuote(q);
-    this.quote.addShipment(q);
+    // var q = new Quote();
+    // q.From = new Shipp();
+    // q.From = this.shipment.From;
+    // q.To = new Shipp();
+    // q.To = this.shipment.To;
+    // q.QuoteParcel = null;
+    // q.QuoteRate = r;
+    // q.QuoteDate = new Date();
+    // this.quote.addQuote(q);
+    // this.quote.addShipment(q);
 
     //this.showQuote=true;
 
@@ -326,15 +328,15 @@ export class GetquoteComponent implements OnInit {
   }
 
   private onClickAdd(rate){
-    var q = new Quote();
-    q.From = this.shipment.From;
-    q.To = this.shipment.To;
-    q.QuoteParcel = this.shipment.Parcels[0];
-    q.QuoteRate = rate;
-    q.QuoteDate = new Date();
-    this.quote.addQuote(q);
-    this.quote.addShipment(q);
-    console.log(this.qq);
+    var quote = new Quote();
+    quote.From = this.shipment.From;
+    quote.To = this.shipment.To;
+    quote.QuoteParcel = this.shipment.Parcels[0];
+    quote.QuoteRate = rate;
+    quote.QuoteDate = new Date();
+    this.quote.addShipment(quote);
+    
+    this.router.navigateByUrl('/shipment');
   }
 
 }
