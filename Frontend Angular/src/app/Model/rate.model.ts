@@ -1,5 +1,6 @@
 export class Rate 
 {
+    Id : string;
     Image : string;
     Amount :number;
     Currency :string;

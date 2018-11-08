@@ -17,9 +17,17 @@
                 </tr>      
                 <tr>
                     <td class="slimField">
-                      <input class="form-control" id="name" placeholder="Company Name"
-                        value="{{ contentForm1.name  }}" required /></td>
-                  </tr>      
+                      <input class="form-control" id="name" placeholder="Name"
+                      [(ngModel)]="contentForm1.name"  value="{{ contentForm1.name  }}" required /></td>
+                  </tr>  
+                  <tr>
+                      <td class="label">Company </td>
+                    </tr>      
+                    <tr>                        
+                      <td class="slimField">
+                        <input class="form-control" id="company" required
+                        [(ngModel)]="contentForm1.company" placeholder="Company Name" value="{{ contentForm1.company  }}"/></td>
+                  </tr>                         
                   <tr>
                     <td class="label">Street number</td>
                     </tr>      
@@ -106,8 +114,16 @@
                   <tr>                        
                     <td class="slimField">
                       <input class="form-control" id="name" required
-                      placeholder="Company Name" value="{{ contentForm2.name  }}"/></td>
+                      [(ngModel)]="contentForm2.name" placeholder="Name" value="{{ contentForm2.name  }}"/></td>
                 </tr>  
+                <tr>
+                    <td class="label">Company </td>
+                  </tr>      
+                  <tr>                        
+                    <td class="slimField">
+                      <input class="form-control" id="company" required
+                      [(ngModel)]="contentForm2.company" placeholder="Company Name" value="{{ contentForm2.company  }}"/></td>
+                </tr>                  
                 <tr>
                   <td class="label">Street number</td>
                 </tr>      
