@@ -4,10 +4,10 @@ import { FormControl } from '@angular/forms';
 import { MapsAPILoader } from '@agm/core';
 import { QuoteService } from '../Services/quote.service';
 import { Observable } from 'rxjs';
-import { Shipment } from '../Model/shipment.model';
-import { Parcel } from '../Model/parcel.model';
-import { Shipp } from '../Model/shipp.model';
-import { Rate } from '../Model/rate.model';
+import { Shipment } from '../model/shipment.model';
+import { Parcel } from '../model/parcel.model';
+import { Shipp } from '../model/shipp.model';
+import { Rate } from '../model/rate.model';
 import { NgxSpinnerService } from 'ngx-spinner';
 import {Router} from '@angular/router';
 
@@ -15,7 +15,9 @@ import {Router} from '@angular/router';
 import { HttpClient } from '@angular/common/http'; 
 import { HttpHeaders } from '@angular/common/http';
 import { Location } from '@angular/common';
-import { Quote } from '../Model/quote.model';
+import { Quote } from '../model/quote.model';
+import { Constants } from '../util/constants.util';
+
 
 
 const httpOptions = {
@@ -32,8 +34,7 @@ const httpOptions = {
 
 export class GetquoteComponent implements OnInit {
 
-  //public baseUrl = "http://shipping-co.azurewebsites.net" ; 
-  public baseUrl = "http://localhost:5000" ; 
+
   public shipment : Shipment;
   public latitude: number;
   public longitude: number;
@@ -293,7 +294,7 @@ export class GetquoteComponent implements OnInit {
 
     console.log(JSON.stringify(this.shipment));
 
-    this.http.post(this.baseUrl+'/shipment.json' ,
+    this.http.post(Constants.baseUrl+'/shipment.json' ,
                    JSON.stringify(this.shipment), httpOptions).subscribe(
       data => {
 

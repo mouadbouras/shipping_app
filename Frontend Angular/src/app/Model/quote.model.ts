@@ -2,8 +2,6 @@ import { Shipp } from "./shipp.model";
 import { Parcel } from "./parcel.model";
 import { Rate } from "./rate.model";
 
-
-
 export class Quote 
 {
     From: Shipp; 
@@ -11,4 +9,5 @@ export class Quote
     QuoteParcel: Parcel; 
     QuoteDate: Date; 
     QuoteRate: Rate;
+    
 }

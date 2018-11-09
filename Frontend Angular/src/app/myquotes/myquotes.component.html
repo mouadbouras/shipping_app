@@ -1,7 +1,7 @@
 <div class="row">
   <div class="col-12 py-3 "  >
-      <div class="card" >
-        <div class="card-body text-center">    
+      <div class="card" *ngIf="!this.selectedQuote">
+        <div class="card-body text-center" >    
           <div class="text-left">            
             <h1>My Quotes</h1>
             <br/>
@@ -31,6 +31,98 @@
           <button type="button" class="btn btn-primary" (click)="onClickBack()" >Back</button>
         </div>
       </div>
+
+      <div class="card" *ngIf="this.selectedQuote">
+        <div class="card-body text-center">    
+          <div class="text-left">            
+            <h1>Order</h1>
+            <br/>
+          </div>  
+
+          <div class="row">
+              <div class="col-6">
+                  <div class=""   *ngIf="this.shipment.From">
+                      <div class="card-body text-left">
+                        <h3>From</h3>
+                        <p class="card-text">
+                          {{this.shipment.From.Company}} <br>
+                          {{this.shipment.From.StreetNumber}}
+                          {{this.shipment.From.Street1}} <br>
+                          {{this.shipment.From.City }},
+                          {{this.shipment.From.State}} ,
+                          {{this.shipment.From.Zip}} <br>
+                          {{this.shipment.From.Country}} <br>
+                        </p>
+                      </div>
+                  </div>
+                  <br />
+                  <br />
+                  <div class=""  *ngIf="this.shipment.To">
+                      <div class="card-body text-left">
+                        <h3>To</h3>
+                        <p class="card-text">
+                          {{this.shipment.To.Company}} <br>
+                          {{this.shipment.To.StreetNumber}} 
+                          {{this.shipment.To.Street1}} <br>
+                          {{this.shipment.To.City }},
+                          {{this.shipment.To.State}},  
+                          {{this.shipment.To.Zip}} <br>
+                          {{this.shipment.To.Country}} <br>
+                        </p>
+                      </div>
+                  </div>       
+              </div>
+              <div class="col-6">
+                  <div class=""   *ngIf="this.shipment.QuoteRate" >
+                      <div class="card-body text-left">
+                        <h3>Details</h3>
+                        <table class="table table-borderless" >
+                            <tbody>
+                                <tr>      
+                                    <th>Label</th>
+                                    <td> <a href="{{ this.shipment.LabelURL}}" target="_blank"> {{ this.shipment.QuoteRate.Provider }} Label </a>  </td>
+                                </tr>    
+                                <tr>      
+                                    <th>Tracking</th>
+                                    <td> <a href="{{ this.shipment.TrackingURL}}" target="_blank">{{ this.shipment.TrackingNumber }}</a>  </td>
+                                </tr>     
+                                <tr>      
+                                    <th>ETA</th>
+                                    <td> {{ this.shipment.Eta | date }}</td>
+                                  </tr>                                                             
+                                <tr>
+                                    <th>Price </th>
+                                    <td>${{ this.shipment.Price}} {{ this.shipment.QuoteRate.Currency}}</td>
+                                </tr>  
+                              <tr>
+                                  <th class="align-middle">Provider</th>
+                                  <td><img src="{{this.shipment.QuoteRate.Image}}" width="50" class="img-fluid" alt="Responsive image">
+                                      {{ this.shipment.QuoteRate.Provider }}
+                                  </td>
+                              </tr>
+                              <tr>  
+                                <th>Servicelevel</th>
+                                <td> {{ this.shipment.QuoteRate.Servicelevel }}</td>
+                              </tr>
+                              <tr>  
+                                  <th>Dimensions (HxWxL)</th>
+                                  <td> {{ this.shipment.QuoteParcel.Height}}{{ this.shipment.QuoteParcel.Distance_unit}}  x 
+                                        {{ this.shipment.QuoteParcel.Width}}{{ this.shipment.QuoteParcel.Distance_unit}} x 
+                                        {{ this.shipment.QuoteParcel.Length}}{{ this.shipment.QuoteParcel.Distance_unit}}
+                                        <br>
+                                        {{ this.shipment.QuoteParcel.Weight}}{{ this.shipment.QuoteParcel.Mass_unit}} 
+
+                                  </td>
+                                </tr>
+                            </tbody>
+                        </table> 
+                      </div>
+                  </div>                          
+              </div>
+          </div>
+        </div>
+      </div>
+
     </div>
   </div>
 

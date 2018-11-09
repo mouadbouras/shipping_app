@@ -86,9 +86,14 @@ namespace MyApp.ServiceInterface
             // }
 
             // return response.Rates;
-                            var response = "{\"SSuccess\": \"transaction Sccess\" ," +
-                    "\"label\" : \"" + " https://shippo-delivery-east.s3.amazonaws.com/e119bde5117946c2a2f121b610db21a4.pdf?Signature=VJnRwuOBpMf788d2GB0zkNjWRh4%3D&Expires=1573254252&AWSAccessKeyId=AKIAJGLCC5MYLLWIG42A" + "\" ,"+
-                    "\"transaction\" : " + "123456789012" + "}";
+                            var response = "{\"success\": \"transaction Success\" ," +
+                    "\"label_url\" : \"" + "https://shippo-delivery-east.s3.amazonaws.com/e119bde5117946c2a2f121b610db21a4.pdf?Signature=VJnRwuOBpMf788d2GB0zkNjWRh4%3D&Expires=1573254252&AWSAccessKeyId=AKIAJGLCC5MYLLWIG42A" + "\" ,"+
+                    "\"tracking_number\" : \"" + "ZW70QJC" + "\","+
+                    "\"tracking_url\" : \"" + "https://tools.usps.com/go/TrackConfirmAction.action?tLabels=ZW70QJC" + "\","+ 
+                    "\"eta\" : \"" + "2013-12-30T12:00:00.000Z" + "\"}";
+                    
+
+
             return response;
         }
 
@@ -181,7 +186,7 @@ namespace MyApp.ServiceInterface
                     transaction.TrackingNumber);
                 //return {transaction.LabelURL,transaction.TrackingNumber}
 
-                var response = "{\"SSuccess\": \"transaction Sccess\" ," +
+                var response = "{\"Success\": \"transaction Sccess\" ," +
                     "\"label\" : \"" + transaction.LabelURL.ToString() + "\" ,"+
                     "\"transaction\" : " + transaction.TrackingNumber.ToString() + "}";
 

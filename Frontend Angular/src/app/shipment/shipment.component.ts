@@ -1,15 +1,15 @@
 import { Component, OnInit } from '@angular/core';
-import { Quote } from '../Model/quote.model';
-import { QuoteService } from '../Services/quote.service';
-import { Rate } from '../Model/rate.model';
+import { Quote } from '../model/quote.model';
+import { QuoteService } from '../services/quote.service';
+import { Rate } from '../model/rate.model';
 
 import { HttpClient } from '@angular/common/http'; 
 import { HttpHeaders } from '@angular/common/http';
 import { NgxSpinnerService } from 'ngx-spinner';
 
-import { Shipment } from '../Model/shipment.model';
-import { Parcel } from '../Model/parcel.model';
-import { Shipp } from '../Model/shipp.model';
+import { Shipment } from '../model/shipment.model';
+import { Parcel } from '../model/parcel.model';
+import { Shipp } from '../model/shipp.model';
 
 const httpOptions = {
   headers: new HttpHeaders({
