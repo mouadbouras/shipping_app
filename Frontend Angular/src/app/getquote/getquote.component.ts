@@ -4,16 +4,20 @@ import { FormControl } from '@angular/forms';
 import { MapsAPILoader } from '@agm/core';
 import { QuoteService } from '../Services/quote.service';
 import { Observable } from 'rxjs';
-import { Shipment } from '../Model/shipment.model';
-import { Parcel } from '../Model/parcel.model';
-import { Shipp } from '../Model/shipp.model';
-import { Rate } from '../Model/rate.model';
+import { Shipment } from '../model/shipment.model';
+import { Parcel } from '../model/parcel.model';
+import { Shipp } from '../model/shipp.model';
+import { Rate } from '../model/rate.model';
 import { NgxSpinnerService } from 'ngx-spinner';
+import {Router} from '@angular/router';
+
 
 import { HttpClient } from '@angular/common/http'; 
 import { HttpHeaders } from '@angular/common/http';
 import { Location } from '@angular/common';
-import { Quote } from '../Model/quote.model';
+import { Quote } from '../model/quote.model';
+import { Constants } from '../util/constants.util';
+
 
 
 const httpOptions = {
@@ -30,8 +34,8 @@ const httpOptions = {
 
 export class GetquoteComponent implements OnInit {
 
+
   public shipment : Shipment;
-  public qq: Quote;
   public latitude: number;
   public longitude: number;
   public searchControl1: FormControl;
@@ -58,8 +62,10 @@ export class GetquoteComponent implements OnInit {
     country: 'long_name',
     postal_code: 'short_name'
   };
+
   public contentForm1 = {
     name :'',
+    company :'',
     street_number: '',
     route: '',
     locality: '',
@@ -67,8 +73,10 @@ export class GetquoteComponent implements OnInit {
     country: '',
     postal_code: ''
   };
+
   public contentForm2 = {
     name :'',
+    company :'',
     street_number: '',
     route: '',
     locality: '',
@@ -83,6 +91,7 @@ export class GetquoteComponent implements OnInit {
   public searchElementRef2: ElementRef;
 
   constructor(
+    private router : Router,
     private mapsAPILoader: MapsAPILoader,
     private ngZone: NgZone,
     private quote: QuoteService,
@@ -93,8 +102,6 @@ export class GetquoteComponent implements OnInit {
   }
 
   ngOnInit() {
-
-    this.quote.quoteOB.subscribe(res => this.qq = res);
 
     this.quote.shipmentOB.subscribe(
       resShipment => this.shipment = resShipment
@@ -116,127 +123,20 @@ export class GetquoteComponent implements OnInit {
     this.showQuote = false;
     this.quoteError= "" ;
 
-    var q = new Quote();
-    q.From = new Shipp();
-    q.From = this.shipment.From;
-    q.To = new Shipp();
-    q.To = this.shipment.To;
-    q.QuoteParcel = null;
-    q.QuoteRate = r;
-    q.QuoteDate = new Date();
-    this.quote.addQuote(q);
-    this.quote.addShipment(q);
+    // var q = new Quote();
+    // q.From = new Shipp();
+    // q.From = this.shipment.From;
+    // q.To = new Shipp();
+    // q.To = this.shipment.To;
+    // q.QuoteParcel = null;
+    // q.QuoteRate = r;
+    // q.QuoteDate = new Date();
+    // this.quote.addQuote(q);
+    // this.quote.addShipment(q);
 
     //this.showQuote=true;
 
     this.loadMapsAutocomplete();
-  }
-
-  onClickBack() {
-    // this.showError = false;
-    // this.showQuote = false;
-    // this.quoteError= "" ;
-    // this.loadMapsAutocomplete();
-
-    // this.router.navigateByUrl('/RefrshComponent', {skipLocationChange: true}).then(()=>
-    // this.router.navigate(["Your actualComponent"]));
-
-    location.reload();
-  }
-
-  onClickMe() {
-
-    this.showError = false;
-    this.showQuote = false;
-    this.quoteError= "" ;
-    this.spinner.show();
-
-    this.shipment = new Shipment();
-    
-    this.shipment.From = new Shipp();
-    this.shipment.From.Name = this.contentForm1.name;
-    this.shipment.From.StreetNumber = this.contentForm1.street_number;
-    this.shipment.From.Street1 =  this.contentForm1.route;
-    this.shipment.From.State = this.contentForm1.administrative_area_level_1;
-    this.shipment.From.City = this.contentForm1.locality;
-    this.shipment.From.Country = this.contentForm1.country;
-    this.shipment.From.Zip = this.contentForm1.postal_code;
-
-    this.shipment.To = new Shipp();
-    this.shipment.To.Name = this.contentForm2.name;
-    this.shipment.To.StreetNumber = this.contentForm2.street_number;
-    this.shipment.To.Street1 = this.contentForm2.route ;
-    this.shipment.To.State = this.contentForm2.administrative_area_level_1;
-    this.shipment.To.City = this.contentForm2.locality;
-    this.shipment.To.Country = this.contentForm2.country;
-    this.shipment.To.Zip = this.contentForm2.postal_code;    
-
-    var parcel = new Parcel();
-    parcel.Length =  Number(this.shippment.Length) ;
-    parcel.Width  =  Number(this.shippment.width);
-    parcel.Height =  Number(this.shippment.height);
-    parcel.Distance_unit = 'in';
-    parcel.Weight =  Number(this.shippment.weight);
-    parcel.Mass_unit = 'lb' ;
-
-    this.shipment.Parcels = new Array<Parcel>();
-    this.shipment.Parcels.push(parcel);
-    var name = "bob";
-    //console.log(this.shipment);
-    var response; 
-
-    console.log(JSON.stringify(this.shipment));
-
-    this.http.post(//'http://localhost:5000/shipment.json' ,
-                   'http://shipping-co.azurewebsites.net/shipment.json' ,
-                   JSON.stringify(this.shipment), httpOptions).subscribe(
-      data => {
-
-      this.spinner.hide();
-
-      response = data;
-      //console.log(data);
-      if(data["error"]!= undefined)
-      {
-        this.showError = true;
-        this.quoteError = "An error happened, please try again.";
-        console.log("An Error Happened");
-        console.log(data["details"]);
-      }
-
-      console.log(data[0]);
-      this.rates = new Array<Rate>();
-      for (var i =0 ; i < 50 ; i++ ){
-        if(data[i] == undefined){
-          break;
-        }
-        var r = new Rate();
-        r.Image = data[i]["providerImage75"];
-        r.Amount = data[i]["amount"];
-        r.Currency= data[i]["currency"];
-        r.Estimate= data[i]["estimatedDays"];
-        r.Provider= data[i]["provider"];
-        r.Servicelevel= data[i]["servicelevel"]["name"];
-        this.rates.push(r);
-        this.rates.sort(function(a, b) {
-          if (a.Amount < b.Amount)
-            return -1;
-          if (a.Amount > b.Amount)
-            return 1;
-          return 0;
-        });
-      }
-
-      if(data[0] == undefined){
-        this.showError = true;
-        this.quoteError = "No results found, please try again.";
-      }
-      else{
-        this.showQuote = true;
-      }
-
-    });
-
   }
 
   private loadMapsAutocomplete(){
@@ -326,15 +226,124 @@ export class GetquoteComponent implements OnInit {
   }
 
   private onClickAdd(rate){
-    var q = new Quote();
-    q.From = this.shipment.From;
-    q.To = this.shipment.To;
-    q.QuoteParcel = this.shipment.Parcels[0];
-    q.QuoteRate = rate;
-    q.QuoteDate = new Date();
-    this.quote.addQuote(q);
-    this.quote.addShipment(q);
-    console.log(this.qq);
+    var quote = new Quote();
+    quote.From = this.shipment.From;
+    quote.To = this.shipment.To;
+    quote.QuoteParcel = this.shipment.Parcels[0];
+    quote.QuoteRate = rate;
+    quote.QuoteDate = new Date();
+    this.quote.addShipment(quote);
+    
+    this.router.navigateByUrl('/shipment');
   }
+
+  onClickBack() {
+    // this.showError = false;
+    // this.showQuote = false;
+    // this.quoteError= "" ;
+    // this.loadMapsAutocomplete();
+
+    // this.router.navigateByUrl('/RefrshComponent', {skipLocationChange: true}).then(()=>
+    // this.router.navigate(["Your actualComponent"]));
+
+    location.reload();
+  }
+
+  onClickMe() {
+
+    this.showError = false;
+    this.showQuote = false;
+    this.quoteError= "" ;
+    this.spinner.show();
+
+    this.shipment = new Shipment();
+    
+    this.shipment.From = new Shipp();
+    this.shipment.From.Name = this.contentForm1.name;
+    this.shipment.From.Company = this.contentForm1.company;
+    this.shipment.From.StreetNumber = this.contentForm1.street_number;
+    this.shipment.From.Street1 =  this.contentForm1.route;
+    this.shipment.From.State = this.contentForm1.administrative_area_level_1;
+    this.shipment.From.City = this.contentForm1.locality;
+    this.shipment.From.Country = this.contentForm1.country;
+    this.shipment.From.Zip = this.contentForm1.postal_code;
+
+    this.shipment.To = new Shipp();
+    this.shipment.To.Name = this.contentForm2.name;
+    this.shipment.To.Company = this.contentForm2.company;
+    this.shipment.To.StreetNumber = this.contentForm2.street_number;
+    this.shipment.To.Street1 = this.contentForm2.route ;
+    this.shipment.To.State = this.contentForm2.administrative_area_level_1;
+    this.shipment.To.City = this.contentForm2.locality;
+    this.shipment.To.Country = this.contentForm2.country;
+    this.shipment.To.Zip = this.contentForm2.postal_code;    
+
+    var parcel = new Parcel();
+    parcel.Length =  Number(this.shippment.Length) ;
+    parcel.Width  =  Number(this.shippment.width);
+    parcel.Height =  Number(this.shippment.height);
+    parcel.Distance_unit = 'in';
+    parcel.Weight =  Number(this.shippment.weight);
+    parcel.Mass_unit = 'lb' ;
+
+    this.shipment.Parcels = new Array<Parcel>();
+    this.shipment.Parcels.push(parcel);
+    var name = "bob";
+    //console.log(this.shipment);
+    var response; 
+
+    console.log(JSON.stringify(this.shipment));
+
+    this.http.post(Constants.baseUrl+'/shipment.json' ,
+                   JSON.stringify(this.shipment), httpOptions).subscribe(
+      data => {
+
+      this.spinner.hide();
+
+      response = data;
+      //console.log(data);
+      if(data["error"]!= undefined)
+      {
+        this.showError = true;
+        this.quoteError = "An error happened, please try again.";
+        console.log("An Error Happened");
+        console.log(data["details"]);
+      }
+
+      console.log(data[0]);
+      this.rates = new Array<Rate>();
+      for (var i =0 ; i < 50 ; i++ ){
+        if(data[i] == undefined){
+          break;
+        }
+        var r = new Rate();
+        r.Id = data[i]["objectId"];
+        r.Image = data[i]["providerImage75"];
+        r.Amount = data[i]["amount"];
+        r.Currency= data[i]["currency"];
+        r.Estimate= data[i]["estimatedDays"];
+        r.Provider= data[i]["provider"];
+        r.Servicelevel= data[i]["servicelevel"]["name"];
+        this.rates.push(r);
+        this.rates.sort(function(a, b) {
+          if (a.Amount < b.Amount)
+            return -1;
+          if (a.Amount > b.Amount)
+            return 1;
+          return 0;
+        });
+      }
+
+      if(data[0] == undefined){
+        this.showError = true;
+        this.quoteError = "No results found, please try again.";
+      }
+      else{
+        this.showQuote = true;
+      }
+
+    });
+
+  }  
 
 }

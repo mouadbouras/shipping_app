@@ -1,4 +1,3 @@
-
 export class Parcel 
 {
     Length :number;

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Shipment } from '../Model/shipment.model';
-import { Quote } from '../Model/quote.model';
+import { Shipment } from '../model/shipment.model';
+import { Quote } from '../model/quote.model';
 import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
