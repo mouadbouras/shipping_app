@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { QuoteService } from '../Services/quote.service';
+import { QuoteService } from '../services/quote.service';
 import { Quote } from '../model/quote.model';
 import { Order } from '../model/order.model';
-import { Shipp } from '../model/Shipp.model';
-import { Parcel } from '../model/Parcel.model';
-import { Rate } from '../model/Rate.model';
+import { Shipp } from '../model/shipp.model';
+import { Parcel } from '../model/parcel.model';
+import { Rate } from '../model/rate.model';
 import { Constants } from '../util/constants.util';
 import { HttpClient } from '@angular/common/http'; 
 import { HttpHeaders } from '@angular/common/http';

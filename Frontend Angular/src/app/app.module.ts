@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import { FormsModule, ReactiveFormsModule} from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -8,7 +8,7 @@ import { GetquoteComponent } from './getquote/getquote.component';
 import { NavigationComponent } from './navigation/navigation.component';
 import { AgmCoreModule } from '@agm/core';
 import { GetratesComponent } from './getrates/getrates.component';
-import { QuoteService } from './Services/quote.service';
+import { QuoteService } from './services/quote.service';
 import { HttpClientModule } from '@angular/common/http'; 
 import { HttpModule } from '@angular/http';
 import { NgxSpinnerModule } from 'ngx-spinner';

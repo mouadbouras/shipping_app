@@ -13,6 +13,8 @@
   <ItemGroup>
     <ProjectReference Include="..\MyApp.Model\MyApp.Model.csproj" />
     <ProjectReference Include="..\MyApp.ServiceModel\MyApp.ServiceModel.csproj" />
+    <ProjectReference Include="..\MyApp.DataAccess\MyApp.DataAccess.csproj" />
+
   </ItemGroup>
 
 </Project>

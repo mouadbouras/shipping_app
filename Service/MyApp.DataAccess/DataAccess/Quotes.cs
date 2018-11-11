@@ -10,7 +10,7 @@ namespace MyApp.DataAccess.DataAccess
         public int? ToId { get; set; }
         public int? ParcelId { get; set; }
         public DateTime? Date { get; set; }
-        public decimal? Amout { get; set; }
+        public decimal? Amount { get; set; }
         public string Currency { get; set; }
         public string Provider { get; set; }
         public string ServiceLevel { get; set; }

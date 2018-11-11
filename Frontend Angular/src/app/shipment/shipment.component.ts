@@ -105,6 +105,25 @@ export class ShipmentComponent implements OnInit {
     });
   }
 
+  private onClickSave(){
+    console.log("save me");
+    this.http.post(this.baseUrl+'/quote.json' ,
+    JSON.stringify({QuoteId:this.shipment.QuoteRate.ShipmentId,ClientId:1,RateId: this.shipment.QuoteRate.Id}), httpOptions).subscribe(
+      data => {
+        this.spinner.hide();
+        //console.log(data);
+        if(data["error"]!= undefined)
+        {
+          console.log("An Error Happened");
+          console.log(data["details"]);
+        }
+        if(data["success"]!= undefined)
+        {
+          console.log("Saved Succesfully");
+          console.log(data["success"]);
+        }        
+    });
+  }
 
 
 }

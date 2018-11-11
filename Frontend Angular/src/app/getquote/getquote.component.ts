@@ -2,7 +2,7 @@ import { Component,ElementRef, NgZone, OnInit, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
 /// <reference types="@types/googlemaps" />
 import { MapsAPILoader } from '@agm/core';
-import { QuoteService } from '../Services/quote.service';
+import { QuoteService } from '../services/quote.service';
 import { Observable } from 'rxjs';
 import { Shipment } from '../model/shipment.model';
 import { Parcel } from '../model/parcel.model';
@@ -310,20 +310,24 @@ export class GetquoteComponent implements OnInit {
         console.log(data["details"]);
       }
 
-      console.log(data[0]);
+      console.log(data);
       this.rates = new Array<Rate>();
       for (var i =0 ; i < 50 ; i++ ){
-        if(data[i] == undefined){
+        if(data["rates"] == undefined || data["rates"][i] == undefined ){
           break;
         }
+        console.log(i);
+
         var r = new Rate();
-        r.Id = data[i]["objectId"];
-        r.Image = data[i]["providerImage75"];
-        r.Amount = data[i]["amount"];
-        r.Currency= data[i]["currency"];
-        r.Estimate= data[i]["estimatedDays"];
-        r.Provider= data[i]["provider"];
-        r.Servicelevel= data[i]["servicelevel"]["name"];
+        r.ShipmentId = data["shipment_id"]
+        var rowData = data["rates"];
+        r.Id = rowData[i]["objectId"];
+        r.Image = rowData[i]["providerImage75"];
+        r.Amount = rowData[i]["amount"];
+        r.Currency= rowData[i]["currency"];
+        r.Estimate= rowData[i]["estimatedDays"];
+        r.Provider= rowData[i]["provider"];
+        r.Servicelevel= rowData[i]["servicelevel"]["name"];
         this.rates.push(r);
         this.rates.sort(function(a, b) {
           if (a.Amount < b.Amount)
@@ -334,7 +338,7 @@ export class GetquoteComponent implements OnInit {
         });
       }
 
-      if(data[0] == undefined){
+      if(data["success"] == undefined){
         this.showError = true;
         this.quoteError = "No results found, please try again.";
       }

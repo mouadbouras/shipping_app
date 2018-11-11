@@ -5,6 +5,9 @@ using Newtonsoft.Json;
 using MyApp.ServiceModel;
 using System.Collections;
 using System.Collections.Generic;
+using MyApp.DataAccess.DataAccess;
+using System.Linq;
+using Newtonsoft.Json.Linq;
 
 namespace MyApp.ServiceInterface
 {
@@ -143,12 +146,18 @@ namespace MyApp.ServiceInterface
                 }
 
 
-                var response = resource.CreateShipment(new Hashtable(){
+                var apiResponse = resource.CreateShipment(new Hashtable(){
                 { "address_to", toAddressTable},
                 { "address_from", fromAddressTable},
                 { "parcels", parcels},
                 { "async", false}});
-                return response.Rates;
+
+
+                 var response = "{\"success\": \"success\" ," +
+                    "\"shipment_id\" : \""+ apiResponse.ObjectId +"\","+
+                    "\"rates\" : "+ JSON.stringify(apiResponse.Rates) + "}";
+
+                return response;
 
             }
             catch (Exception e)
@@ -161,6 +170,87 @@ namespace MyApp.ServiceInterface
         }
         
         public object Post(QuoteDTO request){
+
+            if(request.QuoteId != "" && request.ClientId != "" && request.RateId != "")
+            {
+                var shipment = resource.RetrieveShipment(request.QuoteId);
+                var rate = resource.RetrieveRate(request.RateId);
+                
+                var context = new shippingcoContext();
+                var from = new ShippmentUnit();
+                var to = new ShippmentUnit();
+                var parcel = new MyApp.DataAccess.DataAccess.Parcel();
+                var quote = new Quotes();                
+
+                var apiShipmentObject = (Address) ((JObject)shipment.AddressFrom).ToObject(typeof(Address));
+
+                from.StreetNumber = apiShipmentObject.StreetNo.ToString();
+                from.StreetAddress = apiShipmentObject.Street1.ToString();
+                from.City = apiShipmentObject.City.ToString();
+                from.Province = apiShipmentObject.State.ToString();
+                from.PostalCode = apiShipmentObject.Zip.ToString();
+                from.Country = apiShipmentObject.Country.ToString();
+
+                apiShipmentObject = (Address) ((JObject)shipment.AddressTo).ToObject(typeof(Address));
+
+                to.StreetNumber = apiShipmentObject.StreetNo.ToString();
+                to.StreetAddress = apiShipmentObject.Street1.ToString();
+                to.City = apiShipmentObject.City.ToString();
+                to.Province = apiShipmentObject.State.ToString();
+                to.PostalCode = apiShipmentObject.Zip.ToString();
+                to.Country = apiShipmentObject.Country.ToString();
+
+                var apiParcelObject = (Shippo.Parcel) ((JObject)shipment.Parcels[0]).ToObject(typeof(Shippo.Parcel));
+
+                parcel.Height = Decimal.Parse(apiParcelObject.Height.ToString());
+                parcel.Width  = Decimal.Parse(apiParcelObject.Width.ToString());
+                parcel.Weight = Decimal.Parse(apiParcelObject.Weight.ToString());
+                parcel.Length = Decimal.Parse(apiParcelObject.Length.ToString());
+                parcel.MassUnit = apiParcelObject.MassUnit.ToString();
+                parcel.DistanceUnit = apiParcelObject.DistanceUnit.ToString();
+
+                context.ShippmentUnit.Add(from);
+                context.ShippmentUnit.Add(to);
+                context.Parcel.Add(parcel);
+
+                context.SaveChanges();
+                 
+                quote.ClientId = Int32.Parse(request.ClientId); 
+                quote.FromId = from.Id; 
+                quote.ToId = to.Id; 
+                quote.ParcelId = parcel.Id; 
+                quote.Date = (DateTime) shipment.ShipmentDate;
+                quote.Amount =  Decimal.Parse(rate.Amount.ToString());                                      
+                quote.Currency =rate.Currency.ToString();
+                quote.Provider = rate.Provider.ToString();
+                quote.ServiceLevel = rate.Servicelevel.Name.ToString();
+                quote.Estimate = rate.EstimatedDays.ToString();                                       
+
+                context.Quotes.Add(quote);                
+                context.SaveChanges();
+
+                // from.StreetNumber = ((Hashtable) shipment.AddressTo)["street_no"].ToString();
+                // from.StreetAddress = ((Hashtable) shipment.AddressTo)["street1"].ToString();
+                // from.City = ((Hashtable) shipment.AddressTo)["city"].ToString();
+                // from.Province = ((Hashtable) shipment.AddressTo)["state"].ToString();
+                // from.PostalCode = ((Hashtable) shipment.AddressTo)["zip"].ToString();
+                // from.Country = ((Hashtable) shipment.AddressTo)["country"].ToString();
+                // var fromId = context.ShippmentUnit.Add(from).GetId();
+
+                // Orders order = new Orders();
+                // order.FromId = (int)fromId;
+                //    var shippingDb = context.Orders.Add(
+                    
+                //    );
+                //    db.Set<Customer>();
+                //     customers.Add( new Customer { CustomerId = id, Name = "John Doe" } );
+
+                //     shippingDb.SaveChanges();
+
+                // var getUSer = context.Users
+                //                       .Where(s => s.Id == 2)
+                //                       .ToList();
+            }
             return null;
         }
 
