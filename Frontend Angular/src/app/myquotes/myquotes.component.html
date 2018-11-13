@@ -1,38 +1,95 @@
 <div class="row">
   <div class="col-12 py-3 "  >
-      <div class="card" *ngIf="!this.selectedQuote">
-        <div class="card-body text-center" >    
-          <div class="text-left">            
-            <h1>My Quotes</h1>
-            <br/>
-          </div>                          
-          <table class="table "  >
-              <thead class="thead-dark">
-                <tr >
-                    <th colspan="2">Provider</th>
-                    <th>Amount</th>
-                    <th>Currency</th>
-                    <th>Estimate</th>
-                    <th>Servicelevel</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr *ngFor="let r of this.quotes">
-                  <th><img src="{{r.QuoteRate.Image}}" width="50" class="img-fluid" alt="Responsive image"></th>
-                  <td> {{ r.QuoteRate.Provider }}</td>
-                  <td>${{ r.QuoteRate.Amount}}</td>
-                  <td> {{ r.QuoteRate.Currency}}</td>
-                  <td> {{ r.QuoteRate.Estimate }} Days</td>
-                  <td> {{ r.QuoteRate.Servicelevel }}</td>
-                </tr>
-              </tbody>
-          </table> 
-          
-          <button type="button" class="btn btn-primary" (click)="onClickBack()" >Back</button>
-        </div>
-      </div>
+      <div class="card" *ngIf="!(this.selectedQuote == null)">
+          <div class="card-body text-center">    
+              <div class="text-left">            
+                <h1>Quote</h1>
+                <br/>
+              </div>  
+    
+              <div class="row">
+                  <div class="col-6">
+                      <div class=""   *ngIf="this.selectedQuote.From">
+                          <div class="card-body text-left">
+                            <h3>From</h3>
+                            <p class="card-text">
+                              {{this.selectedQuote.From.Name}} <br>
+                              {{this.selectedQuote.From.Company}} <br>
+                              {{this.selectedQuote.From.StreetNumber}}
+                              {{this.selectedQuote.From.Street1}} <br>
+                              {{this.selectedQuote.From.City }},
+                              {{this.selectedQuote.From.State}} ,
+                              {{this.selectedQuote.From.Zip}} <br>
+                              {{this.selectedQuote.From.Country}} <br>
+                            </p>
+                          </div>
+                      </div>
+                      <br />
+                      <br />
+                      <div class=""  *ngIf="this.selectedQuote.To">
+                          <div class="card-body text-left">
+                            <h3>To</h3>
+                            <p class="card-text">
+                              {{this.selectedQuote.To.Name}} <br>
+                              {{this.selectedQuote.To.Company}} <br>
+                              {{this.selectedQuote.To.StreetNumber}} 
+                              {{this.selectedQuote.To.Street1}} <br>
+                              {{this.selectedQuote.To.City }},
+                              {{this.selectedQuote.To.State}},  
+                              {{this.selectedQuote.To.Zip}} <br>
+                              {{this.selectedQuote.To.Country}} <br>
+                            </p>
+                          </div>
+                      </div>       
+                  </div>
+                  <div class="col-6">
+                      <div class=""   *ngIf="this.selectedQuote.QuoteRate" >
+                          <div class="card-body text-left">
+                            <h3>Details</h3>
+                            <table class="table table-borderless" >
+                                <tbody> 
+                                    <tr>
+                                        <th>Price </th>
+                                        <td>${{ this.selectedQuote.QuoteRate.Amount }} {{ this.selectedQuote.QuoteRate.Currency }}</td>
+                                      </tr>                                        
+                                    <tr>
+                                      <th class="align-middle">Provider</th>
+                                      <td><img src="{{this.selectedQuote.QuoteRate.Image}}" width="50" class="img-fluid" alt="Responsive image">
+                                        {{ this.selectedQuote.QuoteRate.Provider }}
+                                      </td>
+                                    </tr>    
+                                    <tr>  
+                                        <th>Estimate</th>
+                                        <td>{{this.selectedQuote.QuoteRate.Estimate }}</td>
+                                      </tr>                                                                                                                            
+                                    <tr>  
+                                      <th>Servicelevel</th>
+                                      <td> {{ this.selectedQuote.QuoteRate.Servicelevel  }}</td>
+                                    </tr>
+                                    <tr>  
+                                        <th>Dimensions (HxWxL)</th>
+                                        <td> {{ this.selectedQuote.QuoteParcel.Height}}{{ this.selectedQuote.QuoteParcel.Distance_unit}}  x 
+                                             {{ this.selectedQuot.QuoteParcele.Width}}{{ this.selectedQuote.QuoteParcel.Distance_unit}} x 
+                                             {{ this.selectedQuote.QuoteParcel.Length}}{{ this.selectedQuote.QuoteParcel.Distance_unit}}
+                                             <br>
+                                             {{ this.selectedQuote.QuoteParcel.Weight}}{{ this.selectedQuote.QuoteParcel.Mass_unit}} 
+    
+                                        </td>
+                                      </tr>                                    
+                                </tbody>
+                            </table> 
+                          </div>
+                      </div>                          
+                  </div>
+                  <div class="col-12">
+                      <button type="button" class="btn btn-primary" (click)="onClickBack()" >Back</button>
+                  </div>
+              </div>
+            </div>
+    
+      </div> 
 
-      <div class="card" *ngIf="this.selectedQuote">
+      <!-- <div class="card" *ngIf="this.selectedQuote">
         <div class="card-body text-center">    
           <div class="text-left">            
             <h1>Order</h1>
@@ -121,7 +178,48 @@
               </div>
           </div>
         </div>
+      </div>  -->
+
+      <div class="card" *ngIf="(this.quotes.length > 0 && this.selectedQuote == null) " >
+        <div class="card-body text-center">
+          <div class="text-left">            
+              <h1>Quotes</h1>
+              <br/>
+          </div>            
+          <table class="table"  >
+              <thead class="thead-dark">
+                <tr >
+                    <th>From</th>
+                    <th>To</th>                  
+                    <th>Provider</th>
+                    <th>Amount</th>
+                    <th>Estimate</th>
+                    <th>Servicelevel</th>
+                    <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let q of this.quotes">
+                  <td> {{ q.From.Name }} &nbsp; {{ q.From.Company }} </td>
+                  <td> {{ q.To.Name   }} &nbsp; {{ q.To.Company }}  </td>
+                  <td> {{ q.QuoteRate.Provider}}</td>
+                  <td> $ {{ q.QuoteRate.Amount}} {{ q.QuoteRate.Currency  }}</td>
+                  <td> {{ q.QuoteRate.Estimate }} Days</td>
+                  <td> {{ q.QuoteRate.Servicelevel }}</td>
+                  <td> <button type="button" class="btn btn-info" 
+                              (click)="selectQuote(q)" >View
+                        </button>
+                  </td>
+                </tr>
+              </tbody>
+
+
+          </table> 
+          
+          <!-- <button type="button" class="btn btn-primary" (click)="onClickBack()" >Back</button> -->
+        </div>
       </div>
+
 
     </div>
   </div>

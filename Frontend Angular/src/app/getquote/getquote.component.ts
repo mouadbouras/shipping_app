@@ -9,7 +9,7 @@ import { Parcel } from '../model/parcel.model';
 import { Shipp } from '../model/shipp.model';
 import { Rate } from '../model/rate.model';
 import { NgxSpinnerService } from 'ngx-spinner';
-import {Router} from '@angular/router';
+import { Router } from '@angular/router';
 
 
 import { HttpClient } from '@angular/common/http'; 
@@ -312,7 +312,7 @@ export class GetquoteComponent implements OnInit {
 
       console.log(data);
       this.rates = new Array<Rate>();
-      for (var i =0 ; i < 50 ; i++ ){
+      for (var i in data["rates"] ){
         if(data["rates"] == undefined || data["rates"][i] == undefined ){
           break;
         }

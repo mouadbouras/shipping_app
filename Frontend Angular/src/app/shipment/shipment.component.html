@@ -48,18 +48,14 @@
                               <tbody>
                                   <tr>
                                       <th>Price </th>
-                                      <td>${{ this.shipment.QuoteRate.Amount}}</td>
+                                      <td>${{ this.shipment.QuoteRate.Amount}}{{ this.shipment.QuoteRate.Currency}}</td>
                                   </tr>  
                                 <tr>
                                     <th class="align-middle">Provider</th>
                                     <td><img src="{{this.shipment.QuoteRate.Image}}" width="50" class="img-fluid" alt="Responsive image">
                                         {{ this.shipment.QuoteRate.Provider }}
                                     </td>
-                                </tr>
-                                <tr>     
-                                  <th>Currency</th>
-                                  <td> {{ this.shipment.QuoteRate.Currency}}</td>
-                                </tr>      
+                                </tr>   
                                 <tr>      
                                   <th>Estimate</th>
                                   <td> {{ this.shipment.QuoteRate.Estimate }} Days</td>

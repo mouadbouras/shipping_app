@@ -10,6 +10,9 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { Shipment } from '../model/shipment.model';
 import { Parcel } from '../model/parcel.model';
 import { Shipp } from '../model/shipp.model';
+import { Constants } from '../util/constants.util';
+import { Router } from '@angular/router';
+
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -25,14 +28,14 @@ const httpOptions = {
 export class ShipmentComponent implements OnInit {
 
   //public baseUrl = "http://shipping-co.azurewebsites.net" ; 
-  public baseUrl = "http://localhost:5000" ; 
+  //public baseUrl = "http://localhost:5000" ; 
   private shipment = new Quote();
 
   constructor(
               private quoteServcie: QuoteService,
               private http: HttpClient,
-              private spinner: NgxSpinnerService
-
+              private spinner: NgxSpinnerService,
+              private router : Router
               ) { }
 
   ngOnInit() {
@@ -84,10 +87,9 @@ export class ShipmentComponent implements OnInit {
 
   //
   private onClickConfirm(){
-      this.http.post(this.baseUrl+'/transaction.json' ,
+      this.http.post(Constants.baseUrl+'/transaction.json' ,
                    JSON.stringify({rateId:this.shipment.QuoteRate.Id}), httpOptions).subscribe(
       data => {
-
       this.spinner.hide();
       //console.log(data);
       if(data["error"]!= undefined)
@@ -106,9 +108,8 @@ export class ShipmentComponent implements OnInit {
   }
 
   private onClickSave(){
-    console.log("save me");
-    this.http.post(this.baseUrl+'/quote.json' ,
-    JSON.stringify({QuoteId:this.shipment.QuoteRate.ShipmentId,ClientId:1,RateId: this.shipment.QuoteRate.Id}), httpOptions).subscribe(
+    this.http.post(Constants.baseUrl+'/quote.json' ,
+    JSON.stringify({QuoteId:this.shipment.QuoteRate.ShipmentId,UserId:1,RateId: this.shipment.QuoteRate.Id}), httpOptions).subscribe(
       data => {
         this.spinner.hide();
         //console.log(data);
@@ -121,6 +122,8 @@ export class ShipmentComponent implements OnInit {
         {
           console.log("Saved Succesfully");
           console.log(data["success"]);
+          this.router.navigateByUrl('/myquotes');
+
         }        
     });
   }

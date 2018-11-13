@@ -89,7 +89,7 @@ namespace MyApp.ServiceInterface
             // }
 
             // return response.Rates;
-                            var response = "{\"success\": \"transaction Success\" ," +
+            var response = "{\"success\": \"transaction Success\" ," +
                     "\"label_url\" : \"" + "https://shippo-delivery-east.s3.amazonaws.com/e119bde5117946c2a2f121b610db21a4.pdf?Signature=VJnRwuOBpMf788d2GB0zkNjWRh4%3D&Expires=1573254252&AWSAccessKeyId=AKIAJGLCC5MYLLWIG42A" + "\" ,"+
                     "\"tracking_number\" : \"" + "ZW70QJC" + "\","+
                     "\"tracking_url\" : \"" + "https://tools.usps.com/go/TrackConfirmAction.action?tLabels=ZW70QJC" + "\","+ 
@@ -153,9 +153,9 @@ namespace MyApp.ServiceInterface
                 { "async", false}});
 
 
-                 var response = "{\"success\": \"success\" ," +
-                    "\"shipment_id\" : \""+ apiResponse.ObjectId +"\","+
-                    "\"rates\" : "+ JSON.stringify(apiResponse.Rates) + "}";
+                var response = "{\"success\": \"success\" ," +
+                "\"shipment_id\" : \""+ apiResponse.ObjectId +"\","+
+                "\"rates\" : "+ JSON.stringify(apiResponse.Rates) + "}";
 
                 return response;
 
@@ -171,12 +171,15 @@ namespace MyApp.ServiceInterface
         
         public object Post(QuoteDTO request){
 
-            if(request.QuoteId != "" && request.ClientId != "" && request.RateId != "")
+            var context = new shippingcoContext();
+
+            if(request.QuoteId != "" && request.QuoteId != null
+             && request.UserId != "" && request.UserId != null
+             && request.RateId != "" &&  request.RateId != null)
             {
                 var shipment = resource.RetrieveShipment(request.QuoteId);
                 var rate = resource.RetrieveRate(request.RateId);
                 
-                var context = new shippingcoContext();
                 var from = new ShippmentUnit();
                 var to = new ShippmentUnit();
                 var parcel = new MyApp.DataAccess.DataAccess.Parcel();
@@ -190,6 +193,9 @@ namespace MyApp.ServiceInterface
                 from.Province = apiShipmentObject.State.ToString();
                 from.PostalCode = apiShipmentObject.Zip.ToString();
                 from.Country = apiShipmentObject.Country.ToString();
+                from.Name = apiShipmentObject.Name.ToString();
+                from.Company = apiShipmentObject.Company.ToString();
+
 
                 apiShipmentObject = (Address) ((JObject)shipment.AddressTo).ToObject(typeof(Address));
 
@@ -199,6 +205,8 @@ namespace MyApp.ServiceInterface
                 to.Province = apiShipmentObject.State.ToString();
                 to.PostalCode = apiShipmentObject.Zip.ToString();
                 to.Country = apiShipmentObject.Country.ToString();
+                to.Name = apiShipmentObject.Name.ToString();
+                to.Company = apiShipmentObject.Company.ToString();
 
                 var apiParcelObject = (Shippo.Parcel) ((JObject)shipment.Parcels[0]).ToObject(typeof(Shippo.Parcel));
 
@@ -215,7 +223,7 @@ namespace MyApp.ServiceInterface
 
                 context.SaveChanges();
                  
-                quote.ClientId = Int32.Parse(request.ClientId); 
+                quote.UserId = Int32.Parse(request.UserId); 
                 quote.FromId = from.Id; 
                 quote.ToId = to.Id; 
                 quote.ParcelId = parcel.Id; 
@@ -224,10 +232,14 @@ namespace MyApp.ServiceInterface
                 quote.Currency =rate.Currency.ToString();
                 quote.Provider = rate.Provider.ToString();
                 quote.ServiceLevel = rate.Servicelevel.Name.ToString();
-                quote.Estimate = rate.EstimatedDays.ToString();                                       
+                quote.Estimate = rate.EstimatedDays.ToString();       
+                quote.Image = rate.ProviderImage200.ToString();                 
 
                 context.Quotes.Add(quote);                
                 context.SaveChanges();
+
+                var response = "{\"success\": \"success\"} " ;
+                return response;
 
                 // from.StreetNumber = ((Hashtable) shipment.AddressTo)["street_no"].ToString();
                 // from.StreetAddress = ((Hashtable) shipment.AddressTo)["street1"].ToString();
@@ -251,7 +263,57 @@ namespace MyApp.ServiceInterface
                 //                       .Where(s => s.Id == 2)
                 //                       .ToList();
             }
-            return null;
+
+            if(request.UserId != "" && request.QuoteId == null && request.RateId == null)
+            {
+                var responseList = new List<QuoteDTOResponse>();
+                
+                var from = new ShippmentUnit();
+                var to = new ShippmentUnit();
+                var parcel = new MyApp.DataAccess.DataAccess.Parcel();
+                var client = new Client();
+                var quote = new Quotes();      
+                var user = new Users();      
+
+
+                var quotes = context.Quotes
+                            .Where(q => q.UserId.ToString() == request.UserId)
+                            .ToList();
+
+                foreach(var q in quotes)
+                {
+                    to = context.ShippmentUnit
+                                .Where(u => u.Id.ToString() == q.ToId.ToString() )
+                                .ToList().First();
+
+                    from = context.ShippmentUnit
+                                .Where(u => u.Id.ToString() == q.FromId.ToString() )
+                                .ToList().First();       
+
+                    parcel = context.Parcel
+                                .Where(p => p.Id.ToString() == q.ParcelId.ToString() )
+                                .ToList().First();  
+
+                    client = context.Client                             
+                                .Where(c => c.Id.ToString() == request.UserId)
+                                .ToList().First(); 
+
+                    var rlist = new QuoteDTOResponse();
+                    rlist.from = from;
+                    rlist.to = to;
+                    rlist.parcel = parcel;
+                    rlist.quote = q;
+
+                    responseList.Add(rlist);
+                }                                                      
+
+                var response = "{\"success\": \"success\" ,"  +
+                    "\"quotes\" : " + JSON.stringify(responseList)  + "}";
+                return response;
+
+            }
+            
+            return "{\"error\": \"Invalid Request\"}" ;      
         }
 
         public object Post(TransactionDTO request){

@@ -5,7 +5,7 @@ namespace MyApp.DataAccess.DataAccess
 {
     public partial class Quotes
     {
-        public int? ClientId { get; set; }
+        public int? UserId { get; set; }
         public int? FromId { get; set; }
         public int? ToId { get; set; }
         public int? ParcelId { get; set; }
@@ -16,5 +16,6 @@ namespace MyApp.DataAccess.DataAccess
         public string ServiceLevel { get; set; }
         public string Estimate { get; set; }
         public int Id { get; set; }
+        public string Image { get; set; }
     }
 }

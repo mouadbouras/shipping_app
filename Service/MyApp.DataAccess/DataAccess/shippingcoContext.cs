@@ -90,8 +90,6 @@ namespace MyApp.DataAccess.DataAccess
             {
                 entity.Property(e => e.Amount).HasColumnType("numeric(18, 0)");
 
-                entity.Property(e => e.ClientId).HasColumnName("Client_Id");
-
                 entity.Property(e => e.Currency).IsUnicode(false);
 
                 entity.Property(e => e.Date).HasColumnType("datetime");
@@ -100,6 +98,8 @@ namespace MyApp.DataAccess.DataAccess
 
                 entity.Property(e => e.FromId).HasColumnName("From_Id");
 
+                entity.Property(e => e.Image).IsUnicode(false);
+
                 entity.Property(e => e.ParcelId).HasColumnName("Parcel_Id");
 
                 entity.Property(e => e.Provider).IsUnicode(false);
@@ -107,13 +107,19 @@ namespace MyApp.DataAccess.DataAccess
                 entity.Property(e => e.ServiceLevel).IsUnicode(false);
 
                 entity.Property(e => e.ToId).HasColumnName("To_Id");
+
+                entity.Property(e => e.UserId).HasColumnName("User_Id");
             });
 
             modelBuilder.Entity<ShippmentUnit>(entity =>
             {
                 entity.Property(e => e.City).IsUnicode(false);
 
+                entity.Property(e => e.Company).IsUnicode(false);
+
                 entity.Property(e => e.Country).IsUnicode(false);
+
+                entity.Property(e => e.Name).IsUnicode(false);
 
                 entity.Property(e => e.PostalCode).IsUnicode(false);
 
@@ -126,6 +132,8 @@ namespace MyApp.DataAccess.DataAccess
 
             modelBuilder.Entity<Users>(entity =>
             {
+                entity.Property(e => e.ClientId).HasColumnName("Client_Id");
+
                 entity.Property(e => e.Name).IsUnicode(false);
 
                 entity.Property(e => e.Password).IsUnicode(false);

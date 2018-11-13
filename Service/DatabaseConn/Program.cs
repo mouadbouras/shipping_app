@@ -14,11 +14,15 @@ namespace DatabaseConn
         {
                 var context = new shippingcoContext();
 
-                var getUSer = context.Users
-                                      .Where(s => s.Id == 2)
-                                      .ToList();
+                // var getUSer = context.Users
+                //                       .Where(s => s.Id == 2)
+                //                       .ToList();
+
+                var quotes = context.Quotes
+                .Where(q => q.ClientId.ToString() == "1")
+                .ToList();
             
-                Console.WriteLine(getUSer[0].Username);
+                Console.WriteLine(quotes[0].Id );
 
             // string queryString = "SELECT * FROM Users;";
 
