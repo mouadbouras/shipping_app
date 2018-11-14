@@ -42,9 +42,7 @@ namespace MyApp.DataAccess.DataAccess
             {
                 entity.Property(e => e.Id).ValueGeneratedNever();
 
-                entity.Property(e => e.Amout).HasColumnType("numeric(18, 0)");
-
-                entity.Property(e => e.ClientId).HasColumnName("Client_Id");
+                entity.Property(e => e.Amount).HasColumnType("numeric(18, 0)");
 
                 entity.Property(e => e.Currency).IsUnicode(false);
 
@@ -55,6 +53,8 @@ namespace MyApp.DataAccess.DataAccess
                 entity.Property(e => e.Eta).HasColumnType("datetime");
 
                 entity.Property(e => e.FromId).HasColumnName("From_Id");
+
+                entity.Property(e => e.Image).IsUnicode(false);
 
                 entity.Property(e => e.LabelUrl)
                     .HasColumnName("LabelURL")
@@ -73,6 +73,8 @@ namespace MyApp.DataAccess.DataAccess
                 entity.Property(e => e.TrackingUrl)
                     .HasColumnName("TrackingURL")
                     .IsUnicode(false);
+
+                entity.Property(e => e.UserId).HasColumnName("User_id");
             });
 
             modelBuilder.Entity<Parcel>(entity =>

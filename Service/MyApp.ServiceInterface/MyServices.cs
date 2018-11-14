@@ -321,44 +321,168 @@ namespace MyApp.ServiceInterface
             // Get the first rate in the rates results.
             // Customize this based on your business logic.
             //Rate rate = shipment.RatesList[];
+            var context = new shippingcoContext();
 
-            Hashtable transactionParameters = new Hashtable();
-            transactionParameters.Add("rate", request.RateId);
-            transactionParameters.Add("async", false);
-
-            try{ 
-
-
-            // Purchase the desired rate.
-            Transaction transaction = resource.CreateTransaction(transactionParameters);
-
-            if (((String) transaction.Status).Equals("SUCCESS", StringComparison.OrdinalIgnoreCase)){
-                Console.WriteLine("Label url: " + transaction.LabelURL);
-                Console.WriteLine("Tracking number: " +
-                    transaction.TrackingNumber);
-                //return {transaction.LabelURL,transaction.TrackingNumber}
-
-                var response = "{\"Success\": \"transaction Sccess\" ," +
-                    "\"label\" : \"" + transaction.LabelURL.ToString() + "\" ,"+
-                    "\"transaction\" : " + transaction.TrackingNumber.ToString() + "}";
-
-                return response;
-
-            } else{
-                Console.WriteLine("Error generating label. Messages: " +
-                    transaction.Messages);
-                
-                var response = "{\"error\": \"exception caught by server\" ," +
-                    "\"details\" : " + transaction.Messages.ToString() + "}";
-                return response;
-            }
-            }
-            catch (Exception e)
+            if(request.QuoteId != "" && request.QuoteId != null
+            && request.UserId != "" && request.UserId != null
+            && request.RateId != "" &&  request.RateId != null)
             {
-                var response = "{\"error\": \"exception caught by server\" ," +
-                    "\"details\" : "+ e.Message.ToString() +"}";
-                return response;
+
+                Hashtable transactionParameters = new Hashtable();
+                transactionParameters.Add("rate", request.RateId);
+                transactionParameters.Add("async", false);
+
+                try{ 
+                // Purchase the desired rate.
+                Transaction transaction = resource.CreateTransaction(transactionParameters);
+
+                if (((String) transaction.Status).Equals("SUCCESS", StringComparison.OrdinalIgnoreCase)){
+                    Console.WriteLine("Label url: " + transaction.LabelURL);
+                    Console.WriteLine("Tracking number: " +
+                        transaction.TrackingNumber);
+
+                        var shipment = resource.RetrieveShipment(request.QuoteId);
+                        var rate = resource.RetrieveRate(request.RateId);
+                        
+                        var from = new ShippmentUnit();
+                        var to = new ShippmentUnit();
+                        var parcel = new MyApp.DataAccess.DataAccess.Parcel();
+                        var order = new Orders();                
+
+                        var apiShipmentObject = (Address) ((JObject)shipment.AddressFrom).ToObject(typeof(Address));
+
+                        from.StreetNumber = apiShipmentObject.StreetNo.ToString();
+                        from.StreetAddress = apiShipmentObject.Street1.ToString();
+                        from.City = apiShipmentObject.City.ToString();
+                        from.Province = apiShipmentObject.State.ToString();
+                        from.PostalCode = apiShipmentObject.Zip.ToString();
+                        from.Country = apiShipmentObject.Country.ToString();
+                        from.Name = apiShipmentObject.Name.ToString();
+                        from.Company = apiShipmentObject.Company.ToString();
+
+
+                        apiShipmentObject = (Address) ((JObject)shipment.AddressTo).ToObject(typeof(Address));
+
+                        to.StreetNumber = apiShipmentObject.StreetNo.ToString();
+                        to.StreetAddress = apiShipmentObject.Street1.ToString();
+                        to.City = apiShipmentObject.City.ToString();
+                        to.Province = apiShipmentObject.State.ToString();
+                        to.PostalCode = apiShipmentObject.Zip.ToString();
+                        to.Country = apiShipmentObject.Country.ToString();
+                        to.Name = apiShipmentObject.Name.ToString();
+                        to.Company = apiShipmentObject.Company.ToString();
+
+                        var apiParcelObject = (Shippo.Parcel) ((JObject)shipment.Parcels[0]).ToObject(typeof(Shippo.Parcel));
+
+                        parcel.Height = Decimal.Parse(apiParcelObject.Height.ToString());
+                        parcel.Width  = Decimal.Parse(apiParcelObject.Width.ToString());
+                        parcel.Weight = Decimal.Parse(apiParcelObject.Weight.ToString());
+                        parcel.Length = Decimal.Parse(apiParcelObject.Length.ToString());
+                        parcel.MassUnit = apiParcelObject.MassUnit.ToString();
+                        parcel.DistanceUnit = apiParcelObject.DistanceUnit.ToString();
+
+                        context.ShippmentUnit.Add(from);
+                        context.ShippmentUnit.Add(to);
+                        context.Parcel.Add(parcel);
+
+                        context.SaveChanges();
+                        
+                        order.UserId = Int32.Parse(request.UserId); 
+                        order.FromId = from.Id; 
+                        order.ToId = to.Id; 
+                        order.ParcelId = parcel.Id; 
+                        order.Date = (DateTime) shipment.ShipmentDate;
+                        order.Amount =  Decimal.Parse(rate.Amount.ToString());                                      
+                        order.Currency =rate.Currency.ToString();
+                        order.Provider = rate.Provider.ToString();
+                        order.ServiceLevel = rate.Servicelevel.Name.ToString();
+                        order.Estimate = rate.EstimatedDays.ToString();       
+                        order.Image = rate.ProviderImage200.ToString();      
+                        order.LabelUrl = transaction.LabelURL.ToString();
+                        order.TrackingNumber = transaction.TrackingNumber.ToString();
+                        order.TrackingUrl = transaction.TrackingUrlProvider.ToString();
+                        //order.Eta = transaction..tostring();
+
+                        context.Orders.Add(order);                
+                        context.SaveChanges();
+
+                        //var response = "{\"success\": \"success\"} " ;
+                        //return response;
+
+
+                        var response = "{\"Success\": \"transaction Sccess\" ," +
+                        "\"label\" : \"" + transaction.LabelURL.ToString() + "\" ,"+
+                        "\"transaction\" : " + transaction.TrackingNumber.ToString() + "}";
+
+                    return response;
+
+                } else{
+                    Console.WriteLine("Error generating label. Messages: " +
+                        transaction.Messages);
+                    
+                    var response = "{\"error\": \"exception caught by server\" ," +
+                        "\"details\" : " + transaction.Messages.ToString() + "}";
+                    return response;
+                }
+                }
+                catch (Exception e)
+                {
+                    var response = "{\"error\": \"exception caught by server\" ," +
+                        "\"details\" : "+ e.Message.ToString() +"}";
+                    return response;
+                }
             }
+
+           if(request.UserId != "" && request.QuoteId == null && request.RateId == null)
+            {
+                var responseList = new List<TransactionDTOResponse>();
+                
+                var from = new ShippmentUnit();
+                var to = new ShippmentUnit();
+                var parcel = new MyApp.DataAccess.DataAccess.Parcel();
+                var client = new Client();
+                var order = new Orders();      
+                var user = new Users();      
+
+
+                var orders = context.Orders
+                            .Where(q => q.UserId.ToString() == request.UserId)
+                            .ToList();
+
+                foreach(var q in orders)
+                {
+                    to = context.ShippmentUnit
+                                .Where(u => u.Id.ToString() == q.ToId.ToString() )
+                                .ToList().First();
+
+                    from = context.ShippmentUnit
+                                .Where(u => u.Id.ToString() == q.FromId.ToString() )
+                                .ToList().First();       
+
+                    parcel = context.Parcel
+                                .Where(p => p.Id.ToString() == q.ParcelId.ToString() )
+                                .ToList().First();  
+
+                    client = context.Client                             
+                                .Where(c => c.Id.ToString() == request.UserId)
+                                .ToList().First(); 
+
+                    var rlist = new TransactionDTOResponse();
+                    rlist.from = from;
+                    rlist.to = to;
+                    rlist.parcel = parcel;
+                    rlist.order = q;
+
+                    responseList.Add(rlist);
+                }                                                      
+
+                var response = "{\"success\": \"success\" ,"  +
+                    "\"orders\" : " + JSON.stringify(responseList)  + "}";
+                return response;
+
+            }
+ 
+            return null;
         }        
     
     }

@@ -88,7 +88,7 @@ export class ShipmentComponent implements OnInit {
   //
   private onClickConfirm(){
       this.http.post(Constants.baseUrl+'/transaction.json' ,
-                   JSON.stringify({rateId:this.shipment.QuoteRate.Id}), httpOptions).subscribe(
+                   JSON.stringify({QuoteId:this.shipment.QuoteRate.ShipmentId,UserId:1,RateId: this.shipment.QuoteRate.Id}), httpOptions).subscribe(
       data => {
       this.spinner.hide();
       //console.log(data);
