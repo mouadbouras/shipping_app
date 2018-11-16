@@ -97,12 +97,12 @@ export class ShipmentComponent implements OnInit {
         console.log("An Error Happened");
         console.log(data["details"]);
       }
-
-      console.log(data[0]);
-      if(data[0] == undefined){
-      }
-      else{
-      }
+      if(data["success"]!= undefined)
+      {
+        console.log("Saved Succesfully");
+        console.log(data["success"]);
+        this.router.navigateByUrl('/myorders');
+      }       
 
     });
   }

@@ -11,8 +11,6 @@ import { HttpHeaders } from '@angular/common/http';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Router } from '@angular/router';
 
-
-
 const httpOptions = {
   headers: new HttpHeaders({
     'Content-Type':  'application/json'

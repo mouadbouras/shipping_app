@@ -5,7 +5,6 @@ namespace MyApp.DataAccess.DataAccess
 {
     public partial class Orders
     {
-        public int Id { get; set; }
         public int? UserId { get; set; }
         public int? FromId { get; set; }
         public int? ToId { get; set; }
@@ -21,5 +20,6 @@ namespace MyApp.DataAccess.DataAccess
         public string LabelUrl { get; set; }
         public DateTime? Eta { get; set; }
         public string Image { get; set; }
+        public int Id { get; set; }
     }
 }

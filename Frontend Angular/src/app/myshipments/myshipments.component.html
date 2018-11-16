@@ -1,0 +1,276 @@
+<div class="row">
+  <div class="col-12 py-3 "  >
+      <div class="card" *ngIf="!(this.selectedOrder == null)">
+          <div class="card-body text-center">    
+              <div class="text-left">            
+                <h1>Order</h1>
+                <br/>
+              </div>  
+    
+              <div class="row">
+                  <div class="col-6">
+                      <div class=""   *ngIf="this.selectedOrder.From">
+                          <div class="card-body text-left">
+                            <h3>From</h3>
+                            <p class="card-text">
+                              {{this.selectedOrder.From.Name}} <br>
+                              {{this.selectedOrder.From.Company}} <br>
+                              {{this.selectedOrder.From.StreetNumber}}
+                              {{this.selectedOrder.From.Street1}} <br>
+                              {{this.selectedOrder.From.City }},
+                              {{this.selectedOrder.From.State}} ,
+                              {{this.selectedOrder.From.Zip}} <br>
+                              {{this.selectedOrder.From.Country}} <br>
+                            </p>
+                          </div>
+                      </div>
+                      <br />
+                      <br />
+                      <div class=""  *ngIf="this.selectedOrder.To">
+                          <div class="card-body text-left">
+                            <h3>To</h3>
+                            <p class="card-text">
+                              {{this.selectedOrder.To.Name}} <br>
+                              {{this.selectedOrder.To.Company}} <br>
+                              {{this.selectedOrder.To.StreetNumber}} 
+                              {{this.selectedOrder.To.Street1}} <br>
+                              {{this.selectedOrder.To.City }},
+                              {{this.selectedOrder.To.State}},  
+                              {{this.selectedOrder.To.Zip}} <br>
+                              {{this.selectedOrder.To.Country}} <br>
+                            </p>
+                          </div>
+                      </div>       
+                  </div>
+
+                  <!-- <div class="col-6">
+                      <div class=""   *ngIf="this.selectedOrder.QuoteRate" >
+                          <div class="card-body text-left">
+                            <h3>Details</h3>
+                            <table class="table table-borderless" >
+                                <tbody> 
+                                    <tr>
+                                        <th>Price </th>
+                                        <td>${{ this.selectedOrder.QuoteRate.Amount }} {{ this.selectedOrder.QuoteRate.Currency }}</td>
+                                      </tr>                                        
+                                    <tr>
+                                      <th class="align-middle">Provider</th>
+                                      <td><img src="{{this.selectedOrder.QuoteRate.Image}}" width="50" class="img-fluid" alt="Responsive image">
+                                        {{ this.selectedOrder.QuoteRate.Provider }}
+                                      </td>
+                                    </tr>    
+                                    <tr>  
+                                        <th>Estimate</th>
+                                        <td>{{this.selectedOrder.QuoteRate.Estimate }}</td>
+                                      </tr>                                                                                                                            
+                                    <tr>  
+                                      <th>Servicelevel</th>
+                                      <td> {{ this.selectedOrder.QuoteRate.Servicelevel  }}</td>
+                                    </tr>
+                                    <tr>  
+                                        <th>Dimensions (HxWxL)</th>
+                                        <td> {{ this.selectedOrder.QuoteParcel.Height}}{{ this.selectedOrder.QuoteParcel.Distance_unit}}  x 
+                                             {{ this.selectedQuot.QuoteParcele.Width}}{{ this.selectedOrder.QuoteParcel.Distance_unit}} x 
+                                             {{ this.selectedOrder.QuoteParcel.Length}}{{ this.selectedOrder.QuoteParcel.Distance_unit}}
+                                             <br>
+                                             {{ this.selectedOrder.QuoteParcel.Weight}}{{ this.selectedOrder.QuoteParcel.Mass_unit}} 
+    
+                                        </td>
+                                      </tr>                                    
+                                </tbody>
+                            </table> 
+                          </div>
+                      </div>                          
+                  </div> -->
+
+                  <div class="col-6">
+                    <div class=""   *ngIf="this.selectedOrder" >
+                        <div class="card-body text-left">
+                          <h3>Details</h3>
+                          <table class="table table-borderless" >
+                              <tbody>
+                                  <tr>      
+                                      <th>Label</th>
+                                      <td> <a href="{{ this.selectedOrder.LabelURL}}" target="_blank"> {{ this.selectedOrder.QuoteRate.Provider }} Label </a>  </td>
+                                  </tr>    
+                                  <tr>      
+                                      <th>Tracking</th>
+                                      <td> <a href="{{ this.selectedOrder.TrackingURL}}" target="_blank">{{ this.selectedOrder.TrackingNumber }}</a>  </td>
+                                  </tr>     
+                                  <!-- <tr>      
+                                      <th>ETA</th>
+                                      <td> {{ this.selectedOrder.Eta | date }}</td>
+                                    </tr>                                                              -->
+                                  <tr>
+                                      <th>Price </th>
+                                      <td>${{ this.selectedOrder.QuoteRate.Amount}} {{ this.selectedOrder.QuoteRate.Currency}}</td>
+                                  </tr>  
+                                <tr>
+                                    <th class="align-middle">Provider</th>
+                                    <td><img src="{{this.selectedOrder.QuoteRate.Image}}" width="50" class="img-fluid" alt="Responsive image">
+                                        {{ this.selectedOrder.QuoteRate.Provider }}
+                                    </td>
+                                </tr>
+                                <tr>  
+                                  <th>Servicelevel</th>
+                                  <td> {{ this.selectedOrder.QuoteRate.Servicelevel }}</td>
+                                </tr>
+                                <tr>  
+                                    <th>Dimensions (HxWxL)</th>
+                                    <td> {{ this.selectedOrder.QuoteParcel.Height}}{{ this.selectedOrder.QuoteParcel.Distance_unit}}  x 
+                                          {{ this.selectedOrder.QuoteParcel.Width}}{{ this.selectedOrder.QuoteParcel.Distance_unit}} x 
+                                          {{ this.selectedOrder.QuoteParcel.Length}}{{ this.selectedOrder.QuoteParcel.Distance_unit}}
+                                          <br>
+                                          {{ this.selectedOrder.QuoteParcel.Weight}}{{ this.selectedOrder.QuoteParcel.Mass_unit}} 
+  
+                                    </td>
+                                  </tr>
+                              </tbody>
+                          </table> 
+                        </div>
+                    </div>                          
+                  </div>
+
+                  <div class="col-12">
+                      <button type="button" class="btn btn-primary" (click)="onClickBack()" >Back</button>
+                  </div>
+              </div>
+            </div>
+    
+      </div> 
+
+      <!-- <div class="card" *ngIf="this.selectedOrder">
+        <div class="card-body text-center">    
+          <div class="text-left">            
+            <h1>Order</h1>
+            <br/>
+          </div>  
+
+          <div class="row">
+              <div class="col-6">
+                  <div class=""   *ngIf="this.selectedOrder.From">
+                      <div class="card-body text-left">
+                        <h3>From</h3>
+                        <p class="card-text">
+                          {{this.selectedOrder.From.Company}} <br>
+                          {{this.selectedOrder.From.StreetNumber}}
+                          {{this.selectedOrder.From.Street1}} <br>
+                          {{this.selectedOrder.From.City }},
+                          {{this.selectedOrder.From.State}} ,
+                          {{this.selectedOrder.From.Zip}} <br>
+                          {{this.selectedOrder.From.Country}} <br>
+                        </p>
+                      </div>
+                  </div>
+                  <br />
+                  <br />
+                  <div class=""  *ngIf="this.selectedOrder.To">
+                      <div class="card-body text-left">
+                        <h3>To</h3>
+                        <p class="card-text">
+                          {{this.selectedOrder.To.Company}} <br>ng bu
+                          {{this.selectedOrder.To.StreetNumber}} 
+                          {{this.selectedOrder.To.Street1}} <br>
+                          {{this.selectedOrder.To.City }},
+                          {{this.selectedOrder.To.State}},  
+                          {{this.selectedOrder.To.Zip}} <br>
+                          {{this.selectedOrder.To.Country}} <br>
+                        </p>
+                      </div>
+                  </div>       
+              </div>
+              <div class="col-6">
+                  <div class=""   *ngIf="this.selectedOrder" >
+                      <div class="card-body text-left">
+                        <h3>Details</h3>
+                        <table class="table table-borderless" >
+                            <tbody>
+                                <tr>      
+                                    <th>Label</th>
+                                    <td> <a href="{{ this.selectedOrder.LabelURL}}" target="_blank"> {{ this.selectedOrder.Provider }} Label </a>  </td>
+                                </tr>    
+                                <tr>      
+                                    <th>Tracking</th>
+                                    <td> <a href="{{ this.selectedOrder.TrackingURL}}" target="_blank">{{ this.selectedOrder.TrackingNumber }}</a>  </td>
+                                </tr>     
+                                <tr>      
+                                    <th>ETA</th>
+                                    <td> {{ this.selectedOrder.Eta | date }}</td>
+                                  </tr>                                                             
+                                <tr>
+                                    <th>Price </th>
+                                    <td>${{ this.selectedOrder.Price}} {{ this.selectedOrder.Currency}}</td>
+                                </tr>  
+                              <tr>
+                                  <th class="align-middle">Provider</th>
+                                  <td><img src="{{this.selectedOrder.Image}}" width="50" class="img-fluid" alt="Responsive image">
+                                      {{ this.selectedOrder.Provider }}
+                                  </td>
+                              </tr>
+                              <tr>  
+                                <th>Servicelevel</th>
+                                <td> {{ this.selectedOrder.Servicelevel }}</td>
+                              </tr>
+                              <tr>  
+                                  <th>Dimensions (HxWxL)</th>
+                                  <td> {{ this.selectedOrder.QuoteParcel.Height}}{{ this.selectedOrder.QuoteParcel.Distance_unit}}  x 
+                                        {{ this.selectedOrder.QuoteParcel.Width}}{{ this.selectedOrder.QuoteParcel.Distance_unit}} x 
+                                        {{ this.selectedOrder.QuoteParcel.Length}}{{ this.selectedOrder.QuoteParcel.Distance_unit}}
+                                        <br>
+                                        {{ this.selectedOrder.QuoteParcel.Weight}}{{ this.selectedOrder.QuoteParcel.Mass_unit}} 
+
+                                  </td>
+                                </tr>
+                            </tbody>
+                        </table> 
+                      </div>
+                  </div>                          
+              </div>
+          </div>
+        </div>
+      </div>  -->
+
+      <div class="card" *ngIf="(this.orders.length > 0 && this.selectedOrder == null) " >
+        <div class="card-body text-center">
+          <div class="text-left">            
+              <h1>Orders</h1>
+              <br/>
+          </div>            
+          <table class="table"  >
+              <thead class="thead-dark">
+                <tr >
+                    <th>From</th>
+                    <th>To</th>                  
+                    <th>Provider</th>
+                    <th>Amount</th>
+                    <th>Estimate</th>
+                    <th>Servicelevel</th>
+                    <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let o of this.orders">
+                  <td> {{ o.From.Name }} &nbsp; {{ o.From.Company }} </td>
+                  <td> {{ o.To.Name   }} &nbsp; {{ o.To.Company }}  </td>
+                  <td> {{ o.QuoteRate.Provider}}</td>
+                  <td> $ {{ o.QuoteRate.Amount}} {{ o.QuoteRate.Currency  }}</td>
+                  <td> {{ o.QuoteRate.Estimate }} Days</td>
+                  <td> {{ o.QuoteRate.Servicelevel }}</td>
+                  <td> <button type="button" class="btn btn-info" 
+                              (click)="selectOrder(o)" >View
+                        </button>
+                  </td>
+                </tr>
+              </tbody>
+
+
+          </table> 
+          
+          <!-- <button type="button" class="btn btn-primary" (click)="onClickBack()" >Back</button> -->
+        </div>
+      </div>
+
+
+    </div>
+  </div>
+

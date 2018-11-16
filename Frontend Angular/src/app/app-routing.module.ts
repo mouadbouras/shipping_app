@@ -5,6 +5,7 @@ import { GetquoteComponent } from './getquote/getquote.component';
 import { AppComponent } from './app.component';
 import { MyquotesComponent } from './myquotes/myquotes.component';
 import { ShipmentComponent } from './shipment/shipment.component';
+import { MyshipmentsComponent } from './myshipments/myshipments.component';
 
 
 const routes: Routes = [
@@ -19,7 +20,11 @@ const routes: Routes = [
   {
     path:"shipment",
     component:ShipmentComponent
-  }    
+  },
+  {
+    path:"myshipments",
+    component:MyshipmentsComponent
+  }       
 
 ];
 

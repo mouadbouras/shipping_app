@@ -22,13 +22,25 @@
                   </tr>  
                   <tr>
                       <td class="label">Company </td>
-                    </tr>      
+                    </tr> 
                     <tr>                        
-                      <td class="slimField">
-                        <input class="form-control" id="company" required
-                        [(ngModel)]="contentForm1.company" placeholder="Company Name" value="{{ contentForm1.company  }}"/></td>
-                  </tr>                         
-                  <tr>
+                        <td class="slimField">
+                          <input class="form-control" id="company" required
+                          [(ngModel)]="contentForm1.company" placeholder="Company Name" value="{{ contentForm1.company  }}"/></td>
+                    </tr>     
+                    <tr>
+                        <td class="label">Address</td>
+                    </tr>      
+                    <tr>
+                        <td class="slimField">
+                          <input class="form-control" placeholder="Address" 
+                          value="{{ contentForm1.street_number +  ' ' + contentForm1.street_number  }}"
+                          />
+                         </td>
+                      </tr>                                       
+              </table>     
+              <table class="d-none">                        
+                   <tr>
                     <td class="label">Street number</td>
                     </tr>      
                     <tr>                    
@@ -78,7 +90,7 @@
                     <input class="form-control" required
                         id="country" disabled="true"
                         value="{{ contentForm1.country }}"/></td>
-                </tr>
+                </tr> 
               </table>    
         </div> 
       </div>
@@ -123,7 +135,9 @@
                     <td class="slimField">
                       <input class="form-control" id="company" required
                       [(ngModel)]="contentForm2.company" placeholder="Company Name" value="{{ contentForm2.company  }}"/></td>
-                </tr>                  
+                </tr>    
+              </table>    
+              <table class="d-none">             
                 <tr>
                   <td class="label">Street number</td>
                 </tr>      

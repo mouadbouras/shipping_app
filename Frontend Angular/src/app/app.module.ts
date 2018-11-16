@@ -14,6 +14,7 @@ import { HttpModule } from '@angular/http';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { MyquotesComponent } from './myquotes/myquotes.component';
 import { ShipmentComponent } from './shipment/shipment.component';
+import { MyshipmentsComponent } from './myshipments/myshipments.component';
 
 @NgModule({
   declarations: [
@@ -23,6 +24,7 @@ import { ShipmentComponent } from './shipment/shipment.component';
     GetratesComponent,
     MyquotesComponent,
     ShipmentComponent,
+    MyshipmentsComponent,
   ],
   imports: [
     AgmCoreModule.forRoot({

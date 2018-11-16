@@ -40,8 +40,6 @@ namespace MyApp.DataAccess.DataAccess
 
             modelBuilder.Entity<Orders>(entity =>
             {
-                entity.Property(e => e.Id).ValueGeneratedNever();
-
                 entity.Property(e => e.Amount).HasColumnType("numeric(18, 0)");
 
                 entity.Property(e => e.Currency).IsUnicode(false);
