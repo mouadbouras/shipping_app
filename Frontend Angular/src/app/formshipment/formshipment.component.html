@@ -1,4 +1,35 @@
-<p>
-  formshipment works!
-  {{ formShipment.From.Name }}
-</p>
+<div class="card" >
+  <div class="card-body">
+    <h2>Summary : </h2>
+    <p>
+      <br>
+      <b>From : </b> <br>
+      {{ formShipment.From.Name }} <br>
+      {{ formShipment.From.StreetNumber }}  
+      {{ formShipment.From.Street1 }} <br>
+      {{ formShipment.From.City != undefined ?  formShipment.From.City + " ," : "" }} 
+      {{ formShipment.From.State}} {{formShipment.From.Zip}} <br>
+      {{ formShipment.From.Country }}
+      <br>
+      <br>
+
+      <b>To : </b><br>
+      {{ formShipment.To.Name }} <br>
+      {{ formShipment.To.StreetNumber }}  
+      {{ formShipment.To.Street1 }} <br>
+      {{ formShipment.To.City != undefined ?  formShipment.To.City + " ," : "" }} 
+      {{ formShipment.To.State}} {{formShipment.To.Zip}} <br>
+      {{ formShipment.To.Country }}
+      <br>
+      <br>
+
+      <b>Parcel (HxWxL) : </b><br>
+          {{ formShipment.Parcels[0].Height }}{{ formShipment.Parcels[0].Distance_unit }}  x 
+           {{ formShipment.Parcels[0].Width }}{{ formShipment.Parcels[0].Distance_unit }} x 
+           {{ formShipment.Parcels[0].Length }}{{ formShipment.Parcels[0].Distance_unit }}
+           <br>
+           {{ formShipment.Parcels[0].Weight }}{{ formShipment.Parcels[0].Mass_unit }} 
+
+    </p>
+</div>
+</div>

@@ -1,5 +1,10 @@
 export class Parcel 
 {
+    constructor() {
+        this.Distance_unit = "cm";
+        this.Mass_unit = "g";
+     }
+
     Length :number;
     Width :number;
     Height :number;
