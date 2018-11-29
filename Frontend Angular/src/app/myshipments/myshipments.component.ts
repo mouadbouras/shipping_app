@@ -80,7 +80,7 @@ export class MyshipmentsComponent implements OnInit {
 
             o.QuoteParcel = new Parcel();
             o.QuoteParcel.Height = data["orders"][i]["parcel"]["height"];
-            o.QuoteParcel.Width = data["orders"][i]["parcel"]["wight"];
+            o.QuoteParcel.Width = data["orders"][i]["parcel"]["width"];
             o.QuoteParcel.Length = data["orders"][i]["parcel"]["length"];
             o.QuoteParcel.Weight = data["orders"][i]["parcel"]["weight"];
             o.QuoteParcel.Mass_unit = data["orders"][i]["parcel"]["massUnit"];

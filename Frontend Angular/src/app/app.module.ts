@@ -9,12 +9,14 @@ import { NavigationComponent } from './navigation/navigation.component';
 import { AgmCoreModule } from '@agm/core';
 import { GetratesComponent } from './getrates/getrates.component';
 import { QuoteService } from './services/quote.service';
+import { FormService } from './services/form.service';
 import { HttpClientModule } from '@angular/common/http'; 
 import { HttpModule } from '@angular/http';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { MyquotesComponent } from './myquotes/myquotes.component';
 import { ShipmentComponent } from './shipment/shipment.component';
 import { MyshipmentsComponent } from './myshipments/myshipments.component';
+import { FormshipmentComponent } from './formshipment/formshipment.component';
 
 @NgModule({
   declarations: [
@@ -25,6 +27,7 @@ import { MyshipmentsComponent } from './myshipments/myshipments.component';
     MyquotesComponent,
     ShipmentComponent,
     MyshipmentsComponent,
+    FormshipmentComponent,
   ],
   imports: [
     AgmCoreModule.forRoot({
@@ -39,7 +42,7 @@ import { MyshipmentsComponent } from './myshipments/myshipments.component';
     HttpClientModule,
     NgxSpinnerModule    
   ],
-  providers: [QuoteService],
+  providers: [QuoteService, FormService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

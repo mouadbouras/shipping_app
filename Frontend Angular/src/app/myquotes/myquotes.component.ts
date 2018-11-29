@@ -26,7 +26,7 @@ export class MyquotesComponent implements OnInit {
 
   private quotes = new Array<Quote>();
   private selectedQuote : Quote;
-  private shipment = new Order();
+  //private shipment = new Order();
 
 
   constructor(private quoteServcie: QuoteService,
@@ -114,19 +114,19 @@ export class MyquotesComponent implements OnInit {
 
         this.quotes = new Array<Quote>();
 
-        console.log(data);
+        //console.log(data);
         if(data["error"]!= undefined)
         {
-          console.log("An Error Happened");
-          console.log(data["details"]);
+          //console.log("An Error Happened");
+          //console.log(data["details"]);
         }
         if(data["success"]!= undefined)
         {
-          console.log("Saved Succesfully");
-          console.log(data);
+          //console.log("Saved Succesfully");
+          //console.log(data);
 
           for(var i in data["quotes"]){
-            console.log(data["quotes"][i]);
+            //console.log(data["quotes"][i]);
             var q = new Quote();
 
             q.From = new Shipp(); 
@@ -151,11 +151,13 @@ export class MyquotesComponent implements OnInit {
 
             q.QuoteParcel = new Parcel();
             q.QuoteParcel.Height = data["quotes"][i]["parcel"]["height"];
-            q.QuoteParcel.Width = data["quotes"][i]["parcel"]["wight"];
+            q.QuoteParcel.Width = data["quotes"][i]["parcel"]["width"];
             q.QuoteParcel.Length = data["quotes"][i]["parcel"]["length"];
             q.QuoteParcel.Weight = data["quotes"][i]["parcel"]["weight"];
             q.QuoteParcel.Mass_unit = data["quotes"][i]["parcel"]["massUnit"];
             q.QuoteParcel.Distance_unit = data["quotes"][i]["parcel"]["distanceUnit"];
+            console.log(q.QuoteParcel);
+
 
             q.QuoteDate = data["quotes"][i]["quote"]["date"];
 
@@ -178,7 +180,8 @@ export class MyquotesComponent implements OnInit {
 
   selectQuote(quote) {   
      this.selectedQuote = quote;
-     console.log(this.selectedQuote.QuoteRate.Amount);
+     //this.selectedQuote.QuoteParcel
+     //console.log(this.selectedQuote.QuoteParcel);
   }
 
   onClickBack() {   

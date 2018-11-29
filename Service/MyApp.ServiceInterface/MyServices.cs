@@ -412,7 +412,7 @@ namespace MyApp.ServiceInterface
 
                         var response = "{\"Success\": \"transaction Sccess\" ," +
                         "\"label\" : \"" + transaction.LabelURL.ToString() + "\" ,"+
-                        "\"transaction\" : " + transaction.TrackingNumber.ToString() + "}";
+                        "\"transaction\" : \"" + transaction.TrackingNumber.ToString() + "\"}";
 
                     return response;
 

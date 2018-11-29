@@ -6,6 +6,7 @@
 
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
+    <PackageReference Include="PayPal" Version="2.0.0-rc2" />
     <PackageReference Include="ServiceStack" Version="5.*" />
     <PackageReference Include="Shippo" Version="2.1.10" />
   </ItemGroup>

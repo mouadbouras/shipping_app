@@ -17,6 +17,7 @@ import { HttpHeaders } from '@angular/common/http';
 import { Location } from '@angular/common';
 import { Quote } from '../model/quote.model';
 import { Constants } from '../util/constants.util';
+import { FormService } from '../services/form.service';
 
 
 
@@ -34,7 +35,7 @@ const httpOptions = {
 
 export class GetquoteComponent implements OnInit {
 
-
+  public formShipment : Shipment;
   public shipment : Shipment;
   public latitude: number;
   public longitude: number;
@@ -95,6 +96,7 @@ export class GetquoteComponent implements OnInit {
     private mapsAPILoader: MapsAPILoader,
     private ngZone: NgZone,
     private quote: QuoteService,
+    private form: FormService,
     private http: HttpClient,
     private spinner: NgxSpinnerService
   ) {
@@ -106,6 +108,13 @@ export class GetquoteComponent implements OnInit {
     this.quote.shipmentOB.subscribe(
       resShipment => this.shipment = resShipment
     );
+
+    this.form.formShipmentOB.subscribe(
+      resFromShipment => this.formShipment = resFromShipment
+    )
+
+    this.formShipment.From = new Shipp();
+    this.formShipment.From.Name = "Moeezy Lemon Squeezy";
 
     this.rates = new Array<Rate>(); 
     var r = new Rate();

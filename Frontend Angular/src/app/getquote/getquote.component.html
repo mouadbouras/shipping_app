@@ -3,7 +3,11 @@
     <div class="col-lg-6 py-3" >
       <div class="card">
         <div class="card-body">
-          <div class="py-5 form-group ">
+            <div class="text-left">            
+                <h1>New Quote</h1>
+                <br/>
+              </div>  
+          <div class="form-group ">
             <h2>From :</h2>
             <input placeholder="search for location" autocorrect="off" autocapitalize="off" spellcheck="off" type="text" class="form-control" #search1 [formControl]="searchControl1">
             <agm-map [latitude]="latitude" [longitude]="longitude" [scrollwheel]="false" [zoom]="zoom">
@@ -20,22 +24,22 @@
                       <input class="form-control" id="name" placeholder="Name"
                       [(ngModel)]="contentForm1.name"  value="{{ contentForm1.name  }}" required /></td>
                   </tr>  
-                  <tr>
+                  <!-- <tr>
                       <td class="label">Company </td>
                     </tr> 
                     <tr>                        
                         <td class="slimField">
                           <input class="form-control" id="company" required
                           [(ngModel)]="contentForm1.company" placeholder="Company Name" value="{{ contentForm1.company  }}"/></td>
-                    </tr>     
+                    </tr>      -->
                     <tr>
                         <td class="label">Address</td>
                     </tr>      
                     <tr>
                         <td class="slimField">
-                          <input class="form-control" placeholder="Address" 
-                          value="{{ contentForm1.street_number +  ' ' + contentForm1.street_number  }}"
-                          />
+                          <textarea class="form-control" rows="4" disabled>{{ contentForm1.street_number + ' ' + contentForm1.route 
+                              + '\n' + contentForm1.locality + ', ' + contentForm1.administrative_area_level_1 
+                              + ' ' + contentForm1.postal_code + '\n' + contentForm1.country  }}</textarea>
                          </td>
                       </tr>                                       
               </table>     
@@ -99,7 +103,11 @@
       <div class="col-lg-6 py-3" >
         <div class="card rounded ">
         <div class="card-body">
-        <div class="py-5 form-group">
+            <div class="text-left">            
+                <h1>&nbsp;</h1>
+                <br/>
+              </div>  
+        <div class="form-group">
           <h2>To :</h2>
           <input placeholder="search for location" autocorrect="off" autocapitalize="off" spellcheck="off" type="text" class="form-control" #search2 [formControl]="searchControl2">
           <agm-map [latitude]="latitude" [longitude]="longitude" [scrollwheel]="false" [zoom]="zoom">
@@ -128,14 +136,25 @@
                       <input class="form-control" id="name" required
                       [(ngModel)]="contentForm2.name" placeholder="Name" value="{{ contentForm2.name  }}"/></td>
                 </tr>  
-                <tr>
+                <!-- <tr>
                     <td class="label">Company </td>
                   </tr>      
                   <tr>                        
                     <td class="slimField">
                       <input class="form-control" id="company" required
                       [(ngModel)]="contentForm2.company" placeholder="Company Name" value="{{ contentForm2.company  }}"/></td>
-                </tr>    
+                </tr>    -->
+                <tr>
+                    <td class="label">Address</td>
+                </tr>                   
+                <tr>
+                    <td class="slimField">
+                      <textarea class="form-control" rows="4" disabled>{{ contentForm2.street_number + ' ' + contentForm2.route 
+                          + '\n' + contentForm2.locality + ', ' + contentForm2.administrative_area_level_1 
+                          + ' ' + contentForm2.postal_code + '\n' + contentForm2.country  }}</textarea>
+                     </td>
+                  </tr>                     
+                
               </table>    
               <table class="d-none">             
                 <tr>
@@ -196,10 +215,10 @@
     </div>    
   </div>
   <div class="row" *ngIf="!showQuote">
-    <div class="col"></div>
-    <div class="col-lg-8 py-3 " >
+    <div class="col py-3 " >
         <div class="card">
-          <div class="card-body text-center">
+          <div class="card-body text-left">
+              <h2>Parcel :</h2>
               <table class="table table-borderless">
                   <tr>
                       <td class="label">Length </td>
@@ -265,7 +284,13 @@
           </div>
         </div>
     </div>
-    <div class="col"></div>
+    <div class="col">
+        <div class="card">
+            <div class="card-body text-center">
+                <app-formshipment></app-formshipment> 
+            </div>
+        </div>
+    </div>
   </div>
   <div class="row" *ngIf="showQuote">
     <div class="col-12 py-3 "  >
