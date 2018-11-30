@@ -7,6 +7,6 @@ body {
     position: fixed !important;
 }
 
-.container{
- min-width: 650px;
+.container, .navbar{
+ min-width: 900px !important;
 }

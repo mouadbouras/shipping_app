@@ -44,9 +44,13 @@ export class GetquoteComponent implements OnInit {
   public zoom: number;
   public rates : Array<Rate>;
 
-  public showError : boolean;
+  //public showError : boolean;
   public showQuote : boolean;
   public quoteError : string;
+  public toError : string;
+  public fromError : string;
+  public parcelError : string;
+
 
   public shippment = {
     Length: "",
@@ -137,7 +141,7 @@ export class GetquoteComponent implements OnInit {
 
     this.rates.push(r);
 
-    this.showError = false;
+    this.quoteError = "";
     this.showQuote = false;
     this.quoteError= "" ;
 
@@ -276,11 +280,24 @@ export class GetquoteComponent implements OnInit {
     location.reload();
   }
 
-  onClickMe() {
-
-    this.showError = false;
+  onClickSubmit() {
+    var valid = true;
     this.showQuote = false;
     this.quoteError= "" ;
+    this.fromError= "";
+    if(this.formShipment.From.Name == undefined || this.formShipment.From.Name.trim() == "")
+    {
+      this.fromError= "Name is invalid."  
+      this.fromError= "Name is invalid."  
+
+      valid=false;
+    }
+    //toError 
+    //parcelError
+    if(!valid)
+    {
+      return;
+    }
     this.spinner.show();
 
     //this.shipment = new Shipment();
@@ -329,7 +346,6 @@ export class GetquoteComponent implements OnInit {
       //console.log(data);
       if(data["error"]!= undefined)
       {
-        this.showError = true;
         this.quoteError = "An error happened, please try again.";
         console.log("An Error Happened");
         console.log(data["details"]);
@@ -364,13 +380,16 @@ export class GetquoteComponent implements OnInit {
       }
 
       if(data["success"] == undefined){
-        this.showError = true;
         this.quoteError = "No results found, please try again.";
       }
       else{
         this.showQuote = true;
       }
 
+    },
+    error => {
+      this.spinner.hide();
+      this.quoteError = "Unable to connect to remote server. Try again later.";
     });
 
   }  

@@ -9,23 +9,41 @@
                   <h1>New Quote</h1>
                   <br/>
                 </div>  
-            <div class="form-group ">
               <h2>From :</h2>
-              <input placeholder="search for location" autocorrect="off" autocapitalize="off" spellcheck="off" type="text" class="form-control" #search1 [formControl]="searchControl1">
-              <agm-map [latitude]="latitude" [longitude]="longitude" [scrollwheel]="false" [zoom]="zoom">
-                  <agm-marker [latitude]="latitude" [longitude]="longitude"></agm-marker>
-              </agm-map>                
-            </div>   
           <div class="row" >
               <table class="table table-borderless" id="address" >
                   <tr>
                       <td class="label">Name</td>
                   </tr>      
                   <tr>
-                      <td class="slimField">
-                        <input class="form-control" id="name" placeholder="Name"
+                      <td class="slimField form-group">
+                        <input class="form-control" id="Name" placeholder="Name"
                         [(ngModel)]="formShipment.From.Name"  value="{{ formShipment.From.Name  }}" required /></td>
                     </tr>  
+                    <tr>
+                        <td class="label">Address</td>
+                    </tr>      
+                    <tr>
+                        <td class="slimField">
+                          <div class="form-group ">
+                            <input placeholder="Search for location" autocomplete="new-password" autocorrect="off" autocapitalize="off" spellcheck="off" 
+                              type="text" class="form-control" #search1 [formControl]="searchControl1">
+                            <agm-map [latitude]="latitude" [longitude]="longitude" [scrollwheel]="false" [zoom]="zoom">
+                                <agm-marker [latitude]="latitude" [longitude]="longitude"></agm-marker>
+                            </agm-map>   
+                          </div>   
+
+                        </td>
+                      </tr>  
+                      <tr>
+                          <td colspan="2">
+                              <div class="alert alert-danger" role="alert" 
+                                  *ngIf="fromError">
+                                  <p>{{fromError}}</p>
+                              </div>
+                            </td>
+
+                      </tr>                    
                     <!-- <tr>
                         <td class="label">Company </td>
                       </tr> 
@@ -103,17 +121,8 @@
       <div class="col-12" >
           <div class="card rounded ">
           <div class="card-body">
-              <div class="text-left">            
-                  <h1>&nbsp;</h1>
-                  <br/>
-                </div>  
-          <div class="form-group">
             <h2>To :</h2>
-            <input placeholder="search for location" autocorrect="off" autocapitalize="off" spellcheck="off" type="text" class="form-control" #search2 [formControl]="searchControl2">
-            <agm-map [latitude]="latitude" [longitude]="longitude" [scrollwheel]="false" [zoom]="zoom">
-                <agm-marker [latitude]="latitude" [longitude]="longitude"></agm-marker>
-            </agm-map>   
-          </div>
+
           <div class="row" >
 
               <!-- <ul class="list-group list-group-flush" id="address">
@@ -133,9 +142,22 @@
                     </tr>      
                     <tr>                        
                       <td class="slimField">
-                        <input class="form-control" id="name" required
+                        <input class="form-control" id="Name" required
                         [(ngModel)]="formShipment.To.Name" placeholder="Name" value="{{ formShipment.To.Name  }}"/></td>
                   </tr>  
+                  <tr>
+                      <td class="label">Address </td>
+                    </tr>      
+                    <tr>                        
+                      <td class="slimField">
+                        <div class="form-group">
+                          <input placeholder="Search for location" autocomplete="new-password" autocorrect="off" autocapitalize="off" spellcheck="off" type="text" class="form-control" #search2 [formControl]="searchControl2">
+                          <agm-map [latitude]="latitude" [longitude]="longitude" [scrollwheel]="false" [zoom]="zoom">
+                              <agm-marker [latitude]="latitude" [longitude]="longitude"></agm-marker>
+                          </agm-map>   
+                        </div>
+                      </td>
+                  </tr>                    
                   <!-- <tr>
                       <td class="label">Company </td>
                     </tr>      
@@ -152,7 +174,15 @@
                             + ' ' + contentForm2.postal_code + '\n' + contentForm2.country  }}</textarea>
                       </td>
                     </tr>                      -->
-                  
+                    <tr>
+                        <td colspan="2">
+                            <div class="alert alert-danger" role="alert" 
+                                *ngIf="toError">
+                                <p>{{toError}}</p>
+                            </div>
+                          </td>
+
+                    </tr> 
                 </table>    
                 <table class="d-none">             
                   <tr>
@@ -211,7 +241,7 @@
           </div>         
         </div>    
       </div>    
-      <div class="col-12" >
+      <div class="col-12 py-3" >
           <div class="card">
             <div class="card-body text-left">
                 <h2>Parcel :</h2>
@@ -299,19 +329,30 @@
                           </td>
                     </tr>                                      
                 </table>
+                <div class="text-center">
+                    <div class="alert alert-danger" role="alert" *ngIf="quoteError">
+                        {{ quoteError }}
+                    </div>
+                    <div class="alert alert-danger" role="alert" 
+                        *ngIf="parcelError">
+                        {{ parcelError }}
+                    </div>
+
+                    <button type="submit" class="btn btn-primary" (click)="onClickSubmit()" >Get Quote</button>   
+                </div>
+             
             </div>
           </div>
       </div>    
     </div>    
-    <div class="col-4 py-3 ">
-        <app-formshipment class="affix"></app-formshipment> 
+    <div class="col-4 py-3  float-md-right">
+      <div class="position-fixed w-25" >
+          <app-formshipment></app-formshipment> 
+      </div>
     </div>    
   </div>
 
-  <div class="alert alert-danger" role="alert" *ngIf="showError">
-      {{ quoteError}}
-  </div>
-  <button type="submit" class="btn btn-primary" (click)="onClickMe()" >Send</button>
+
 
   <div class="row" *ngIf="showQuote">
     <div class="col-12 py-3 "  >
