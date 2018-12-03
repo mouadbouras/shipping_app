@@ -47,9 +47,11 @@ export class GetquoteComponent implements OnInit {
   //public showError : boolean;
   public showQuote : boolean;
   public quoteError : string;
-  public toError : string;
-  public fromError : string;
-  public parcelError : string;
+  public toNameError : string;
+  public fromNameError : string;
+  public toErrors : Array<string>;
+  public fromErrors : Array<string>;
+  public parcelErrors : Array<string>;
 
 
   public shippment = {
@@ -209,6 +211,8 @@ export class GetquoteComponent implements OnInit {
           this.longitude = place.geometry.location.lng();
           this.zoom = 12;
         });
+
+        this.validateAddressForms(true,false,false);
       });
     });
 
@@ -242,6 +246,8 @@ export class GetquoteComponent implements OnInit {
           this.longitude = place.geometry.location.lng();
           this.zoom = 12;
         });
+
+        this.validateAddressForms(false,true,false);
       });
     });
   }
@@ -268,7 +274,7 @@ export class GetquoteComponent implements OnInit {
     this.router.navigateByUrl('/shipment');
   }
 
-  onClickBack() {
+  private onClickBack() {
     // this.showError = false;
     // this.showQuote = false;
     // this.quoteError= "" ;
@@ -280,24 +286,20 @@ export class GetquoteComponent implements OnInit {
     location.reload();
   }
 
-  onClickSubmit() {
-    var valid = true;
+  private onClickSubmit() {
+    //var valid = true;
     this.showQuote = false;
     this.quoteError= "" ;
-    this.fromError= "";
-    if(this.formShipment.From.Name == undefined || this.formShipment.From.Name.trim() == "")
-    {
-      this.fromError= "Name is invalid."  
-      this.fromError= "Name is invalid."  
 
-      valid=false;
-    }
-    //toError 
-    //parcelError
-    if(!valid)
-    {
+
+    if(this.validateAddressForms (true,true,true) && this.validateNameForms(true,true)){
+      this.quoteError= "Please correct all the form errors then try submitting again." ;
       return;
     }
+    
+    //toError 
+    //parcelError
+ 
     this.spinner.show();
 
     //this.shipment = new Shipment();
@@ -394,4 +396,124 @@ export class GetquoteComponent implements OnInit {
 
   }  
 
+  private validateAddressForms (from : boolean , to:boolean, parcels:boolean) : boolean
+  {
+    if(from)
+    {
+      this.fromErrors = this.validateShippAddress(this.formShipment.From);
+      
+    }
+
+    if(to)
+    {
+      this.toErrors = this.validateShippAddress(this.formShipment.To)  
+    }
+
+    if(parcels)
+    this.parcelErrors = this.validateParcel(this.formShipment.Parcels[0]);
+
+    if((this.fromErrors && this.fromErrors.length > 0)|| 
+       (this.toErrors && this.toErrors.length > 0 )|| 
+       (this.parcelErrors && this.parcelErrors.length > 0))
+    {
+      return true;
+    } else{
+      return false;
+    }
+  }
+
+  private validateNameForms (from : boolean , to:boolean) : boolean
+  {
+    if(from)
+    {
+    this.fromNameError = this.validateShippName(this.formShipment.From);
+    }
+
+    if(to)
+    {
+      this.toNameError = this.validateShippName(this.formShipment.To);
+    }
+
+
+
+    if(this.fromNameError.length > 0 || this.toNameError.length > 0)
+    {
+      return true;
+    } else{
+      return false;
+    }
+  }
+
+  private validateShippName( shippObj:Shipp) : string
+  {
+    var error = ""
+    if(shippObj.Name == undefined || shippObj.Name.trim() == "")
+    {
+      error = "Name is invalid." ;
+    }
+
+    return error
+  }
+
+  private validateShippAddress( shippObj:Shipp) : Array<string>
+  {
+    var errors = new Array<string>();    
+
+
+    if(shippObj.StreetNumber == undefined || shippObj.StreetNumber.trim() == "" ) 
+    {
+      errors.push("Street number is invalid. ");
+    }
+    if(shippObj.Street1 == undefined || shippObj.Street1.trim() == "" ) 
+    {
+      errors.push("Street is invalid. ");
+    }
+    if(shippObj.City  == undefined || shippObj.City.trim() == "" ) 
+    {
+      errors.push("City is invalid. ");
+    }
+    if(shippObj.State == undefined || shippObj.State.trim() == "" ) 
+    {
+      errors.push("State or Province is invalid. ");
+    }
+    if(shippObj.Zip == undefined || shippObj.Zip.trim() == "" ) 
+    {
+      errors.push("Zip or PostalCode is invalid. ");
+    }
+    if(shippObj.Country == undefined || shippObj.Country.trim() == "" ) 
+    {
+      errors.push("Country is invalid. ");
+    } 
+
+    return errors;
+
+  }
+
+  private validateParcel(parcel:Parcel) : Array<string>
+  {   
+      var errors = new Array<string>();  
+
+      if(parcel.Height == undefined || parcel.Height <= 0 )
+      {
+        errors.push("Height is invalid");
+      }
+
+      if(parcel.Width == undefined || parcel.Width <= 0)
+      {
+        errors.push("Width is invalid");
+      }
+
+      if(parcel.Length == undefined || parcel.Length <= 0)
+      {
+        errors.push("Length is invalid");
+      } 
+
+      if(parcel.Weight == undefined || parcel.Weight <= 0)
+      {
+        errors.push("Weight is invalid");
+      }
+
+      return errors;
+  }
+  
 }
