@@ -19,7 +19,11 @@ import { Quote } from '../model/quote.model';
 import { Constants } from '../util/constants.util';
 import { FormService } from '../services/form.service';
 
-
+export enum QuoteState {
+  formState,
+  quoteListState,
+  quoteSelectedState
+}
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -43,9 +47,9 @@ export class GetquoteComponent implements OnInit {
   public searchControl2: FormControl;
   public zoom: number;
   public rates : Array<Rate>;
-
   //public showError : boolean;
   public showQuote : boolean;
+  public showSelectedQuote : boolean;
   public quoteError : string;
   public toNameError : string;
   public fromNameError : string;
@@ -145,7 +149,7 @@ export class GetquoteComponent implements OnInit {
 
     this.quoteError = "";
     this.showQuote = false;
-    this.quoteError= "" ;
+    this.showSelectedQuote = false;
 
     // var q = new Quote();
     // q.From = new Shipp();
@@ -262,19 +266,20 @@ export class GetquoteComponent implements OnInit {
     }
   }
 
-  private onClickAdd(rate){
+  private onClickAdd(rate:Rate){
     var quote = new Quote();
-    quote.From = this.shipment.From;
-    quote.To = this.shipment.To;
-    quote.QuoteParcel = this.shipment.Parcels[0];
+    quote.From = this.formShipment.From;
+    quote.To = this.formShipment.To;
+    quote.QuoteParcel = this.formShipment.Parcels[0];
     quote.QuoteRate = rate;
     quote.QuoteDate = new Date();
     this.quote.addShipment(quote);
-    
-    this.router.navigateByUrl('/shipment');
+    this.showSelectedQuote = true;
+    //this.router.navigateByUrl('/shipment');
   }
 
-  private onClickBack() {
+  private onClickBack(state:QuoteState) {
+    console.log(state);
     // this.showError = false;
     // this.showQuote = false;
     // this.quoteError= "" ;
@@ -283,7 +288,19 @@ export class GetquoteComponent implements OnInit {
     // this.router.navigateByUrl('/RefrshComponent', {skipLocationChange: true}).then(()=>
     // this.router.navigate(["Your actualComponent"]));
 
-    location.reload();
+    if(state == QuoteState.quoteListState){
+      this.quoteError = "";
+      this.showQuote = false;
+      this.showSelectedQuote = false;
+    }else if (state == QuoteState.quoteSelectedState){
+      this.quoteError = "";
+      this.showQuote = true;
+      this.showSelectedQuote = false;
+    }
+
+
+
+    //location.reload();
   }
 
   private onClickSubmit() {
@@ -337,10 +354,15 @@ export class GetquoteComponent implements OnInit {
 
 
     var response; 
+    console.log("shipp");
     console.log(JSON.stringify(this.shipment));
+    console.log(JSON.stringify(this.formShipment));
+
     this.http.post(Constants.baseUrl+'/shipment.json' ,
-                   JSON.stringify(this.shipment), httpOptions).subscribe(
+                   JSON.stringify(this.formShipment), httpOptions).subscribe(
       data => {
+
+      //console.log();
 
       this.spinner.hide();
 
@@ -391,6 +413,7 @@ export class GetquoteComponent implements OnInit {
     },
     error => {
       this.spinner.hide();
+      console.log(error);
       this.quoteError = "Unable to connect to remote server. Try again later.";
     });
 

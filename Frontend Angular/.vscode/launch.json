@@ -13,7 +13,7 @@
             "outFiles": [
                 "${workspaceFolder}/**/*.js"
             ]
-        }
+        },
         {
             "type": "chrome",
             "request": "launch",

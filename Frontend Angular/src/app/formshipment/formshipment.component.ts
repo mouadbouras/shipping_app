@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { FormService } from '../services/form.service';
 import { Shipment } from '../model/shipment.model';
 
@@ -10,10 +10,9 @@ import { Shipment } from '../model/shipment.model';
 })
 export class FormshipmentComponent implements OnInit {
   public formShipment : Shipment;
-
+  @Input() formShipmentTitle: string;
   constructor(
     private form: FormService
-
   ) { }
 
   ngOnInit() {

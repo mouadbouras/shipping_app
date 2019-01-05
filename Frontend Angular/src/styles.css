@@ -1,6 +1,9 @@
 /* You can add global styles to this file, and also import other style files */
 body {
     background-color: #f8f9fa !important; 
+    min-width:1000px;        /* Suppose you want minimum width of 1000px */
+    width: auto !important;  /* Firefox will set width as auto */
+    width:1000px;       
 }
 
 .black-overlay{

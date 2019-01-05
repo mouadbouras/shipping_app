@@ -18,77 +18,6 @@ namespace MyApp.ServiceInterface
 
         public object Any(Hello request)
         {
-            // to address
-            // Hashtable toAddressTable = new Hashtable();
-            // toAddressTable.Add("name", "moe");
-            // toAddressTable.Add("company", "comp");
-            // toAddressTable.Add("street_no", "1461");
-            // toAddressTable.Add("street1", "Rue du Collège");
-            // toAddressTable.Add("city", "Montréal");
-            // toAddressTable.Add("state", "QC");
-            // toAddressTable.Add("zip", "H4L3P1");
-            // toAddressTable.Add("country", "Canada");
-
-            // // from address
-            // Hashtable fromAddressTable = new Hashtable();
-            // fromAddressTable.Add("name", "Ms Hippo");
-            // fromAddressTable.Add("company", "San Diego Zoo");
-            // fromAddressTable.Add("street_no", "17");
-            // fromAddressTable.Add("street1", "Rue de Calumet");
-            // fromAddressTable.Add("city", "Gatineau");
-            // fromAddressTable.Add("state", "QC");
-            // fromAddressTable.Add("zip", " J8P1Z4 ");
-            // fromAddressTable.Add("country", "Canada");
-
-            // Hashtable parcelTable = new Hashtable();
-            // parcelTable.Add("length", "5");
-            // parcelTable.Add("width", "5");
-            // parcelTable.Add("height", "5");
-            // parcelTable.Add("distance_unit", "in");
-            // parcelTable.Add("weight", "2");
-            // parcelTable.Add("mass_unit", "lb");
-
-            // List<Hashtable> parcels = new List<Hashtable>();
-            // parcels.Add(parcelTable);
-           
-
-            // var response = resource.CreateShipment(new Hashtable(){
-            // { "address_to", toAddressTable},
-            // { "address_from", fromAddressTable},
-            // { "parcels", parcels},
-            // { "async", false}});
-
-            // var id =  response.Rates[0].ObjectId;
-
-            // Hashtable transactionParameters = new Hashtable();
-            // transactionParameters.Add("rate",id);
-            // transactionParameters.Add("async", false);
-
-            //  // Purchase the desired rate.
-            // Transaction transaction = resource.CreateTransaction(transactionParameters);
-
-            // if (((String) transaction.Status).Equals("SUCCESS", StringComparison.OrdinalIgnoreCase)){
-            //     Console.WriteLine("Label url: " + transaction.LabelURL);
-            //     Console.WriteLine("Tracking number: " +
-            //         transaction.TrackingNumber);
-            //     //return {transaction.LabelURL,transaction.TrackingNumber}
-
-            //     var rresponse = "{\"SSuccess\": \"transaction Sccess\" ," +
-            //         "\"label\" : " + transaction.LabelURL.ToString() + ","+
-            //         "\"transaction\" : " + transaction.TrackingNumber.ToString() + "}";
-            //     return rresponse;
-
-
-            // } else{
-            //     Console.WriteLine("Error generating label. Messages: " +
-            //         transaction.Messages);
-                
-            //     var rresponse = "{\"error\": \"exception caught by server\" ," +
-            //         "\"details\" : " + transaction.Messages.ToString() + "}";
-            //         return rresponse;
-            // }
-
-            // return response.Rates;
             var response = "{\"success\": \"transaction Success\" ," +
                     "\"label_url\" : \"" + "https://shippo-delivery-east.s3.amazonaws.com/e119bde5117946c2a2f121b610db21a4.pdf?Signature=VJnRwuOBpMf788d2GB0zkNjWRh4%3D&Expires=1573254252&AWSAccessKeyId=AKIAJGLCC5MYLLWIG42A" + "\" ,"+
                     "\"tracking_number\" : \"" + "ZW70QJC" + "\","+
@@ -145,13 +74,11 @@ namespace MyApp.ServiceInterface
                     parcels.Add(parcelTable);
                 }
 
-
                 var apiResponse = resource.CreateShipment(new Hashtable(){
                 { "address_to", toAddressTable},
                 { "address_from", fromAddressTable},
                 { "parcels", parcels},
                 { "async", false}});
-
 
                 var response = "{\"success\": \"success\" ," +
                 "\"shipment_id\" : \""+ apiResponse.ObjectId +"\","+
@@ -240,28 +167,7 @@ namespace MyApp.ServiceInterface
 
                 var response = "{\"success\": \"success\"} " ;
                 return response;
-
-                // from.StreetNumber = ((Hashtable) shipment.AddressTo)["street_no"].ToString();
-                // from.StreetAddress = ((Hashtable) shipment.AddressTo)["street1"].ToString();
-                // from.City = ((Hashtable) shipment.AddressTo)["city"].ToString();
-                // from.Province = ((Hashtable) shipment.AddressTo)["state"].ToString();
-                // from.PostalCode = ((Hashtable) shipment.AddressTo)["zip"].ToString();
-                // from.Country = ((Hashtable) shipment.AddressTo)["country"].ToString();
-                // var fromId = context.ShippmentUnit.Add(from).GetId();
-
-                // Orders order = new Orders();
-                // order.FromId = (int)fromId;
-                //    var shippingDb = context.Orders.Add(
-                    
-                //    );
-                //    db.Set<Customer>();
-                //     customers.Add( new Customer { CustomerId = id, Name = "John Doe" } );
-
-                //     shippingDb.SaveChanges();
-
-                // var getUSer = context.Users
-                //                       .Where(s => s.Id == 2)
-                //                       .ToList();
+                
             }
 
             if(request.UserId != "" && request.QuoteId == null && request.RateId == null)
@@ -410,7 +316,7 @@ namespace MyApp.ServiceInterface
                         //return response;
 
 
-                        var response = "{\"Success\": \"transaction Sccess\" ," +
+                        var response = "{\"success\": \"transaction Sccess\" ," +
                         "\"label\" : \"" + transaction.LabelURL.ToString() + "\" ,"+
                         "\"transaction\" : \"" + transaction.TrackingNumber.ToString() + "\"}";
 
