@@ -43,12 +43,17 @@ namespace MyApp
         // Configure your AppHost with the necessary configuration and dependencies your App needs
         public override void Configure(Container container)
         {
-            Plugins.Add(new CorsFeature());
+            //Plugins.Add(new CorsFeature());
 
             SetConfig(new HostConfig
             {
                 DefaultRedirectPath = "/metadata",
-                DebugMode = AppSettings.Get(nameof(HostConfig.DebugMode), false)
+                // DebugMode = AppSettings.Get(nameof(HostConfig.DebugMode), false),
+                GlobalResponseHeaders = {
+                    { "Access-Control-Allow-Origin", "*" },
+                    { "Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS" },
+                    { "Access-Control-Allow-Headers", "Content-Type" },
+        }
             });
         }
     }
