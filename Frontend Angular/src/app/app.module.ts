@@ -17,6 +17,7 @@ import { MyquotesComponent } from './myquotes/myquotes.component';
 import { ShipmentComponent } from './shipment/shipment.component';
 import { MyshipmentsComponent } from './myshipments/myshipments.component';
 import { FormshipmentComponent } from './formshipment/formshipment.component';
+import { LandingComponent } from './landing/landing.component';
 
 @NgModule({
   declarations: [
@@ -28,6 +29,7 @@ import { FormshipmentComponent } from './formshipment/formshipment.component';
     ShipmentComponent,
     MyshipmentsComponent,
     FormshipmentComponent,
+    LandingComponent,
   ],
   imports: [
     AgmCoreModule.forRoot({

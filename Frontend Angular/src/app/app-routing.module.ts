@@ -6,9 +6,14 @@ import { AppComponent } from './app.component';
 import { MyquotesComponent } from './myquotes/myquotes.component';
 import { ShipmentComponent } from './shipment/shipment.component';
 import { MyshipmentsComponent } from './myshipments/myshipments.component';
+import { LandingComponent } from './landing/landing.component';
 
 
 const routes: Routes = [
+  {
+    path:"",
+    component:LandingComponent
+  },
   {
     path:"quote",
     component:GetquoteComponent
