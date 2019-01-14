@@ -106,7 +106,7 @@ export class MyquotesComponent implements OnInit {
 
     // });
 
-
+    console.log(Constants.baseUrl+'/quote.json');
     this.http.post(Constants.baseUrl+'/quote.json' ,
     JSON.stringify({UserId:1}), httpOptions).subscribe(
       data => {

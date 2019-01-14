@@ -11,7 +11,7 @@ using Newtonsoft.Json.Linq;
 
 namespace MyApp.ServiceInterface
 {
-    [EnableCors(allowedMethods:"GET,POST")]
+    //[EnableCors(allowedMethods:"GET,POST")]
     public class MyServices : Service
     {
         public APIResource resource = new APIResource("shippo_test_5f00f661c1f2f19191bfba82cc8575fddb06c202");
