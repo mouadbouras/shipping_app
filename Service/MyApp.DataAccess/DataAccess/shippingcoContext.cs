@@ -28,9 +28,14 @@ namespace MyApp.DataAccess.DataAccess
             if (!optionsBuilder.IsConfigured)
             {
                 string connString = Helper.LoadConnSgring().connString;
+                
                 if(connString==null)
                 {
                     connString = ConfigurationManager.AppSettings["connString"];
+                }
+
+                if(connString==null){
+                   connString = ConfigurationManager.ConnectionStrings["connString"].ConnectionString;
                 }
 
                 optionsBuilder.UseSqlServer(connString);
