@@ -9,14 +9,9 @@ namespace DatabaseConn
 
     class Program
     {
-        //private static string SqlConnectionString = "Server=tcp:shipping-co.database.windows.net,1433;Initial Catalog=shipping-co;Persist Security Info=False;User ID=shipping-dbadmin;Password=Bacon123;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
         static void Main(string[] args)
         {
                 var context = new shippingcoContext();
-
-                // var getUSer = context.Users
-                //                       .Where(s => s.Id == 2)
-                //                       .ToList();
 
                 var quotes = context.Quotes
                 .Where(q => q.ClientId.ToString() == "1")
@@ -24,22 +19,6 @@ namespace DatabaseConn
             
                 Console.WriteLine(quotes[0].Id );
 
-            // string queryString = "SELECT * FROM Users;";
-
-            // using(var client = new SqlConnection(SqlConnectionString))
-            // {
-            //     SqlCommand command = new SqlCommand(queryString, client);
-            //     client.Open();
-            //     SqlDataReader reader = command.ExecuteReader();
-            //     while (reader.Read())
-            //     {
-            //         Console.WriteLine(String.Format("{0}, {1}, {2}",
-            //             reader[0], reader[1], reader[2]));
-            //     }
-            //     reader.Close();
-            //     client.Close();
-
-            // }
 
         }
     }
