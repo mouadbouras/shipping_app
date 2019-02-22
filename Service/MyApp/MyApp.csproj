@@ -10,7 +10,7 @@
 
   <ItemGroup>
     <Folder Include="wwwroot\" />
-    <EmbeddedResource Include="dbconfig.json" />
+    <!-- <EmbeddedResource Include="dbconfig.json" /> -->
   </ItemGroup>
 
   <ItemGroup>
