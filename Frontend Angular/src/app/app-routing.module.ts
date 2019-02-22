@@ -7,6 +7,8 @@ import { MyquotesComponent } from './myquotes/myquotes.component';
 import { ShipmentComponent } from './shipment/shipment.component';
 import { MyshipmentsComponent } from './myshipments/myshipments.component';
 import { LandingComponent } from './landing/landing.component';
+import { LoginComponent } from './login/login.component';
+import { SignupComponent } from './signup/signup.component';
 
 
 const routes: Routes = [
@@ -29,7 +31,16 @@ const routes: Routes = [
   {
     path:"myshipments",
     component:MyshipmentsComponent
+  },
+  {
+    path:"login",
+    component:LoginComponent
+  },
+  {
+    path:"signup",
+    component:SignupComponent
   }       
+
 
 ];
 

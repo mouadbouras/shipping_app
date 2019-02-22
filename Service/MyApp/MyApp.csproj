@@ -13,8 +13,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.App" Version="2.1.*" />
+    <PackageReference Include="Microsoft.AspNetCore.App" Version="2.1.6" />
     <PackageReference Include="ServiceStack" Version="5.*" />
+    <PackageReference Include="ServiceStack.OrmLite.SqlServer.Core" Version="5.4.1" />
+    <PackageReference Include="ServiceStack.Server" Version="5.4.1" />
     <PackageReference Include="Shippo" Version="2.1.10" />
   </ItemGroup>
 

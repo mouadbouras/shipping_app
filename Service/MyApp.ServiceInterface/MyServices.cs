@@ -16,6 +16,20 @@ namespace MyApp.ServiceInterface
     {
         public APIResource resource = new APIResource("shippo_test_5f00f661c1f2f19191bfba82cc8575fddb06c202");
 
+        public object Get(SessionDTO request)
+        {
+            var typedSession = this.SessionAs<AuthUserSession>();
+            var s = this.GetSession();
+            if(typedSession.IsAuthenticated){
+                //this.RemoveSession();
+                return "{\"IsAuthenticated\" : \"true\"}";                
+            }
+
+                return "{\"IsAuthenticated\" : \"false\"}";
+        }
+
+
+        [Authenticate]
         public object Any(Hello request)
         {
             var response = "{\"success\": \"transaction Success\" ," +
@@ -390,6 +404,6 @@ namespace MyApp.ServiceInterface
  
             return null;
         }        
-    
     }
+    
 }
