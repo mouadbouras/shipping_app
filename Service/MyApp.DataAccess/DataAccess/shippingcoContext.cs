@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Configuration;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 
@@ -27,6 +28,11 @@ namespace MyApp.DataAccess.DataAccess
             if (!optionsBuilder.IsConfigured)
             {
                 string connString = Helper.LoadConnSgring().connString;
+                if(connString==null)
+                {
+                    connString = ConfigurationManager.AppSettings["connString"];
+                }
+
                 optionsBuilder.UseSqlServer(connString);
             }
         }

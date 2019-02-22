@@ -17,6 +17,7 @@
     <PackageReference Include="Microsoft.AspNetCore.App" Version="2.1.*" />
     <PackageReference Include="ServiceStack" Version="5.*" />
     <PackageReference Include="Shippo" Version="2.1.10" />
+    <PackageReference Include="System.Configuration.ConfigurationManager" Version="4.5.0" />
   </ItemGroup>
 
   <ItemGroup>
