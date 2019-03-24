@@ -24,8 +24,8 @@ const httpOptions = {
 })
 export class MyshipmentsComponent implements OnInit {
 
-  private orders = new Array<Order>();
-  private selectedOrder : Order;
+  public orders = new Array<Order>();
+  public selectedOrder : Order;
 
   constructor(
     private quoteServcie: QuoteService,

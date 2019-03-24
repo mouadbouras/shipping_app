@@ -24,8 +24,8 @@ const httpOptions = {
 })
 export class MyquotesComponent implements OnInit {
 
-  private quotes = new Array<Quote>();
-  private selectedQuote : Quote;
+  public quotes = new Array<Quote>();
+  public selectedQuote : Quote;
   //private shipment = new Order();
 
 

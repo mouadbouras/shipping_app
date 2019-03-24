@@ -6,6 +6,7 @@ namespace MyApp.DataAccess.DataAccess
 {
     public partial class shippingcoContext : DbContext
     {
+        public static string connstring = "Server=tcp:shipping-co.database.windows.net,1433;Initial Catalog=shipping-co;Persist Security Info=False;User ID=shipping-dbadmin;Password=Bacon123;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
         public shippingcoContext()
         {
         }
@@ -26,8 +27,7 @@ namespace MyApp.DataAccess.DataAccess
         {
             if (!optionsBuilder.IsConfigured)
             {
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-                optionsBuilder.UseSqlServer("Server=tcp:shipping-co.database.windows.net,1433;Initial Catalog=shipping-co;Persist Security Info=False;User ID=shipping-dbadmin;Password=Bacon123;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;");
+                optionsBuilder.UseSqlServer(shippingcoContext.connstring);
             }
         }
 

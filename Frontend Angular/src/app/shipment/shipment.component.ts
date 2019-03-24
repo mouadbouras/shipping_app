@@ -27,7 +27,7 @@ const httpOptions = {
 })
 export class ShipmentComponent implements OnInit {
 
-  private shipment = new Quote();
+  public shipment = new Quote();
   
   public selectQuoteError : boolean;
   public selectQuoteErrorText : string;
@@ -44,7 +44,7 @@ export class ShipmentComponent implements OnInit {
     this.selectQuoteError = false;        
   }
 
-  private onClickConfirm(){
+  public onClickConfirm(){
 
     this.selectQuoteError = false;
     this.spinner.show();
@@ -71,7 +71,7 @@ export class ShipmentComponent implements OnInit {
     });
   }
 
-  private onClickSave(){
+  public onClickSave(){
 
     this.selectQuoteError = false;
     this.spinner.show();
