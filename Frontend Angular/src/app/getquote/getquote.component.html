@@ -57,76 +57,7 @@
                             </div>
                           </td>
                       </tr>                    
-                    <!-- <tr>
-                        <td class="label">Company </td>
-                      </tr> 
-                      <tr>                        
-                          <td class="slimField">
-                            <input class="form-control" id="company" required
-                            [(ngModel)]="contentForm1.company" placeholder="Company Name" value="{{ contentForm1.company  }}"/></td>
-                      <tr>
-                          <td class="label">Address</td>
-                      </tr>      
-                          <td class="slimField">
-                            <textarea class="form-control" rows="4" disabled>{{ formShipment.From.street_number + ' ' + formShipment.From.route 
-                                + '\n' + formShipment.From.locality + ', ' + formShipment.From.administrative_area_level_1 
-                                + ' ' + formShipment.From.postal_code + '\n' + formShipment.From.country  }}</textarea>
-                          </td>
-                        </tr>                                        -->
                 </table>     
-                <!-- <table class="d-none">                        
-                    <tr>
-                      <td class="label">Street number</td>
-                      </tr>      
-                      <tr>                    
-                      <td class="slimField">
-                        <input class="form-control" id="street_number" required
-                            disabled="true" value="{{ formShipment.From.StreetNumber  }}"/></td>
-                    </tr>                          
-                  <tr>
-                    <td class="label">Street address</td>
-                  </tr>      
-                  <tr>                  
-                    <td class="slimField">
-                      <input class="form-control" id="street_name" required
-                          disabled="true" value="{{ formShipment.From.Street1  }}"/></td>
-                  </tr>
-                  <tr>
-                    <td class="label">City</td>
-                  </tr>      
-                  <tr>                      
-                    <td class="wideField" colspan="3">
-                      <input class="form-control" id="locality" required
-                          disabled="true"  value="{{ formShipment.From.City }}"/></td>
-                  </tr>
-                  <tr>
-                    <td class="label">State/Province</td>
-                  </tr>      
-                  <tr>                      
-                    <td class="slimField">
-                      <input class="form-control" required
-                          id="administrative_area_level_1" disabled="true" 
-                          value="{{ formShipment.From.State }}" /></td>
-                  </tr>
-                  <tr>
-                      <td class="label">Zip code</td>
-                    </tr>      
-                    <tr>                        
-                      <td class="wideField">
-                        <input class="form-control" id="postal_code"
-                            disabled="true" required
-                            value="{{ formShipment.From.Zip }}"/></td>
-                  </tr>                
-                  <tr>
-                    <td class="label">Country</td>
-                  </tr>      
-                  <tr>                      
-                    <td class="wideField" colspan="3">
-                      <input class="form-control" required
-                          id="country" disabled="true"
-                          value="{{ formShipment.From.Country }}"/></td>
-                  </tr> 
-                </table>     -->
           </div> 
         </div>
         </div>
@@ -137,17 +68,6 @@
             <h2>To :</h2>
 
           <div class="row" >
-
-              <!-- <ul class="list-group list-group-flush" id="address">
-                  <li class="list-group-item">
-                      <td class="label">Name </td>
-                      <td class="slimField">
-                        <input class="field" id="name"
-                          value="{{ contentForm2.name  }}"/></td>
-                  </li>
-                  <li class="list-group-item">Dapibus ac facilisis in</li>
-                  <li class="list-group-item">Vestibulum at eros</li>
-              </ul> -->
 
               <table class="table table-borderless" >
                   <tr>
@@ -196,76 +116,7 @@
                         </div>
                       </td>
                   </tr>                                   
-                  <!-- <tr>
-                      <td class="label">Company </td>
-                    </tr>      
-                    <tr>                        
-                      <td class="slimField">
-                        <input class="form-control" id="company" required
-                        [(ngModel)]="contentForm2.company" placeholder="Company Name" value="{{ contentForm2.company  }}"/></td>
-                  <tr>
-                      <td class="label">Address</td>
-                  </tr>                   
-                      <td class="slimField">
-                        <textarea class="form-control" rows="4" disabled>{{ contentForm2.street_number + ' ' + contentForm2.route 
-                            + '\n' + contentForm2.locality + ', ' + contentForm2.administrative_area_level_1 
-                            + ' ' + contentForm2.postal_code + '\n' + contentForm2.country  }}</textarea>
-                      </td>
-                    </tr>                      -->
-                </table>    
-                <!-- <table class="d-none">             
-                  <tr>
-                    <td class="label">Street number</td>
-                  </tr>      
-                  <tr>                      
-                    <td class="slimField">
-                      <input class="form-control" id="street_number" required 
-                          disabled="true" value="{{ formShipment.To.StreetNumber  }}"/></td>
-                  </tr>                   
-                  <tr>
-                    <td class="label">Street address</td>
-                  </tr>      
-                  <tr>                      
-                    <td class="slimField">
-                        <input class="form-control" id="street_name" required
-                        disabled="true" value="{{ formShipment.To.Street1  }}"/></td>
-                  </tr>
-                  <tr>
-                    <td class="label">City</td>
-                  </tr>      
-                  <tr>                      
-                    <td class="wideField" colspan="3">
-                      <input class="form-control" id="locality" required
-                          disabled="true"  value="{{ formShipment.To.City }}"/></td>
-                  </tr>
-                  <tr>
-                    <td class="label">State/Province</td>
-                  </tr>      
-                  <tr>                      
-                    <td class="slimField">
-                      <input class="form-control" required
-                          id="administrative_area_level_1" disabled="true" 
-                          value="{{ formShipment.To.State }}" /></td>
-                  </tr>
-                  <tr>
-                      <td class="label">Zip code</td>
-                    </tr>      
-                    <tr>                        
-                      <td class="wideField">
-                        <input class="form-control" id="postal_code"
-                            disabled="true" required
-                            value="{{ formShipment.To.Zip }}"/></td>
-                  </tr>
-                  <tr>
-                    <td class="label">Country</td>
-                  </tr>      
-                  <tr>                      
-                    <td class="wideField" colspan="3">
-                      <input class="form-control" required
-                          id="country" disabled="true"
-                          value="{{ formShipment.To.Country }}"/></td>
-                  </tr>
-                </table>     -->
+                </table>                  
               </div>         
           </div>         
         </div>    
@@ -389,7 +240,6 @@
                 <tr >
                     <th colspan="2">Provider</th>
                     <th>Amount</th>
-                    <th>Currency</th>
                     <th>Estimate</th>
                     <th>Servicelevel</th>
                     <th>Save</th>
@@ -399,8 +249,7 @@
                 <tr *ngFor="let r of rates">
                   <th><img  src="{{r.Image}}" width="50" class="img-fluid" alt="Responsive image"></th>
                   <td> {{ r.Provider }}</td>
-                  <td>${{ r.Amount}}</td>
-                  <td>{{ r.Currency}}</td>
+                  <td>${{ r.Amount }}{{r.Currency}}</td>
                   <td>{{ r.Estimate }} Days</td>
                   <td>{{ r.Servicelevel }}</td>
                   <td><button type="button" class="btn btn-success" (click)="onClickAdd(r)" >Select</button></td>

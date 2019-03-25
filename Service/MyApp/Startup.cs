@@ -52,7 +52,9 @@ namespace MyApp
         {
 
             Plugins.Add(new SessionFeature());
-            Plugins.Add(new CorsFeature());
+            //Plugins.Add(new CorsFeature());
+            Plugins.Add(GetCors());
+
             Plugins.Add(new AuthFeature(() => new AuthUserSession(),
             new IAuthProvider[] { 
                 //new BasicAuthProvider(),
@@ -65,18 +67,18 @@ namespace MyApp
 
             Plugins.Add(new RegistrationFeature());
 
-            container.Register<ICacheClient>(new MemoryCacheClient());
+            //container.Register<ICacheClient>(new MemoryCacheClient());
 
             container.Register<IDbConnectionFactory>(c =>
-                new OrmLiteConnectionFactory(shippingcoContext.connstring, SqlServer2012Dialect.Provider));
+                new OrmLiteConnectionFactory(Helper.LoadConnSgring().connString, SqlServer2012Dialect.Provider));
 
             container.Register<IAuthRepository>(c =>
                 new OrmLiteAuthRepository(c.Resolve<IDbConnectionFactory>()));
 
-            container.Resolve<IAuthRepository>().InitSchema(); // Create any missing UserAuth tables
+            // container.Resolve<IAuthRepository>().InitSchema(); // Create any missing UserAuth tables
 
-            // var userRep = new InMemoryAuthRepository();
-            // container.Register<IUserAuthRepository>(userRep);
+            //var userRep = new InMemoryAuthRepository();
+            //container.Register<IUserAuthRepository>(userRep);
 
 
 
@@ -93,12 +95,12 @@ namespace MyApp
             //             new CredentialsAuthProvider(AppSettings)
             //                     }));
 
-        // Plugins.Add(new AuthFeature(...,
-        //     new IAuthProvider[] {
-        //         new JwtAuthProvider(AppSettings) { AuthKey = AesUtils.CreateKey() },
-        //         new CredentialsAuthProvider(AppSettings),
-        //         //...
-        //     }));            
+            // Plugins.Add(new AuthFeature(...,
+            //     new IAuthProvider[] {
+            //         new JwtAuthProvider(AppSettings) { AuthKey = AesUtils.CreateKey() },
+            //         new CredentialsAuthProvider(AppSettings),
+            //         //...
+            //     }));            
 
             // Plugins.Add(new RegistrationFeature());
 
@@ -111,6 +113,14 @@ namespace MyApp
                 DefaultRedirectPath = "/metadata",
                 DebugMode = AppSettings.Get(nameof(HostConfig.DebugMode), false)
             });
+        }
+
+        private static CorsFeature GetCors()
+        {
+            return new CorsFeature(allowedOrigins: "http://localhost:4200",
+                                    allowedMethods: "GET, POST, PUT, DELETE",
+                                    allowedHeaders: "Content-Type",
+                                    allowCredentials: true);
         }
     }
 }

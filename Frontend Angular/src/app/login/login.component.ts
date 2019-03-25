@@ -6,6 +6,7 @@ import { first } from 'rxjs/operators';
 import { AuthenticationService } from '../services/authentication.service';
 import { UserService } from '../services/user.service';
 import { AlertService } from '../services/alert.service';
+import { User } from '../model/user.model';
 
 
 @Component({
@@ -18,13 +19,15 @@ export class LoginComponent implements OnInit {
   loading = false;
   submitted = false;
   returnUrl: string;
+  user: User ;
 
   constructor(
       private formBuilder: FormBuilder,
       private route: ActivatedRoute,
       private router: Router,
       private authenticationService: AuthenticationService,
-      private alertService: AlertService) {}
+      private alertService: AlertService,
+      private userServcie: UserService) {}
 
   ngOnInit() {
       this.loginForm = this.formBuilder.group({
@@ -57,7 +60,13 @@ export class LoginComponent implements OnInit {
           .subscribe(
               data => {
                     console.log("Holaaaaa");
+                    console.log(data.headers);
                     this.router.navigate([this.returnUrl]);
+                    var u = new User();
+                    u.Username = data.userName;
+                    u.Id = data.userId;
+                    u.FirstName = data.displayName;
+                    this.userServcie.setUser(u);
               },
               error => {
                   console.log(error["message"]);

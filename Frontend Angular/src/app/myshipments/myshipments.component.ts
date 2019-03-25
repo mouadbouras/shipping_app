@@ -10,12 +10,14 @@ import { HttpClient } from '@angular/common/http';
 import { HttpHeaders } from '@angular/common/http';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Router } from '@angular/router';
+import { UserService } from '../services/user.service';
+import { User } from '../model/user.model';
+//import { userInfo } from 'os';
 
 const httpOptions = {
   headers: new HttpHeaders({
     'Content-Type':  'application/json'
-  })
-};
+  }),withCredentials: true};
 
 @Component({
   selector: 'app-myshipments',
@@ -26,18 +28,30 @@ export class MyshipmentsComponent implements OnInit {
 
   public orders = new Array<Order>();
   public selectedOrder : Order;
+  public user : User;
+
 
   constructor(
     private quoteServcie: QuoteService,
     private http: HttpClient,
-    private spinner: NgxSpinnerService) { }
+    private spinner: NgxSpinnerService,
+    private userServcie: UserService,
+    private router : Router,
+
+    ) { }
 
   ngOnInit() {
-    this.spinner.show();
     this.quoteServcie.ordersOB.subscribe(res => this.orders = res);
+    //this.userServcie.usersOB.subscribe(u => this.user = u[0]);
+    this.userServcie.getUser().subscribe(u => this.user = u);
+    if(this.user.Id == null)
+    {
+      this.router.navigateByUrl('/login');
+    }
+    this.spinner.show();
 
     this.http.post(Constants.baseUrl+'/transaction.json' ,
-    JSON.stringify({UserId:1}), httpOptions).subscribe(
+    JSON.stringify({UserId:this.user.Id}), httpOptions).subscribe(
       data => {
         this.spinner.hide();
 
@@ -106,6 +120,10 @@ export class MyshipmentsComponent implements OnInit {
 
 
         }        
+    },
+    error => {
+      this.spinner.hide();
+      console.log(error);
     });
   }
 

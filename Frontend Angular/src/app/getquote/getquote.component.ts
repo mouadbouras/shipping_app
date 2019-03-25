@@ -10,6 +10,8 @@ import { Shipp } from '../model/shipp.model';
 import { Rate } from '../model/rate.model';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Router } from '@angular/router';
+import { User } from '../model/user.model';
+import { UserService } from '../services/user.service';
 
 
 import { HttpClient } from '@angular/common/http'; 
@@ -28,8 +30,8 @@ export enum QuoteState {
 const httpOptions = {
   headers: new HttpHeaders({
     'Content-Type':  'application/json'
-  })
-};
+  }),withCredentials: true};
+
 
 @Component({
   selector: 'app-getquote',
@@ -56,6 +58,8 @@ export class GetquoteComponent implements OnInit {
   public toErrors : Array<string>;
   public fromErrors : Array<string>;
   public parcelErrors : Array<string>;
+  public user : User;
+
 
 
   public shippment = {
@@ -83,28 +87,6 @@ export class GetquoteComponent implements OnInit {
     country: "Country" 
   }
 
-  // public contentForm1 = {
-  //   name :'',
-  //   company :'',
-  //   street_number: '',
-  //   route: '',
-  //   locality: '',
-  //   administrative_area_level_1: '',
-  //   country: '',
-  //   postal_code: ''
-  // };
-
-  // public contentForm2 = {
-  //   name :'',
-  //   company :'',
-  //   street_number: '',
-  //   route: '',
-  //   locality: '',
-  //   administrative_area_level_1: '',
-  //   country: '',
-  //   postal_code: ''
-  // };  
-
   @ViewChild("search1")
   public searchElementRef1: ElementRef;
   @ViewChild("search2")
@@ -117,12 +99,19 @@ export class GetquoteComponent implements OnInit {
     private quote: QuoteService,
     private form: FormService,
     private http: HttpClient,
-    private spinner: NgxSpinnerService
+    private spinner: NgxSpinnerService,
+    private userServcie: UserService
   ) {
 
   }
 
   ngOnInit() {
+    this.userServcie.getUser().subscribe(u => this.user = u);
+    if(this.user.Id == null)
+    {
+      this.router.navigateByUrl('/login');
+    }
+
 
     this.quote.shipmentOB.subscribe(
       resShipment => this.shipment = resShipment
@@ -307,7 +296,6 @@ export class GetquoteComponent implements OnInit {
     //var valid = true;
     this.showQuote = false;
     this.quoteError= "" ;
-
 
     if(this.validateAddressForms (true,true,true) && this.validateNameForms(true,true)){
       this.quoteError= "Please correct all the form errors then try submitting again." ;

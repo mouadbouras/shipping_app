@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Quote } from '../model/quote.model';
 import { QuoteService } from '../services/quote.service';
+import { UserService } from '../services/user.service';
 import { Rate } from '../model/rate.model';
 
 import { HttpClient } from '@angular/common/http'; 
@@ -10,6 +11,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { Shipment } from '../model/shipment.model';
 import { Parcel } from '../model/parcel.model';
 import { Shipp } from '../model/shipp.model';
+import { User } from '../model/user.model';
 import { Constants } from '../util/constants.util';
 import { Router } from '@angular/router';
 
@@ -17,7 +19,7 @@ import { Router } from '@angular/router';
 const httpOptions = {
   headers: new HttpHeaders({
     'Content-Type':  'application/json'
-  })
+  }),withCredentials: true
 };
 
 @Component({
@@ -31,16 +33,21 @@ export class ShipmentComponent implements OnInit {
   
   public selectQuoteError : boolean;
   public selectQuoteErrorText : string;
+  public user : User;
 
   constructor(
               private quoteServcie: QuoteService,
               private http: HttpClient,
               private spinner: NgxSpinnerService,
-              private router : Router
+              private router : Router,
+              private userServcie: UserService
               ) { }
 
   ngOnInit() {
     this.quoteServcie.shipmentOB.subscribe(res => this.shipment = res[0]); 
+    //this.userServcie.usersOB.subscribe(u => this.user = u[0]);
+    this.userServcie.getUser().subscribe(u => this.user = u);
+
     this.selectQuoteError = false;        
   }
 
@@ -50,7 +57,7 @@ export class ShipmentComponent implements OnInit {
     this.spinner.show();
 
       this.http.post(Constants.baseUrl+'/transaction.json' ,
-                   JSON.stringify({QuoteId:this.shipment.QuoteRate.ShipmentId,UserId:1,RateId: this.shipment.QuoteRate.Id}), httpOptions).subscribe(
+                   JSON.stringify({QuoteId:this.shipment.QuoteRate.ShipmentId,UserId:this.user.Id,RateId: this.shipment.QuoteRate.Id}), httpOptions).subscribe(
       data => {
       this.spinner.hide();
       //console.log(data);
@@ -58,7 +65,7 @@ export class ShipmentComponent implements OnInit {
       {
         console.log("An Error Happened");
         this.selectQuoteError = true;
-        this.selectQuoteErrorText = data["details"];
+        this.selectQuoteErrorText = data["details"][0]["text"];
         console.log(data["details"]);
       }
       if(data["success"]!= undefined)
@@ -77,17 +84,17 @@ export class ShipmentComponent implements OnInit {
     this.spinner.show();
 
     this.http.post(Constants.baseUrl+'/quote.json' ,
-    JSON.stringify({QuoteId:this.shipment.QuoteRate.ShipmentId,UserId:1,RateId: this.shipment.QuoteRate.Id}), httpOptions).subscribe(
+    JSON.stringify({QuoteId:this.shipment.QuoteRate.ShipmentId,UserId:this.user.Id,RateId: this.shipment.QuoteRate.Id}), httpOptions).subscribe(
       data => {
         this.spinner.hide();
-        //console.log(data);
+        console.log(data);
         if(data["error"]!= undefined)
         {
           console.log("An Error Happened");
-          console.log(data["details"]);
+          console.log(data["details"]["text"]);
 
           this.selectQuoteError = true;
-          this.selectQuoteErrorText = data["details"];
+          this.selectQuoteErrorText = data["details"]["text"];
         }
         if(data["success"]!= undefined)
         {

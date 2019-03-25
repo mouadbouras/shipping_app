@@ -27,19 +27,16 @@ import { LoginComponent } from './login/login.component';
 import { SignupComponent } from './signup/signup.component';
 import { GetquoteComponent } from './getquote/getquote.component';
 import { NavigationComponent } from './navigation/navigation.component';
-import { GetratesComponent } from './getrates/getrates.component';
+//import { GetratesComponent } from './getrates/getrates.component';
 
-import { BasicAuthInterceptor } from './util/basic-auth.util';
+//import { BasicAuthInterceptor } from './util/basic-auth.util';
 import { AlertComponent } from './alert/alert.component';
-
-
 
 @NgModule({
   declarations: [
     AppComponent,
     GetquoteComponent,
     NavigationComponent,
-    GetratesComponent,
     MyquotesComponent,
     ShipmentComponent,
     MyshipmentsComponent,
@@ -64,8 +61,9 @@ import { AlertComponent } from './alert/alert.component';
   ],
   providers: [
                 QuoteService, FormService,UserService,AlertService,AuthenticationService,
-                { provide: HTTP_INTERCEPTORS, useClass: BasicAuthInterceptor, multi: true }
+           
               ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
+//useClass: BasicAuthInterceptor      ,{ provide: HTTP_INTERCEPTORS , multi: true }
