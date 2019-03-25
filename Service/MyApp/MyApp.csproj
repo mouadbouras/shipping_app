@@ -10,12 +10,16 @@
 
   <ItemGroup>
     <Folder Include="wwwroot\" />
-    <!-- <EmbeddedResource Include="dbconfig.json" /> -->
+    <EmbeddedResource Include="dbconfig.json" />
+
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.App" Version="2.1.*" />
+    <PackageReference Include="Microsoft.AspNetCore.App" Version="2.1.6" />
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.1" />
     <PackageReference Include="ServiceStack" Version="5.*" />
+    <PackageReference Include="ServiceStack.OrmLite.SqlServer.Core" Version="5.4.1" />
+    <PackageReference Include="ServiceStack.Server" Version="5.4.1" />
     <PackageReference Include="Shippo" Version="2.1.10" />
     <PackageReference Include="System.Configuration.ConfigurationManager" Version="4.5.0" />
   </ItemGroup>

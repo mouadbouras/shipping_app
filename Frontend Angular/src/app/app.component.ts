@@ -1,4 +1,6 @@
 import { Component, AfterViewChecked  } from '@angular/core';
+import { UserService } from './services/user.service';
+import { User } from './model/user.model';
 
 declare let paypal: any;
 
@@ -8,13 +10,23 @@ declare let paypal: any;
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
+
 export class AppComponent{// implements AfterViewChecked {
   title = 'shipping-app';
 
-  // addScript: boolean = false;
-  // paypalLoad: boolean = true;
+  addScript: boolean = false;
+  paypalLoad: boolean = false;
   
-  // finalAmount: number = 1;
+  finalAmount: number = 1;
+
+  public user : User;
+
+  constructor(private userServcie: UserService) { }
+
+  ngOnInit() {
+    this.userServcie.getUser().subscribe(u => this.user = u);
+    console.log();
+  }
 
   // paypalConfig = {
   //   env: 'sandbox',
@@ -64,6 +76,6 @@ export class AppComponent{// implements AfterViewChecked {
   //     scripttagElement.onload = resolve;
   //     document.body.appendChild(scripttagElement);
   //   })
-  //}
+  // }
 
 }

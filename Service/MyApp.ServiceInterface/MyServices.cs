@@ -16,6 +16,20 @@ namespace MyApp.ServiceInterface
     {
         public APIResource resource = new APIResource("shippo_test_5f00f661c1f2f19191bfba82cc8575fddb06c202");
 
+        public object Get(SessionDTO request)
+        {
+            var typedSession = this.SessionAs<AuthUserSession>();
+            var s = this.GetSession();
+            if(typedSession.IsAuthenticated){
+                //this.RemoveSession();
+                return "{\"IsAuthenticated\" : \"true\"}";                
+            }
+
+                return "{\"IsAuthenticated\" : \"false\"}";
+        }
+
+
+        [Authenticate]
         public object Any(Hello request)
         {
             var response = "{\"success\": \"transaction Success\" ," +
@@ -96,6 +110,7 @@ namespace MyApp.ServiceInterface
 
         }
         
+        [Authenticate]
         public object Post(QuoteDTO request){
 
             var context = new shippingcoContext();
@@ -200,9 +215,9 @@ namespace MyApp.ServiceInterface
                                 .Where(p => p.Id.ToString() == q.ParcelId.ToString() )
                                 .ToList().First();  
 
-                    client = context.Client                             
-                                .Where(c => c.Id.ToString() == request.UserId)
-                                .ToList().First(); 
+                    // client = context.Client                             
+                    //             .Where(c => c.Id.ToString() == request.UserId)
+                    //             .ToList().First(); 
 
                     var rlist = new QuoteDTOResponse();
                     rlist.from = from;
@@ -222,6 +237,7 @@ namespace MyApp.ServiceInterface
             return "{\"error\": \"Invalid Request\"}" ;      
         }
 
+        [Authenticate]
         public object Post(TransactionDTO request){
             
             // Get the first rate in the rates results.
@@ -348,7 +364,8 @@ namespace MyApp.ServiceInterface
                 var parcel = new MyApp.DataAccess.DataAccess.Parcel();
                 var client = new Client();
                 var order = new Orders();      
-                var user = new Users();      
+                var user = new Users();   
+                var userAuth = new UserAuth();   
 
 
                 var orders = context.Orders
@@ -369,9 +386,9 @@ namespace MyApp.ServiceInterface
                                 .Where(p => p.Id.ToString() == q.ParcelId.ToString() )
                                 .ToList().First();  
 
-                    client = context.Client                             
-                                .Where(c => c.Id.ToString() == request.UserId)
-                                .ToList().First(); 
+                    // client = context.Client                             
+                    //             .Where(c => c.Id.ToString() == request.UserId)
+                    //             .ToList().First(); 
 
                     var rlist = new TransactionDTOResponse();
                     rlist.from = from;
@@ -390,6 +407,6 @@ namespace MyApp.ServiceInterface
  
             return null;
         }        
-    
     }
+    
 }

@@ -10,12 +10,14 @@ import { HttpClient } from '@angular/common/http';
 import { HttpHeaders } from '@angular/common/http';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Router } from '@angular/router';
+import { UserService } from '../services/user.service';
+import { User } from '../model/user.model';
+
 
 const httpOptions = {
   headers: new HttpHeaders({
-    'Content-Type':  'application/json'
-  })
-};
+    'Content-Type':  'application/json',
+  }),withCredentials: true};
 
 @Component({
   selector: 'app-myquotes',
@@ -24,18 +26,30 @@ const httpOptions = {
 })
 export class MyquotesComponent implements OnInit {
 
-  private quotes = new Array<Quote>();
-  private selectedQuote : Quote;
+  public quotes = new Array<Quote>();
+  public selectedQuote : Quote;
+  public user : User;
+
   //private shipment = new Order();
 
 
   constructor(private quoteServcie: QuoteService,
               private http: HttpClient,
-              private spinner: NgxSpinnerService ) { }
+              private spinner: NgxSpinnerService,
+              private userServcie: UserService,
+              private router : Router,
+              ) { }
 
   ngOnInit() {
     this.spinner.show();
     this.quoteServcie.quoteOB.subscribe(res => this.quotes = res);
+    //this.userServcie.usersOB.subscribe(u => this.user = u[0]);
+    this.userServcie.getUser().subscribe(u => this.user = u);
+    if(this.user.Id == null)
+    {
+      this.router.navigateByUrl('/login');
+    }
+
 
     // this.shipment.From = new Shipp();
     // this.shipment.From.Company = "company";
@@ -107,7 +121,7 @@ export class MyquotesComponent implements OnInit {
     // });
 
     this.http.post(Constants.baseUrl+'/quote.json' ,
-    JSON.stringify({UserId:1}), httpOptions).subscribe(
+    JSON.stringify({UserId:this.user.Id}), httpOptions).subscribe(
       data => {
         this.spinner.hide();
 
@@ -171,9 +185,11 @@ export class MyquotesComponent implements OnInit {
             
             this.quotes.push(q);
           }
-
-
         }        
+    },
+    error => {
+      this.spinner.hide();
+      console.log(error);
     });
   }
 

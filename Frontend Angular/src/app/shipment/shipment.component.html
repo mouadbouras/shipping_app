@@ -1,7 +1,7 @@
 <div class="row">
     <div class="col-12 "  >
         <div class="text-left" *ngIf="this.shipment.QuoteRate">
-            <h3>Rate</h3>
+            <h3>Rato</h3>
             <table class="table table-borderless" >
                 <tbody>
                     <tr>
@@ -30,7 +30,7 @@
 
 <div class="row py-3"  > 
     <div class="col-12"> 
-        <div class="alert alert-danger" role="alert" *ngIf="selectQuoteError">
+        <div class="alert alert-danger" role="alert" *ngIf="selectQuoteError && user">
                 {{ selectQuoteErrorText }}
             </div>    
     </div>
