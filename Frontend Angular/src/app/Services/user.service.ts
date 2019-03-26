@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { User } from '../model/user.model';
-import { of,Observable, BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable, Subscriber, Subject } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Constants } from '../util/constants.util';
 
@@ -10,31 +10,18 @@ import { Constants } from '../util/constants.util';
 })
 
 export class UserService {
+    private subject = new Subject<User>();
+    constructor(private http: HttpClient)  {
+        
+     }
 
-  private user = new User();
-  private userObs = new BehaviorSubject<User>(this.user);
+     getUser() {
+         return this.subject.asObservable();
+     }
 
-  public obj = {  
-      id: "4720",  
-      name: "Rathrola Prem Kumar",  
-      position: "Software Engineer"  
-  } 
-
-  constructor(private http: HttpClient)  {
-    //this.userObs = of(this.user);
-   }
-
-
-  public setUser(user : User) : void
-  {  
-    this.userObs.next(user);
-  }
-
-  public getUser() : Observable<User>
-  {
-    return this.userObs.asObservable();
-  }
-
+     setUser(user: User) {
+         this.subject.next(user);
+     }
 
   getAll() {
     //return this.http.get<User[]>(`${config.apiUrl}/users`);
