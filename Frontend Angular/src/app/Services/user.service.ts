@@ -10,17 +10,16 @@ import { Constants } from '../util/constants.util';
 })
 
 export class UserService {
-    private subject = new Subject<User>();
+    private userSubject = new BehaviorSubject<User>();
     constructor(private http: HttpClient)  {
-        
      }
 
      getUser() {
-         return this.subject.asObservable();
+         return this.userSubject.asObservable();
      }
 
      setUser(user: User) {
-         this.subject.next(user);
+         this.userSubject.next(user);
      }
 
   getAll() {
