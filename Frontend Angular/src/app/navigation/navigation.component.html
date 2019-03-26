@@ -1,22 +1,24 @@
 
 <div class="container-fluid">
 
-      <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm">
-          <img src="assets/img/Shipping-co-logo.png" alt="Shipping Co Logo" width="50" height="50">
-          <h5 class="my-0 mr-md-auto font-weight-normal"><a class="navbar-brand" href="#">Shipping Co</a></h5>
-          <nav class="my-2 my-md-0 mr-md-3">
-            <a class="p-2 text-dark"  *ngIf="this.user.Id != null" > Welcome {{this.user.Username}}</a>
-            <a class="p-2 text-dark"  *ngIf="this.user.Id != null" > ID {{this.user.Id}}</a>
+  <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm">
+      <img src="assets/img/Shipping-co-logo.png" alt="Shipping Co Logo" width="50" height="50">
+      <h5 class="my-0 mr-md-auto font-weight-normal"><a class="navbar-brand" href="#">Shipping Co</a></h5>
+      <nav class="my-2 my-md-0 mr-md-3">
+        <a class="p-2 text-dark"  *ngIf="this.user.Id != null" > Welcome {{this.user.Username}}</a>
+        <a class="p-2 text-dark"  *ngIf="this.user.Id != null" > ID {{this.user.Id}}</a>
+        <button (click)="onSetStel()">Set Stel</button>
+        <button (click)="onSetMouad()">Set Mouad</button>
 
-            <a class="p-2 text-dark" routerLink="quote"  *ngIf="this.user.Id != null" > New Quote</a>
-            <a class="p-2 text-dark" routerLink="myquotes"  *ngIf="this.user.Id != null" >My Quotes</a>
-            <a class="p-2 text-dark" routerLink="myshipments"  *ngIf="this.user.Id != null" >My Shipments</a>
-            <a class="p-2 text-dark" routerLink="" *ngIf="this.user.Id != null" (click)="logout()" >Logout</a>
-            <a class="p-2 text-dark" routerLink="signup"  *ngIf="this.user.Id == null" >Sign Up</a>
-            <a class="p-2 text-dark" routerLink="login" *ngIf="this.user.Id == null"  >Login</a>
+        <a class="p-2 text-dark" routerLink="quote"  *ngIf="this.user.Id != null" > New Quote</a>
+        <a class="p-2 text-dark" routerLink="myquotes"  *ngIf="this.user.Id != null" >My Quotes</a>
+        <a class="p-2 text-dark" routerLink="myshipments"  *ngIf="this.user.Id != null" >My Shipments</a>
+        <a class="p-2 text-dark" routerLink="" *ngIf="this.user.Id != null" (click)="logout()" >Logout</a>
+        <a class="p-2 text-dark" routerLink="signup"  *ngIf="this.user.Id == null" >Sign Up</a>
+        <a class="p-2 text-dark" routerLink="login" *ngIf="this.user.Id == null"  >Login</a>
 
-          </nav>
-        </div>
+      </nav>
+    </div>
 
 </div>
 
