@@ -107,11 +107,6 @@ export class GetquoteComponent implements OnInit {
 
   ngOnInit() {
     this.userServcie.getUser().subscribe(u => this.user = u);
-    if(this.user.Id == null)
-    {
-      this.router.navigateByUrl('/login');
-    }
-
 
     this.quote.shipmentOB.subscribe(
       resShipment => this.shipment = resShipment

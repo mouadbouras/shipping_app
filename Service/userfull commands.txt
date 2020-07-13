@@ -1,1 +1,7 @@
-dotnet ef dbcontext scaffold "Server=tcp:shipping-co.database.windows.net,1433;Initial Catalog=shipping-co;Persist Security Info=False;User ID=shipping-dbadmin;Password=Bacon123;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;" Microsoft.EntityFrameworkCore.SqlServer -o DataAccess -F
+dotnet ef dbcontext scaffold "Server=tcp:shipping-co.database.windows.net,1433;Initial Catalog=shipping-co;Persist Security Info=False;User ID=shipping-dbadmin;Password=Bacon123;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;" 
+Microsoft.EntityFrameworkCore.SqlServer -o DataAccess -F
+
+Server=myServerAddress;Port=1234;Database=myDataBase;Uid=myUsername;
+Pwd=myPassword;
+
+dotnet ef dbcontext scaffold "Server=tcp:mouadbouras.com;Port=3306;Database=shipping-co;Uid=shipping-co;Pwd=Bacon12345" MySql.Data.EntityFrameworkCore -o DataAccess -f

@@ -6,7 +6,7 @@
           <h5 class="my-0 mr-md-auto font-weight-normal"><a class="navbar-brand" href="#">Shipping Co</a></h5>
           <nav class="my-2 my-md-0 mr-md-3">
             <a class="p-2 text-dark"  *ngIf="this.user.Id != null" > Welcome {{this.user.Username}}</a>
-            <a class="p-2 text-dark"  *ngIf="this.user.Id != null" > ID {{this.user.Id}}</a>
+            <!-- <a class="p-2 text-dark"  *ngIf="this.user.Id != null" > ID {{this.user.Id}}</a> -->
 
             <a class="p-2 text-dark" routerLink="quote"  *ngIf="this.user.Id != null" > New Quote</a>
             <a class="p-2 text-dark" routerLink="myquotes"  *ngIf="this.user.Id != null" >My Quotes</a>

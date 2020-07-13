@@ -45,10 +45,6 @@ export class MyquotesComponent implements OnInit {
     this.quoteServcie.quoteOB.subscribe(res => this.quotes = res);
     //this.userServcie.usersOB.subscribe(u => this.user = u[0]);
     this.userServcie.getUser().subscribe(u => this.user = u);
-    if(this.user.Id == null)
-    {
-      this.router.navigateByUrl('/login');
-    }
 
 
     // this.shipment.From = new Shipp();
